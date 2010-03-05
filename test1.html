@@ -19,17 +19,19 @@
     <div class="ft">ft</div>
 </div>
 
-
 <script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 <script type="text/javascript">
 YUI().use('node', function(Y) {
     var hdNode = Y.one('#demo .hd');
     hdNode.setStyles({
         'color': 'red',
         'background-color': 'yellow'
+    }).on('click', function (e) {
+        e.preventDefault();
+        console.log('You clicked hdNode!');
     });
-    //test
-    //test from home
+
 });
 </script>
 </body>
