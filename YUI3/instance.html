@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache" />
-<title>Title</title>
+<title>YUI multi instance test</title>
 <style>
 #demo div {
     border: 1px solid red;
@@ -16,26 +16,19 @@
 <div id="demo">
     <div class="hd">hd</div>
     <div class="bd">bd</div>
-    <div class="ft">ft <input type="text" id="tt"></div>
+    <div class="ft">ft</div>
 </div>
 
 <script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
 <script type="text/javascript">
 
-YUI({
-    modules: {
-       jquery: {
-           fullpath: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'
-       }
-    }
+for (var i = 0; i < 200; ++i) {
+    YUI().use('node', 'event', function(Y) {
+        Y.log('new instance!');
+    });
+}
 
-}).use('jquery', function(Y) {
 
-  $(function() {
-    $('#demo').append('<div class="jq">jQuery !!!</div>');
-  });
-
-});
 </script>
 </body>
 </html>

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Testing callframe</title>
+</head>
+
+<body>
+
+<script type="text/javascript">
+
+function a() {
+    console.log('this is a');
+    b();
+    console.log('this is a');
+}
+function b() {
+    console.log('this is b');
+    c();
+    console.log('this is b');
+}
+function c() {
+    console.log('this is c');
+    d();
+    console.log('this is c');
+}
+function d() {
+    console.log('this is d');
+}
+a();
+
+</script>
+</body>
+</html>
