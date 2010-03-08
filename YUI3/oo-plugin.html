@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>OO</title>
+<style>
+#demo div {
+    border: 1px solid red;
+}
+</style>
+</head>
+
+<body>
+
+<div id="demo">
+    <div class="hd">hd</div>
+    <div class="bd">bd</div>
+    <div class="ft">ft <input type="text" id="tt"></div>
+</div>
+
+<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+
+YUI().use('base', 'plugin', function(Y) {
+
+    function Car() {
+        // Invoke Base constructor, passing through arguments
+        Car.superclass.constructor.apply(this, arguments);
+    }
+    Car.NAME = "myCar";
+    Car.ATTRS = {
+        year : {
+            value: 1995
+        },
+        brand : {
+            value: 'honda'
+        }
+    };
+
+    Y.extend(Car, Y.Base, {
+        initializer : function(cfg) {
+            Y.log('A new car has been created!');
+        },
+        run: function () {
+            Y.log('Car running');
+        },
+        stop: function () {
+            Y.log('Car stopped!');
+        },
+        destructor : function() {
+            Y.log('An old car has been deleted!');
+        }
+    });
+
+    var aCar = new Car();
+    console.log(aCar.get('year'));
+    console.log(aCar.stop());
+
+    /*
+     * Plugin
+     */
+    function EverythingCanFly(config) {
+        this.config = config;
+    }
+    EverythingCanFly.NS = 'fly';
+    EverythingCanFly.prototype = {
+        fly: function () {
+            Y.log('One ' + this.config.host.get('brand') + ' is flying...!@##@');
+        }
+    };
+    aCar.plug(EverythingCanFly);
+    aCar.fly.fly();
+
+    /*
+     * Advanced Plugins - 覆寫原始行為
+     */
+    function SlowMotion(config) {
+        this.config = config;
+        SlowMotion.superclass.constructor.apply(this, arguments);
+    }
+    SlowMotion.NAME = 'slowMotion';
+    SlowMotion.NS = 'fx';
+
+    // Attribute definitions for the plugin
+    SlowMotion.ATTRS = {
+        'HowSlow': {
+            value: 1
+        }
+    };
+
+    // Extend Plugin.Base
+    Y.extend(SlowMotion, Y.Plugin.Base, {
+        // Add any required prototype methods
+        initializer : function(config) {
+          this.doBefore('run', this.run);
+        },
+        run : function () {
+            Y.log('running very slow...');
+            return new Y.Do.Prevent();
+        }
+    });
+
+    var bCar = new Car({ year : 2010 });
+    bCar.plug(SlowMotion);
+    bCar.run();
+
+    /*
+     * Advanced Plugins - 添加行為 (跟上面一個類似)
+     */
+    function ParkingVeryWell(config) {
+        this.config = config;
+        ParkingVeryWell.superclass.constructor.apply(this, arguments);
+    }
+    ParkingVeryWell.NAME = 'parkingPlugin';
+    ParkingVeryWell.NS = 'pkp';
+
+    // Attribute definitions for the plugin
+    ParkingVeryWell.ATTRS = {
+        "HowToPark": {
+            value: "You don't need to know"
+        }
+    };
+
+    // Extend Plugin.Base
+    Y.extend(ParkingVeryWell, Y.Plugin.Base, {
+        // Add any required prototype methods
+        initializer : function(config) {
+          this.doAfter('stop', this.park);
+        },
+        park : function () {
+            Y.log('Parking!');
+        }
+    });
+
+    var cCar = new Car();
+    cCar.plug(ParkingVeryWell);
+    cCar.stop();
+
+    window.aCar = aCar; //for testing
+    window.bCar = bCar; //for testing
+    window.cCar = cCar; //for testing
+});
+
+</script>
+</body>
+</html>
