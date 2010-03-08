@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>OO</title>
+<style>
+#demo div {
+    border: 1px solid red;
+}
+</style>
+</head>
+
+<body>
+
+<div id="demo">
+    <div class="hd">hd</div>
+    <div class="bd">bd</div>
+    <div class="ft">ft <input type="text" id="tt"></div>
+</div>
+
+<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+
+YUI().use('base', function(Y) {
+
+    function Car() {
+        // Invoke Base constructor, passing through arguments
+        Car.superclass.constructor.apply(this, arguments);
+    }
+    Car.NAME = "myCar";
+    Car.ATTRS = {
+        year : {
+            value: 1995
+        },
+        brand : {
+            value: 'honda'
+        }
+    };
+
+    Y.extend(Car, Y.Base, {
+        initializer : function(cfg) {
+            Y.log('A new car has been created!');
+        },
+        start: function () {
+            Y.log('Car starting');
+        },
+        stop: function () {
+            Y.log('Car stopped!');
+        },
+        destructor : function() {
+            Y.log('An old car has been deleted!');
+        }
+    });
+
+    window.Car = Car;
+
+    var aCar = new Car();
+    console.log(aCar.get('year'));
+    console.log(aCar.stop());
+
+    var bCar = new Car({ year : 2010 });
+    console.log(bCar);
+
+});
+
+</script>
+</body>
+</html>

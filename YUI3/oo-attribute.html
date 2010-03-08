@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>OO</title>
+<style>
+#demo div {
+    border: 1px solid red;
+}
+</style>
+</head>
+
+<body>
+
+<div id="demo">
+    <div class="hd">hd</div>
+    <div class="bd">bd</div>
+    <div class="ft">ft <input type="text" id="tt"></div>
+</div>
+
+<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+
+YUI().use('attribute', 'event', function(Y) {
+
+    function Car(userValues) {
+
+        // 設定此物件的可用屬性
+        var defaultAttrs = {
+            year : { // 出廠年份
+                value : 1995,  // 預設值
+                validator : function(val) { // 檢查是否為數字，不然就會無法設定
+                    return Y.Lang.isNumber(val);
+               }
+           },
+           brand : {
+               value : 'civic'
+           }
+        };
+
+        // 將參數 (attr) 寫入設定好的屬性 (Car.attr) 中
+        this.addAttrs(defaultAttrs, userValues);
+    }
+
+    // 將 Y.Attribute 的  Public Method 拿到用 Car 用
+    Y.augment(Car, Y.Attribute);
+
+    /*
+    var oCar = new Car({year:2009});
+    oCar.set('brand', 'ford');
+    oCar.on("yearChange", function (e) {
+        Y.log('year changed!');
+    });
+    */
+
+    window.Car = Car;
+
+});
+
+</script>
+</body>
+</html>
