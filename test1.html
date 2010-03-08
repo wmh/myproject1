@@ -30,6 +30,12 @@ var objTransaction = Y.Get.script("http://localhost:8000/js/test.js", {
 	}
 });
 
+YUI().use('*', function(Y) {
+  window.Y = Y;
+  color = Y.Color;
+});
+
+
 if (0)
 YUI().use('node', 'event-key', function(Y) {
 
