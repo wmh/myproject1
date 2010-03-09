@@ -43,7 +43,9 @@ YUI().use('node', 'event-key', function(Y) {
     hdNode.setStyles({
         'color': 'red',
         'background-color': 'yellow'
-    }).on('click', function (e) {
+    });
+
+    hdNode.on('click', function (e) {
         //for debugging
         var _Y = Y;
         window.__Y = _Y;
