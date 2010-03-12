@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>BOM</title>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/reset-fonts-grids/reset-fonts-grids.css">
+<style type="text/css">
+div {
+    margin-bottom: 10px;
+}
+strong {
+    font-weight: bold;
+    color: green;
+}
+</style>
+</head>
+
+<body>
+<p><button id="ow">Open window</button></p>
+
+<p>resizeTo <button id="rts">small</button> <button id="rtb">big</button></p>
+<p>resizeBy <button id="rbn">negative</button> <button id="rbp">positive</button></p>
+<p>moveTo <button id="mttl">top left</button> <button id="mtc">center</button></p>
+<p>moveBy <button id="mbn">negative</button> <button id="mbp">positive</button></p>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+  $('#ow').click(function () {
+    window.open('test.html', 'tow', 'height=400, width=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no,resizable=no,location=no, status=no');
+  });
+  $('#rts').click(function () {
+    window.resizeTo(300, 200);
+  });
+  $('#rtb').click(function () {
+    window.resizeTo(600, 400);
+  });
+  $('#rbn').click(function () {
+    window.resizeBy(-50, -50);
+  });
+  $('#rbp').click(function () {
+    window.resizeBy(50, 50);
+  });
+  $('#mttl').click(function () {
+    window.moveTo(0, 0);
+  });
+  $('#mtc').click(function () {
+    var newTop = parseInt((screen.height - $(window).height()) / 2, 10);
+    var newLeft = parseInt((screen.width - $(window).width()) / 2, 10);
+    window.moveTo(newLeft, newTop);
+  });
+  $('#mbn').click(function () {
+    window.moveBy(-50, -50);
+  });
+  $('#mbp').click(function () {
+    window.moveBy(50, 50);
+  });
+});
+</script>
+</body>
+</html>

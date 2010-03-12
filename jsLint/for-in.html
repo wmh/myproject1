@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Test for-in</title>
+<style>
+#demo div {
+    border: 1px solid red;
+}
+</style>
+</head>
+
+<body>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript">
+(function() {
+    var a = {
+        'b1': 'c1',
+        'b2': 'c2',
+        'b3': 'c3',
+    };
+    for (var idx in a) {
+        console.log(idx + ':' + a[idx]);
+    }
+})();
+console.log(idx);
+</script>
+</body>
+</html>
