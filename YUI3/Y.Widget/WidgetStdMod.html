@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI widget WidgetStdMod</title>
+<style>
+#widget1 {
+    border: 1px solid silver;
+}
+</style>
+</head>
+
+<body>
+
+<div id="widget1">
+</div>
+
+
+<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui.js"></script>
+<script type="text/javascript">
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+YUI.add('unit', function (Y) {
+
+function MyUnit() {
+
+}
+
+
+Y.MyUnit = MyUnit;
+
+}, '1.0.0', {requires: ['widget', 'widget-htmlparser'], optional:['anim']});
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+
+YUI({
+    filter: 'raw'
+}).use('widget', 'widget-stdmod',  function(Y) {
+
+
+    Y.augment(Y.WidgetStdMod, Y.EventTarget);
+    var StandardModule = Y.Base.build("standardModule", Y.Widget, [Y.WidgetStdMod]);
+    Y.augment(StandardModule, Y.EventTarget);
+
+    // Render from Markup
+    var stdmod = new StandardModule({
+        boundingBox: "#widget1",
+        width:"12em",
+        height:"12em"
+    });
+    Y.augment(stdmod, Y.EventTarget);
+    stdmod.render();
+    stdmod.setStdModContent('header', 'HHH');
+    stdmod.setStdModContent('body', 'BBB');
+    stdmod.setStdModContent('footer', 'FFFF');
+    stdmod.set('width', 500);
+    stdmod.set('height', 100);
+    stdmod.on('resize', function(e) {
+        Y.log('I heard resize bubbling...');
+    });
+
+
+    ////////////////
+    function LayoutUnit(n) {
+        this.name = n;
+        this.publish("resize", {
+            emitFacade: true,
+            bubbles: true,
+            defaultFn: function() {
+                Y.log("(df) Layout " + this.name + " is resized.", "info", "LayoutUnit");
+            }
+        });
+    }
+    Y.augment(LayoutUnit, Y.EventTarget);
+    var u1 = new LayoutUnit('u1');
+        u1.on("resize", function (e) {
+            Y.log("Layout! " + this.name + " is resizing....", "info", "LayoutUnit");
+        });
+
+    function Layout() {
+        this.publish("resize", {
+            broadcast: 2,   //no broadcast
+            emitFacade: true,
+            bubbles: true,
+            defaultFn: function() {
+                Y.log("Layout (df) resized", "info", "example");
+            }
+        });
+    }
+    Layout.prototype.resize = function (e) {
+        Y.log("Layout resizing....", "info", "example");
+        this.fire('resize');
+    };
+    Y.augment(Layout, Y.EventTarget);
+
+    //run
+    var layout = new Layout();
+    layout.addTarget(stdmod);
+    layout.addTarget(u1);
+    Y.on("windowresize", function (e) {
+        layout.resize(e);
+    });
+    layout.resize();
+
+
+});
+
+</script>
+</body>
+</html>
