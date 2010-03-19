@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI widget test</title>
+<style>
+#demo div {
+    border: 1px solid silver;
+}
+#bb.yui-jsg {
+    border: 1px dashed silver;
+    display: inline-block;
+}
+#cc.yui-jsg-content {
+    border: 1px solid green;
+    padding: 6px;
+}
+.yui-jsg-hidden {
+    display:none;
+}
+.yui-jsg-disabled {
+    background-color: silver;
+}
+.yui-jsg-focused {
+    /*background-color: yellow;*/
+}
+</style>
+</head>
+
+<body>
+
+<div id="bb" class="bb">
+</div>
+<div id="cc" class="cc">
+    CCCC
+</div>
+
+
+<!--div id="demo">
+    <div class="hd">hd</div>
+    <div class="bd">bd</div>
+    <div class="ft">ft</div>
+</div>
+<div id="mywidget">
+    <p>Hello, My Widget!</p>
+</div>
+<div id="data">
+    <p class="a">Data AAA!!!</p>
+    <p class="b">Data BBB!!!</p>
+</div-->
+
+<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui.js"></script>
+<script type="text/javascript">
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+YUI.add('myWidget', function (Y) {
+
+function MyWidget(config) {
+    console.log('-- MyWidget start 1 --');
+    MyWidget.superclass.constructor.apply(this, arguments);
+    console.log('-- MyWidget start 2 --');
+}
+MyWidget.NAME = "jsg";
+MyWidget.NS   = "jsgNS";
+
+MyWidget.HTML_PARSER = {
+    value: function (boundingBox) {
+        /*
+        Y.log('HTML_PARSER');
+        Y.log(boundingBox);
+        var node = Y.one("#data .a");
+        var v = (node) ? node.get("innerHTML") : null;
+        return v;
+        */
+    },
+    valuett: function () {
+        return 'tt';
+    }
+};
+
+MyWidget.ATTRS = {
+    width: {
+        value: 300
+    },
+    min : {
+        value:0
+    },
+    max : {
+        value:100
+    },
+    value : {
+        value : 0
+    },
+    valuett : {
+        value : 0
+    }
+};
+
+Y.extend(MyWidget, Y.Widget, {
+
+    initializer: function(config) {
+        console.log('initializer-config: ');
+        console.log(config);
+        console.log('-----');
+        for (var idx in config) {
+            console.log(idx);
+        }
+        console.log('-----');
+    },
+    destructor : function() {
+        console.log('destructor');
+    },
+
+    //render process...
+    renderUI : function() {
+        console.log('renderUI');
+        var contentBox = this.get("contentBox");
+        contentBox.append("<p>" + this.getClassName("extra", "a", "b", "c") + "</p>");
+    },
+    bindUI : function() {
+        //ok
+        Y.on('click', Y.bind(this._onContentClick, this), this.get("contentBox"));
+
+    },
+    syncUI : function() {
+        console.log('syncUI');
+    },
+
+    //events
+    _onContentClick : function (e) {
+        if (this.get("disabled")) {
+            console.log("DISABLED!!!");
+        } else {
+            console.log(Y.Widget.getClassName("click", "a", "b"));
+        }
+    },
+
+    //status
+
+    //test
+    test : function () {
+        console.log(this.get("disabled"));
+    },
+
+});
+
+Y.MyWidget = MyWidget;
+
+}, '1.0.0', {requires: ['widget', 'widget-htmlparser'], optional:['anim']});
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+
+YUI({
+    filter: 'raw'
+}).use('myWidget', function(Y) {
+
+    var a = new Y.MyWidget({
+        /*
+        boundingBox: "#mywidget",
+        contentBox: "#mywidget p",
+        dataBox : "#data"
+        */
+        boundingBox: "#bb",
+        contentBox: "#cc",
+        width: "500"
+    });
+    a.render();
+    a.test();
+
+    window.a = a;
+});
+
+</script>
+</body>
+</html>

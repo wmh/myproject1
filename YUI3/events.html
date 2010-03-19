@@ -86,9 +86,9 @@ YUI().use("node", "event", "event-custom", "node-event-simulate", function(Y) {
     var layout = new Layout();
     layout.addTarget(u1);
     layout.addTarget(u2);
-    Y.on("resize", function (e) {
+    Y.on("windowresize", function (e) {
         layout.resize(e);
-    }, window);
+    });
     layout.resize();
 
 return;
