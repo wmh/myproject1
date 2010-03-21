@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache" />
-<title>YUI widget WidgetStdMod</title>
+<title>YUI widget WidgetStdMod with EventTarget</title>
 <style>
 #widget1 {
     border: 1px solid silver;
@@ -40,12 +40,12 @@ Y.MyUnit = MyUnit;
 
 YUI({
     filter: 'raw'
-}).use('widget', 'widget-stdmod',  function(Y) {
+}).use('event', 'widget', 'widget-stdmod',  function(Y) {
 
 
-    Y.augment(Y.WidgetStdMod, Y.EventTarget);
+    //Y.augment(Y.WidgetStdMod, Y.EventTarget);
     var StandardModule = Y.Base.build("standardModule", Y.Widget, [Y.WidgetStdMod]);
-    Y.augment(StandardModule, Y.EventTarget);
+    //Y.augment(StandardModule, Y.EventTarget);
 
     // Render from Markup
     var stdmod = new StandardModule({
@@ -53,24 +53,25 @@ YUI({
         width:"12em",
         height:"12em"
     });
-    Y.augment(stdmod, Y.EventTarget);
+    //Y.augment(stdmod, Y.EventTarget);
     stdmod.render();
     stdmod.setStdModContent('header', 'HHH');
     stdmod.setStdModContent('body', 'BBB');
     stdmod.setStdModContent('footer', 'FFFF');
     stdmod.set('width', 500);
     stdmod.set('height', 100);
-    stdmod.on('resize', function(e) {
-        Y.log('I heard resize bubbling...');
+    stdmod.on('myresize', function(e) {
+        Y.log('I heard resize bubbling...', "info", "stdmod");
     });
-
-    //CUSTOM EVENT FAILED TO BUBBLE EVENT TO STDMOD!!!
-    //turn to WidgetStdMod_EventTarget.html to do future study
+    var a = new Y.Widget();
+    a.on('myresize', function(e) {
+        Y.log('I heard resize bubbling...', "info", "a");
+    });
 
     ////////////////
     function LayoutUnit(n) {
         this.name = n;
-        this.publish("resize", {
+        this.publish("myresize", {
             emitFacade: true,
             bubbles: true,
             defaultFn: function() {
@@ -79,36 +80,42 @@ YUI({
         });
     }
     Y.augment(LayoutUnit, Y.EventTarget);
+
     var u1 = new LayoutUnit('u1');
-        u1.on("resize", function (e) {
-            Y.log("Layout! " + this.name + " is resizing....", "info", "LayoutUnit");
-        });
+    u1.on("myresize", function (e) {
+        Y.log("Layout! " + this.name + " is resizing....", "info", "LayoutUnit");
+    });
+
 
     function Layout() {
-        this.publish("resize", {
+        this.publish("myresize", {
             broadcast: 2,   //no broadcast
             emitFacade: true,
             bubbles: true,
             defaultFn: function() {
-                Y.log("Layout (df) resized", "info", "example");
+                Y.log("Layout (df) resized", "info", "Layout");
             }
         });
     }
-    Layout.prototype.resize = function (e) {
-        Y.log("Layout resizing....", "info", "example");
-        this.fire('resize');
-    };
     Y.augment(Layout, Y.EventTarget);
 
     //run
     var layout = new Layout();
+    //layout.addTarget(a);
     layout.addTarget(stdmod);
     layout.addTarget(u1);
-    Y.on("windowresize", function (e) {
-        layout.resize(e);
+    layout.on("myresize", function (e) {
+        Y.log("Layout resizing....", "info", "Layout");
+        //e.stopPropagation();
+        //e.preventDefault();
+        //e.halt();
     });
-    layout.resize();
+    Y.on("windowresize", function (e) {
+        layout.fire('myresize');
+    });
+    //layout.myresize();
 
+    var a = 1;
 
 });
 
