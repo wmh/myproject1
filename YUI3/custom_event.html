@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Custom Event</title>
+<style>
+#demo div {
+    border: 1px solid red;
+}
+</style>
+</head>
+
+<body>
+
+<div id="demo">
+    <div class="hd">hd <button id="aa">aa</button></div>
+    <div class="bd">bd</div>
+    <div class="ft">ft</div>
+</div>
+
+<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript">
+
+YUI().use('node', 'event', 'event-custom', function(Y) {
+
+    Y.one('#demo .bd').on('walk', function () {
+        console.log('bd walking...');
+    }).set;
+
+    Y.one('#aa').on('click', function () {
+        Y.one('#demo .bd').fire('walk');
+    });
+
+});
+</script>
+</body>
+</html>
