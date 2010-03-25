@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI3 Event - mousewheel</title>
+<style>
+#container {
+    border: 10px solid silver;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    width: 300px;
+}
+#container .scroller {
+    background-color: blue;
+    border: 1px solid blue;
+    height: 30px;
+    position: absolute;
+    width: 100px;
+    z-index: 100;
+
+    /* IE filter extension */
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+    -moz-opacity: 0.5; /* Mozilla extension */
+    -khtml-opacity:0.5; /* Konqueror extension (Safari 1.1)*/
+    opacity: 0.5; /* the correct CSS3 syntax */
+}
+#container .scrollup {
+    top: 0;
+    right: 20px;
+}
+#container .scrolldown {
+    bottom: 0;
+    right: 20px;
+}
+#data {
+    border: 10px solid green;
+    position: absolute;
+    top: 0;
+}
+</style>
+</head>
+
+<body>
+<div id="container">
+    <div class="scroller scrollup"></div>
+    <div class="scroller scrolldown"></div>
+    <div id="data">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec dolor lectus, id suscipit tortor. Integer vel mi nec turpis sagittis dictum vitae quis erat. Cras id orci eu quam interdum congue. Sed vestibulum vulputate arcu laoreet convallis. Sed tellus ligula, suscipit ac gravida accumsan, tempus et mauris. Donec dapibus mollis sem, et tincidunt justo lacinia quis. Sed ultrices mattis pulvinar. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer vel neque lorem. Donec ante enim, condimentum ac faucibus at, tristique nec risus.</p>
+        <p>In rhoncus vestibulum tempus. Vivamus imperdiet placerat augue, et dignissim ante ullamcorper sit amet. Etiam posuere blandit consectetur. Nam scelerisque lacus arcu. Quisque iaculis dui eget lorem tempus convallis. Sed sollicitudin, est id facilisis ultricies, est nunc placerat leo, a egestas tortor est eu libero. Cras quis enim dolor, at aliquet nibh. Morbi ut mattis velit. Sed mollis tempor ante, vel porttitor nibh tincidunt eget. Pellentesque porta aliquam arcu, rhoncus suscipit justo fringilla sit amet. Fusce pellentesque lobortis leo ac suscipit. Cras elementum tincidunt dapibus. Duis consectetur faucibus augue eget tempus. Aliquam scelerisque euismod nulla, eu pretium nibh viverra a. Ut sit amet dictum enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam erat volutpat. Nulla ac justo sapien, eu cursus dolor. In hac habitasse platea dictumst.</p>
+        <p>Praesent blandit erat et lorem porta ac euismod justo consectetur. Proin id rhoncus justo. Nulla facilisi. Nunc id purus magna. Duis ut urna eget metus congue consectetur quis vel dolor. Praesent sit amet orci turpis, at adipiscing diam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi molestie lorem nec sem malesuada faucibus. Proin mattis venenatis justo, eget eleifend neque scelerisque at. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus mollis, quam et egestas euismod, urna lacus egestas velit, sed laoreet nibh magna ut arcu. Pellentesque interdum velit et ante consectetur at rutrum erat lobortis. Suspendisse libero erat, tincidunt quis ultricies non, elementum eu est. Vestibulum porttitor, velit in malesuada rhoncus, libero enim facilisis turpis, in pellentesque nulla augue ac ante. Suspendisse tellus mauris, blandit quis euismod ac, sodales at tortor.</p>
+    </div>
+</div>
+
+<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript">
+/*
+Use style-top to simulate scrolling...
+ - positive: these two handlers will fixed to the container
+ - negative: need to calulate the top attribute and need to handle different browsers!
+*/
+
+var YUIConfig = {
+    filter: 'raw',
+    debug : true
+};
+
+YUI(YUIConfig).use("node", "event", "console", "event-delegate", function (Y) {
+
+    var containerNode = Y.one("#container");
+    var dataNode = Y.one("#data");
+
+    var _renderHandler = function () {
+
+    };
+    _renderHandler();
+
+    var doScroll = function (delta) {
+        var top = parseInt(dataNode.getStyle("top"));
+        var newTop = Math.min(0, top + 30 * delta);
+
+        if (newTop < 0) {
+            //detect max top
+            var viewHeight = containerNode.get("clientHeight");
+            var totalHeight = dataNode.get("scrollHeight");
+            var maxTop = totalHeight - viewHeight + 20;
+
+            newTop = Math.max(-maxTop, newTop);
+        }
+
+        dataNode.setStyle("top", newTop + "px");
+        Y.log((delta < 0 ? "scroll-down" : "scroll-up") + " " + newTop);
+        setTimeout(function () {
+            var lastEntry = Y.one(".yui-console-entry:last-child");
+            if (lastEntry) {
+                lastEntry.remove();
+            }
+        }, 3000);
+    };
+
+    Y.on("mousewheel", function (e) {
+        if (containerNode.contains(e.target)) {
+            doScroll(e.wheelDelta < 0 ? -1 : 1);
+            e.halt();
+        }
+    });
+
+
+    Y.one("body").addClass("yui-skin-sam");
+    var YConsole = new Y.Console();
+    YConsole.render();
+    //setInterval(function () { YConsole.clearConsole() }, 3000);
+
+    //Y.one("#container").set("scrollTop", 2000);
+    //Y.log("scrollTop: " + Y.one("#container").get("scrollTop"));
+    //console.log(containerNode.get("viewportRegion"));
+
+    //on window resize
+    Y.on("windowresize", function (e) {
+        var viewport = containerNode.get("viewportRegion");
+        console.log(viewport.height - 50);
+        containerNode.setStyle("height", (viewport.height - 50) + "px");
+    });
+
+    window.Y = Y;
+});
+</script>
+</body>
+</html>
