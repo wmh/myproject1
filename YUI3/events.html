@@ -4,20 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache" />
 <title>YUI3 Events</title>
-<style>
-#demo div {
-    border: 1px solid red;
-}
-</style>
 </head>
 
 <body>
 
-<div id="demo">
-    <div class="hd">hd <button id="aa">aa</button></div>
-    <div class="bd">bd</div>
-    <div class="ft">ft</div>
-</div>
+<h1>layout -> u1 -> p1 (it works)</h1>
+<h1>layout -> u2 (it works)</h1>
 
 <script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
@@ -33,7 +25,7 @@ var cnt = 0;
 YUI().use("node", function (Y) {
     console.log("instance 1");
     Y.Global.on("resize", function () {
-        console.log("GLOBAL: I know layout resizing...");
+        console.log("GLOBAL: I know layout resizing...", "info", "InstanceX");
     });
 });
 
@@ -69,7 +61,7 @@ YUI().use("node", "event", "event-custom", "node-event-simulate", function(Y) {
 
     function Layout() {
         this.publish("resize", {
-            broadcast: 2,   //no broadcast
+            broadcast: 0,   //no broadcast
             emitFacade: true,
             defaultFn: function() {
                 Y.log("Layout (df) resized", "info", "example");
@@ -91,115 +83,6 @@ YUI().use("node", "event", "event-custom", "node-event-simulate", function(Y) {
     });
     layout.resize();
 
-return;
-
-    var BubbleTarget = function() {
-        Y.log("Host constructor executed.", "info", "example");
-    }
-    Y.augment(BubbleTarget, Y.EventTarget);
-    var bubbleTarget = new BubbleTarget();
-    bubbleTarget.on("publisher:testEvent", function(e) {
-        Y.log("publisher:testEvent fired on the BubbleTarget object.", "info", "example");
-    });
-    var Publisher = function(bubbleTarget) {
-        this.addTarget(bubbleTarget);
-        this.publish("publisher:testEvent", {emitFacade: true});
-        /*
-        this.publish("publisher:testEvent",
-            {
-                emitFacade: true,
-                defaultFn: function() {
-                    Y.log("defaultFn: publisher:testEvent's defaultFn executed.", "info", "example");
-                },
-                preventedFn: function() {
-                    Y.log("preventedFn: A subscriber to publisher:testEvent called preventDefault().", "info", "example");
-                },
-                stoppedFn: function() {
-                    Y.log("stoppedFn: A subscriber to publisher:testEvent called stopPropagation().", "info", "example");
-                }
-            }
-        );
-        */
-        Y.log("Publisher constructor executed.");
-    }
-    Y.augment(Publisher, Y.EventTarget);
-    var p = new Publisher(bubbleTarget);
-    p.on("publisher:testEvent", function(e) {
-        Y.log("publisher:testEvent subscriber fired on the publisher object.", "info", "example");
-        /*
-        if(Y.one("#stopPropagation").get("checked")) {
-            e.stopPropagation();
-        }
-        if(Y.one("#preventDefault").get("checked")) {
-            e.preventDefault();
-        }
-        */
-    });
-    Y.on("click", function(e) {
-        //clear out the logger:
-        p.fire("publisher:testEvent");
-    }, "#demo .bd");
-
-
-    var bdNode = Y.one(".bd");
-    Y.augment(bdNode, Y.EventTarget);
-    bdNode.on("walk", function () {
-        console.log("bd is walking...");
-    });
-
-/*
-    //event delegate
-    Y.delegate('custom:resize', function (e) {
-        Y.log(e.target.get('className')  + ' resized by delegator.');
-    }, '#demo', 'div');
-    Y.delegate('myclick', function (e) {
-        Y.log(e.target.get('className')  + ' myclicked by delegator.');
-    }, '#demo', 'div');
-*/
-    //direct event handler
-    bdNode.on("click", function (e) {
-        Y.log('body click directly handler');
-    });
-    Y.one("#aa").on("click", function (e) {
-        Y.fireEvent("click", { target: bdNode });
-    });
-
-    //這邊用 resize 這個名字不行！ (jQuery 可以)
-    /*
-    bdNode.on("custom:resize", function () {
-        console.log("body resized");
-    });
-    */
-    bdNode.on("mouseenter", function () {
-        console.log("body mouseenter");
-    });
-    Y.augment(bdNode, Y.EventTarget, null, null);
-
-
-
-    //window resize
-    Y.one(window).on("resize", function () {
-        bdNode.simulate("click");
-        console.log("window resized");
-    });
-
-if(0) {
-    //測試 ok 放下面
-
-    //window resize
-    Y.one(window).on("resize", function () {
-        console.log("window resized");
-    });
-
-    //simple custom event:
-    // create walk event for .bd, trigger it while #aa clicked
-    Y.one("#demo .bd").on("walk", function () {
-        console.log("bd is walking...");
-    });
-    Y.one("#aa").on("click", function () {
-        Y.one(".bd").fire("walk");
-    });
-}
 });
 
 

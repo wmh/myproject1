@@ -12,11 +12,11 @@
 </head>
 
 <body>
+<h1>layout -> u1 (it works)</h1>
+<h1>layout -> stdmod (not work)</h1>
 
 <div id="widget1">
 </div>
-
-
 <script src="http://yui.yahooapis.com/3.0.0/build/yui/yui.js"></script>
 <script type="text/javascript">
 
@@ -43,9 +43,9 @@ YUI({
 }).use('widget', 'widget-stdmod',  function(Y) {
 
 
-    Y.augment(Y.WidgetStdMod, Y.EventTarget);
+    //Y.augment(Y.WidgetStdMod, Y.EventTarget);
     var StandardModule = Y.Base.build("standardModule", Y.Widget, [Y.WidgetStdMod]);
-    Y.augment(StandardModule, Y.EventTarget);
+    //Y.augment(StandardModule, Y.EventTarget);
 
     // Render from Markup
     var stdmod = new StandardModule({
@@ -53,22 +53,21 @@ YUI({
         width:"12em",
         height:"12em"
     });
-    Y.augment(stdmod, Y.EventTarget);
+    //Y.augment(stdmod, Y.EventTarget);
     stdmod.render();
     stdmod.setStdModContent('header', 'HHH');
     stdmod.setStdModContent('body', 'BBB');
     stdmod.setStdModContent('footer', 'FFFF');
     stdmod.set('width', 500);
     stdmod.set('height', 100);
-    stdmod.on('resize', function(e) {
-        Y.log('I heard resize bubbling...');
+    stdmod.on("XXX:resize", function(e) {
+        Y.log('I heard resize bubbling...', "info", "Stdmod");
     });
-
 
     ////////////////
     function LayoutUnit(n) {
         this.name = n;
-        this.publish("resize", {
+        this.publish("XXX:resize", {
             emitFacade: true,
             bubbles: true,
             defaultFn: function() {
@@ -78,13 +77,13 @@ YUI({
     }
     Y.augment(LayoutUnit, Y.EventTarget);
     var u1 = new LayoutUnit('u1');
-        u1.on("resize", function (e) {
+        u1.on("XXX:resize", function (e) {
             Y.log("Layout! " + this.name + " is resizing....", "info", "LayoutUnit");
         });
+    u1.addTarget(stdmod);
 
     function Layout() {
-        this.publish("resize", {
-            broadcast: 2,   //no broadcast
+        this.publish("XXX:resize", {
             emitFacade: true,
             bubbles: true,
             defaultFn: function() {
@@ -94,7 +93,7 @@ YUI({
     }
     Layout.prototype.resize = function (e) {
         Y.log("Layout resizing....", "info", "example");
-        this.fire('resize');
+        this.fire("XXX:resize");
     };
     Y.augment(Layout, Y.EventTarget);
 
@@ -106,8 +105,6 @@ YUI({
         layout.resize(e);
     });
     layout.resize();
-
-
 });
 
 </script>
