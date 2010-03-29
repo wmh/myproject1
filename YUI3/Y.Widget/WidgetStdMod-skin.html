@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI widget WidgetStdMod</title>
+<style>
+#widget1 {
+}
+#widget1 .yui-widget-hd {
+    background: transparent url(stdmod_bg_hd.png) no-repeat 0 0;
+    height: 7px;
+}
+#widget1 .yui-widget-bd {
+    background: transparent url(stdmod_bg_bd_l.png) repeat-y 0 0;
+}
+#widget1 .yui-widget-ft {
+    background: transparent url(stdmod_bg_ft.png) no-repeat 0 0;
+    height: 7px;
+}
+</style>
+</head>
+
+<body bgcolor="silver">
+<div id="widget1"></div>
+
+<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui.js"></script>
+<script type="text/javascript">
+
+YUI({filter: "raw"}).use("dom-screen", "event", "widget", "widget-stdmod",  function(Y) {
+
+    var StandardModule = Y.Base.build("standardModule", Y.Widget, [Y.WidgetStdMod]);
+
+    // Render from Markup
+    var stdmod = new StandardModule({
+        boundingBox: "#widget1",
+        width  : "74px",
+        height : "200px"
+    });
+    //Y.augment(stdmod, Y.EventTarget);
+    stdmod.render();
+    stdmod.setStdModContent("header", " ");
+    stdmod.setStdModContent("body", " ");
+    stdmod.setStdModContent("footer", " ");
+    stdmod.set("height", Y.DOM.winHeight() - 16);
+    stdmod.fillHeight(stdmod.getStdModNode("body"));
+
+    Y.on("windowresize", function (e) {
+        stdmod.set("height", Y.DOM.winHeight() - 16);
+        stdmod.fillHeight(stdmod.getStdModNode("body"));
+    });
+});
+
+</script>
+</body>
+</html>

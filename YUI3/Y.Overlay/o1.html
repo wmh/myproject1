@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI overlay test</title>
+<style>
+html, body {height: 100%; margin: 0;}
+#overlay-mask {
+    background-color: silver;
+
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+    -moz-opacity: 0.5;
+    -khtml-opacity:0.5;
+    opacity: 0.5;
+}
+#overlay-popup {
+    background-color: yellow;
+    border: 1px solid red;
+}
+</style>
+</head>
+
+<body>
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+<select>
+    <option>ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</option>
+</select>
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+<div id="overlay-popup"></div>
+<div id="overlay-mask"></div>
+
+<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui.js"></script>
+<script type="text/javascript">
+
+YUI().use("overlay", "event", function (Y) {
+
+    var ORIGINAL_OVERFLOW =
+        [
+            Y.one("body").getStyle("overflow"),
+            Y.one("html").getStyle("overflow")
+        ];
+
+    var popup = new Y.Overlay({
+        boundingBox : "#overlay-popup",
+        width  : "10em",
+        height : "10em",
+        headerContent: "Aligned Overlay",
+        bodyContent: "Hello world!!!",
+        centered : true,
+        zIndex:101
+    });
+    popup.render();
+    Y.on("click", function (e) {
+        Y.one("body").setStyle("overflow", ORIGINAL_OVERFLOW[0]);
+        Y.one("html").setStyle("overflow", ORIGINAL_OVERFLOW[1]);
+        popup.hide();
+        mask.hide();
+    }, "#overlay-popup");
+
+    var mask = new Y.Overlay({
+        boundingBox : "#overlay-mask",
+        width  : "100%",
+        height : "100%",
+        bodyContent: " ",
+        centered : true,
+        zIndex:100
+    });
+    mask.render();
+    mask.fillHeight(mask.getStdModNode("body"));
+
+    Y.on("windowresize", function () {
+        popup.set("centered", true);
+        mask.set("centered", true);
+    });
+
+    // this is not necessary if overflow is hidden!
+    Y.on("scroll", function () {
+        popup.set("centered", true);
+        mask.set("centered", true);
+    });
+
+    Y.one("body").setStyle("overflow", "hidden");
+    Y.one("html").setStyle("overflow", "hidden");
+
+});
+
+</script>
+</body>
+</html>
