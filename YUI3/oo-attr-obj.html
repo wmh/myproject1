@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Object ATTR</title>
+</head>
+
+<body>
+
+<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+
+YUI().use('attribute', 'event', function(Y) {
+
+    function Coor(userValues) {
+
+        var defaultAttrs = {
+            xy : {
+                value : {
+                    x: 1,
+                    y: 2,
+                    "3": "3"
+                }
+           },
+           ab : {
+                value : [11, 22 , 33]
+           }
+        };
+
+        // 將參數 (attr) 寫入設定好的屬性 (Car.attr) 中
+        this.addAttrs(defaultAttrs, userValues);
+    }
+
+    // 將 Y.Attribute 的  Public Method 拿到用 Car 用
+    Y.augment(Coor, Y.Attribute);
+
+    window.Coor = Coor;
+});
+
+</script>
+</body>
+</html>
