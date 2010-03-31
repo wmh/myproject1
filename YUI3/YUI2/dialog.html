@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI3 - YUI2 - dialog</title>
+<style>
+#myDialog {display: none;}
+</style>
+</head>
+
+<body class="yui-skin-sam">
+
+<a id="showPopup" href="javascript:void(0)">Popup</a>
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+<select>
+    <option>ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</option>
+</select>
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+<p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p><p>bbbbbbbbbbbbbb</p>
+
+<div id="myDialog">
+    <div class="hd">Dialog test</div>
+    <div class="bd">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis faucibus laoreet lectus. Aliquam erat volutpat. Nulla faucibus ultrices justo.
+    </div>
+</div>
+
+<script src="http://yui.yahooapis.com/3.1.0pr8/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+var YUIConfig = {
+    filter: 'raw',
+    debug : true
+};
+YUI(YUIConfig).use("node", "yui2-container", function (Y) {
+
+	var YAHOO = Y.YUI2,
+	    myDialog;
+
+    //YUI 2 implementation code
+    //var button = new YAHOO.widget.Button("mybutton");
+
+    Y.one("#showPopup").on("click", function (e) {
+        if (!myDialog) {
+            Y.one("#myDialog").setStyle("display", "block");
+            myDialog = new YAHOO.widget.Dialog('myDialog', {
+                fixedcenter : true,
+                modal       : true,
+                width       : "300px"
+            });
+            myDialog.render();
+        }
+        myDialog.show();
+    });
+
+    window.Y = Y;
+});
+</script>
+</body>
+</html>
