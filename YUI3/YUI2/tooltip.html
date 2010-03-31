@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI3 - YUI2 - tooltip</title>
+<style>
+
+</style>
+</head>
+
+<body class="yui-skin-sam">
+
+<ul>
+    <li><a href="#" title="hello, this is tooltip! - 1" id="link1">test 1</a></li>
+    <li><a href="#" title="hello, this is tooltip! - 2" id="link2">test 2</a></li>
+</ul>
+
+<script src="http://yui.yahooapis.com/3.1.0pr8/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+var YUIConfig = {
+    filter: 'raw',
+    debug : true
+};
+YUI(YUIConfig).use("node", "yui2-animation", "yui2-container", function (Y) {
+
+	var YAHOO = Y.YUI2;
+
+    var tt = new YAHOO.widget.Tooltip("tt", {
+        context: ["link1", "link2"],
+        effect:{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.20}
+    });
+
+    window.Y = Y;
+});
+</script>
+</body>
+</html>
