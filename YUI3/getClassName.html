@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI3 Events</title>
+<style>
+</style>
+</head>
+
+<body>
+
+<a href="javascript:void(0)">test</a>
+
+<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+
+YUI.add('MyClass', function (Y) {
+    var getClassName = Y.ClassNameManager.getClassName;
+    function MyClass(config) {
+        MyClass.superclass.constructor.apply(this, arguments);
+    }
+    MyClass.NAME = "myname";
+    MyClass.NS   = "myns";
+    Y.extend(MyClass, Y.Widget, {
+        test : function () {
+            //Y.log(getClassName(this.constructor.NAME.toLowerCase(), "test2"));
+            Y.log(this.getClassName("test3", "test4"));
+        }
+    });
+    Y.MyClass = MyClass;
+}, '1.0.0', {requires: ["widget", "classnamemanager"]});
+
+
+var YUIConfig = {
+    filter: 'raw',
+    debug : true
+};
+YUI(YUIConfig).use("MyClass", "node", "classnamemanager", function (Y) {
+    var getClassName = Y.ClassNameManager.getClassName;
+    Y.log(getClassName("test"));
+
+    var myClass = new Y.MyClass();
+    myClass.test();
+});
+</script>
+</body>
+</html>
