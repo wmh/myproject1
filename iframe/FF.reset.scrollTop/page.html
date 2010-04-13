@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>b</title>
+<style type="text/css">
+pre {
+    border: 1px dashed silver;
+    height: 55px;
+    overflow: hidden;
+}
+</style>
+</head>
+
+<body bgcolor="yellow">
+
+<pre id="pp">
+11111111111111111
+22222222222222222
+33333333333333333
+44444444444444444
+55555555555555555
+66666666666666666
+77777777777777777
+88888888888888888
+99999999999999999
+</pre>
+
+<script type="text/javascript">
+var pp = document.getElementById("pp");
+pp.scrollTop = 10;
+alert("Firefox reset scrollTop to 0 after setting top.document.body.style.overflow=\"hidden\"");
+top.document.body.style.overflow = "hidden";
+//pp.scrollTop = 10;
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI widget WidgetStdMod</title>
+<style>
+#widget1 {
+    border: 1px solid silver;
+}
+.yui-widget-bd {
+    height: 50px;
+    overflow: hidden;
+}
+</style>
+</head>
+
+<body>
+<div id="widget1">
+</div>
+
+<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui.js"></script>
+<script type="text/javascript">
+
+YUI({
+    filter: 'raw'
+}).use('widget', 'widget-stdmod',  function(Y) {
+
+    var StandardModule = Y.Base.build("standardModule", Y.Widget, [Y.WidgetStdMod]);
+
+    var stdmod = new StandardModule({
+        boundingBox: "#widget1",
+        width:"12em",
+        height:"12em"
+    });
+    stdmod.render();
+    stdmod.setStdModContent('header', 'HHH');
+    stdmod.setStdModContent('body', 'BBB<br />BBB<br />BBB<br />BBB<br />BBB<br />BBB<br />BBB<br />BBB<br />BBB<br />');
+    stdmod.setStdModContent('footer', 'FFFF');
+    stdmod.set('width', 500);
+    stdmod.set('height', 100);
+    Y.one(".yui-widget-bd").set("scrollTop", 25);
+
+    // this will reset offsetTop of ".yui-widget-bd" in Firefox
+    top.document.body.style.overflow = "hidden";
+
+    window.Y = Y;
+});
+
+</script>
+</body>
+</html>

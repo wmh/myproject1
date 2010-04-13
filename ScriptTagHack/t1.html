@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Title</title>
+</head>
+
+<body>
+
+
+<script type="text/javascript">
+
+var cnt = 0;
+function doRequest(delay) {
+    console.log("cnt:" + (++cnt));
+    setTimeout(getAppContent, delay);
+}
+
+(function () {
+    var makeRequest = function (delay, targetUnit) {
+        var getAppContent = function (data) {
+            console.log(delay + " " + targetUnit);
+        };
+        window.getAppContent = getAppContent;
+
+        doRequest(delay);
+    };
+
+    // makeRequest
+    makeRequest(3500, "mini");
+    makeRequest(1900, "expand");
+    makeRequest(500, "std");
+}());
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>a</title>
+</head>
+
+<body bgcolor="black">
+<iframe src="b.html" width="150" height="150" frameborder="no" scrolling="no"
+    allowtransparency="true" border="0"></iframe>
+
+
+<script type="text/javascript">
+var i, iframeEl, iframeId = "ifr123";
+
+iframeEl = document.createElement("iframe");
+iframeEl.setAttribute("id", iframeId);
+iframeEl.style.position = "absolute";
+//iframeEl.style.left = "-1000em";
+//iframeEl.style.top = "-1000em";
+iframeEl.style.zIndex = "999999";
+//iframeEl.style.display = "inline";
+//iframeEl.style.visibility = "visible"; // ie bug
+iframeAttrs = {
+    "allowTransparency" : "true",       // case sensitivity!
+    "border"            : "10",
+    "frameBorder"       : "no",         // case sensitivity!
+    "marginWidth"       : "0",          // case sensitivity!
+    "marginHeight"      : "0",          // case sensitivity!
+    "scrolling"         : "no",
+    "src"               : "b.html",
+    "width"             : "150",
+    "height"            : "150"
+};
+for (i in iframeAttrs) {
+    if (iframeAttrs.hasOwnProperty(i)) {
+        iframeEl.setAttribute(i, iframeAttrs[i]);
+    }
+}
+document.body.appendChild(iframeEl);
+iframeEl.style.border = "0";
+
+</script>
+</body>
+</html>

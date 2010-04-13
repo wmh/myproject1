@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI widget WidgetStdMod</title>
+<style>
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+.yui3-layout {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+}
+#layoutunit {
+    background-color: yellow;
+    border: 1px solid silver;
+    height: 97%;
+    left: 55px;
+    position: absolute;
+    z-index: 5;
+}
+.yui3-widget-hd {
+    background-color: #CDD99F;
+    height: 31px;
+}
+.yui3-widget-bd {
+    background-color: #9EC4DA
+}
+.yui3-widget-ft {
+    background-color: #DE9AAB
+    height: 23px;
+}
+</style>
+</head>
+
+<body>
+<div class="yui3-layout yui3-widget yui3-layout-mode-expand" id="yui_3_1_0_1_127104162333121" style="height: 100%; ">
+    <div class="yui3-layout-content" id="yui_3_1_0_1_127104162333123">
+        <!-- .yui3-layoutunit (end) -->
+        <!-- .yui3-layoutunit (end) -->
+        <!-- .yui3-layoutunit (end) -->
+        <div id="layoutunit"></div>
+    </div>
+</div>
+
+<script src="http://yui.yahooapis.com/3.1.0/build/yui/yui.js"></script>
+<script type="text/javascript">
+
+YUI({filter: "raw"}).use("widget", "widget-stdmod", "event", function(Y) {
+
+    var StandardModule = Y.Base.build("standardModule", Y.Widget, [Y.WidgetStdMod]);
+    var StdModBODY = Y.WidgetStdMod.BODY;
+
+    var stdmod = new StandardModule({
+        boundingBox: "#layoutunit",
+        width: "200px"
+    });
+    stdmod.render();
+    stdmod.setStdModContent("header", "HHH");
+    stdmod.setStdModContent("body", "<span>BBB</span>");
+    stdmod.setStdModContent("footer", "FFFF");
+    stdmod.set("width", 93);
+    stdmod.fillHeight(stdmod.getStdModNode(StdModBODY));
+
+    Y.one(window).on("resize", function () {
+        Y.log("window resize");
+
+        // Chrome 至少要以下行為後， fillHeight 才會成功
+        //stdmod.set("height", "97%");
+        //stdmod.set("height", Y.DOM.winHeight()- 10);
+
+        // IE 一定要用這種的：
+        stdmod.set("height", Y.DOM.winHeight()- 10);
+
+        //IE6 fillHeight 一直不成功
+        stdmod.fillHeight(stdmod.getStdModNode(StdModBODY));
+    });
+
+
+
+});
+
+</script>
+</body>
+</html>

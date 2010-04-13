@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Sub Attr</title>
+</head>
+
+<body>
+<script src="http://yui.yahooapis.com/3.1.0/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+
+YUI().use('widget', 'widget-stdmod', function(Y) {
+
+    var Stdmod = Y.Base.build("LayoutUnit", Y.Widget, [Y.WidgetStdMod]);
+
+    function MyClass(config) {
+        MyClass.superclass.constructor.apply(this, arguments);
+    }
+    MyClass.NAME = "myclass";
+    MyClass.NS   = "myclass";
+    MyClass.ATTRS = {
+        stdmods : {
+            value : {
+                "a" : null,
+                "b" : null,
+                "c" : null
+            }
+        }
+    };
+
+    Y.extend(MyClass, Y.Widget, {
+        renderUI : function () {
+            var a, b, c;
+
+            a = new Stdmod({ boundingBox : "body" });
+            this.set("stdmods.a", a);
+
+            b = new Stdmod({ boundingBox : "body" });
+            this.set("stdmods.b", b);
+
+            c = new Stdmod({ boundingBox : "body" });
+
+            Y.log("b : " + new String(this.get("stdmods.b") instanceof Stdmod));    // true
+            this.set("stdmods.c", c);
+            Y.log("b : " + new String(this.get("stdmods.b") instanceof Stdmod));    // false
+        }
+    });
+
+   (new MyClass()).render();
+});
+
+</script>
+</body>
+</html>
