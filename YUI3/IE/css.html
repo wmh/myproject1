@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>className in IE</title>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.0.0/build/cssreset/reset-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.0.0/build/cssfonts/fonts-min.css">
+<style type="text/css">
+.yui3-skin-muchiii .paging {
+    background-color: #8E5A26;
+    display: block;
+    height: 29px;
+    overflow: hidden;
+    position: absolute;
+    left: 18px;
+    top: 13px;
+    width: 77px;
+}
+.yui3-skin-muchiii .paging a img {
+    left: 12px;
+    position: absolute;
+    top: 5px;
+}
+.yui3-skin-muchiii .paging a.history-link-disabled img {
+    cursor: normal;
+    -moz-opacity: 0.3;
+    -khtml-opacity:0.3;
+    filter: alpha(opacity=30);
+    opacity: 0.3;
+}
+.yui3-skin-muchiii .paging .history-back-link {
+    display: block;
+    height: 21px;
+    left: 3px;
+    position: absolute;
+    top: 3px;
+    width: 34px;
+}
+.yui3-skin-muchiii .paging .history-next-link {
+    display: block;
+    height: 21px;
+    left: 40px;
+    position: absolute;
+    top: 3px;
+    width: 34px;
+}
+.yui3-widget-hd {
+    position: relative;
+    background-color: #CDD99F;
+    height: 66px;
+}
+.yui3-widget-bd {
+    background-color: #9EC4DA;
+}
+.yui3-widget-ft {
+    background-color: #DE9AAB;
+    height: 33px;
+}
+#view-standard {
+    border: 1px solid red;
+}
+.yui3-standardmodule-hidden {
+    display: none;
+}
+</style>
+</head>
+
+<body class="yui3-skin-muchiii">
+
+
+<button type="button">test</button>
+
+ <div id="view-standard" class="yui3-layoutunit yui3-layoutunit-standard yui3-standardmodule-hidden">
+    <span class="x1"><span class="x1a"></span><span class="x1b"></span><span class="x1c"></span></span>
+    <span class="x2"><span class="x2a"></span><span class="x2b"></span><span class="x2c"></span></span>
+    <span class="x3"><span class="x3a"></span><span class="x3b"></span><span class="x3c"></span></span>
+    <div class="yui3-layoutunit-content">
+        <div class="yui3-widget-hd">
+
+            <div class="paging">
+                <a href="javascript:void(0);" class="history-link history-back-link">
+                    <img src="http://devm1.corp.muchiii.com:50049/index/btn_prev.png" />
+                </a>
+                <a href="javascript:void(0);" class="history-link history-next-link history-link-disabled">
+                    <img src="http://devm1.corp.muchiii.com:50049/index/btn_next.png" />
+                </a>
+            </div>
+
+        </div>
+        <div class="yui3-widget-bd">BBBBBD
+        </div>
+        <div class="yui3-widget-ft">FFFFFT
+        </div>
+    </div>
+</div>
+
+
+<script src="http://yui.yahooapis.com/3.1.0/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+
+YUI({filter: "raw"}).use("widget", "widget-stdmod", "event", function(Y) {
+
+    var pageNodes = Y.all(".history-link");
+        backNode = Y.one(".history-back-link"),
+        nextNode = Y.one(".history-next-link");
+
+
+    var StandardModule = Y.Base.build("standardModule", Y.Widget, [Y.WidgetStdMod]);
+    var StdModBODY = Y.WidgetStdMod.BODY;
+    var stdmod = new StandardModule({
+        boundingBox : "#view-standard",
+        contentBox  : ".yui3-layoutunit-content",
+        width: "200px"
+    });
+    stdmod.set("height", Y.DOM.winHeight() - 50);
+    stdmod.render();
+    stdmod.fillHeight(stdmod.getStdModNode(StdModBODY));
+
+    Y.delegate("click", function (e) {
+        alert(e.target.get("tagName"));
+    }, "body", "a");
+
+    Y.one("button").on("click", function () {
+
+        backNode.removeClass("history-link-disabled");
+        nextNode.removeClass("history-link-disabled");
+    });
+
+    window.Y = Y;
+});
+
+</script>
+</body>
+</html>
