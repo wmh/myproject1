@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Title</title>
+<style>
+</style>
+</head>
+
+<body bgcolor="white">
+<h2>j.html</h2>
+<button type="button">pink</button>
+<button type="button">yellow</button>
+<button type="button">green</button><hr>
+<iframe id="iframe1" src="http://devm1.corp.muchiii.com:50048/f2e/prototype/xdomain/k.html" frameBorder="1" width="700" height="100"></iframe>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    $("h2").html(location.href);
+
+    $("body").delegate("button", "click", function () {
+        $("#iframe1").attr("src", "http://devm1.corp.muchiii.com:50048/f2e/prototype/xdomain/k.html#" + $(this).html());
+
+        //Unsafe JavaScript (cross domain)
+        if (0) {
+            var newHash = $(this).html();
+            newHash = newHash.replace("#", "");
+            top.document.body.style.backgroundColor = newHash;    //Unsafe JavaScript
+            parent.document.body.style.backgroundColor = newHash;    //Unsafe JavaScript
+        }
+    });
+});
+</script>
+</body>
+</html>

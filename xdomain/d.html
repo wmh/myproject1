@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Title</title>
+<style>
+</style>
+</head>
+
+<body>
+<h1>d.html</h1>
+<p>login success</p>
+<iframe id="iframe1" src="http://devm1.corp.muchiii.com:50048/f2e/prototype/xdomain/b.html" frameBorder="1" width="700" height="100"></iframe>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    $("h1").html(location.href);
+    $("iframe1").ready(function () {
+        //alert("iframe loaded");
+        setTimeout(function () {
+            window.close(); //IE MUST use this kind of syntax
+        }, 100);
+    });
+});
+</script>
+</body>
+</html>

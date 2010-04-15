@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>a</title>
+</head>
+
+<body>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<object width="300" height="250">
+    <param name="allowScriptAccess" value="always"></param>
+    <param name="movie" value=" http://img.cnbeta.com/ms_ff/300x250_40k_article.swf"></param>
+    <embed src="http://img.cnbeta.com/ms_ff/300x250_40k_article.swf"
+        type="application/x-shockwave-flash" width="300" height="250"
+        allowscriptaccess="always"></embed>
+</object>
+<iframe frameBorder="1" src="iframe1.html"></iframe>
+<iframe frameBorder="1" src="iframe2.html"></iframe>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript">
+// miiiBar
+(function(){miiibarjs=document.createElement('SCRIPT');miiibarjs.type='text/javascript';miiibarjs.src='http://mimgs.com/toolbar/js/seed/seed.js?frameset=0&wsip=try.muchiii.com&wip=61.57.130.241';document.getElementsByTagName('body')[0].appendChild(miiibarjs);})();
+
+// fix flash wmode parameters
+function fix_flash() {
+    var i, obj, objects = document.getElementsByTagName("embed");
+    for (i = 0; i < objects.length; ++i) {
+        obj = objects[i];
+        obj.outerHTML = obj.outerHTML.replace(/<embed\s/i,'<embed wmode="transparent" ');
+    }
+}
+//fix_flash();
+</script>
+</body>
+</html>
