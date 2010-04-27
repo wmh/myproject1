@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI3 Events</title>
+<style>
+</style>
+</head>
+
+<body>
+
+<div class="a1">aaaa111</div>
+<div class="a2">aaa2222</div>
+<div class="a3">aaa333</div>
+
+
+
+<script src="http://yui.yahooapis.com/3.1.0/build/yui/yui-min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript">
+var YUIConfig = {
+    filter: 'raw',
+    debug : true
+};
+YUI(YUIConfig).use("node", function (Y) {
+    Y.all(".a1, .a2, .a3").on("click", function (e) {
+
+        //用 this 會死!!!
+        alert(this.get("innerHTML"));
+        alert(e.target.get("innerHTML"));
+    });
+
+    window.Y = Y;
+});
+</script>
+</body>
+</html>
