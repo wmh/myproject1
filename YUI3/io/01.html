@@ -4,8 +4,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache" />
 <title>YUI3 Events</title>
-<style>
-</style>
 </head>
 
 <body>
@@ -20,11 +18,73 @@ var YUIConfig = {
     debug : true
 };
 YUI(YUIConfig).use("node", "event", "io", "json-parse", function (Y) {
+    var ajaxing = false;
     var cfg = {
         method: "POST",
         data: "user=YDN&password=API",
-        headers: { 'X-Transaction': 'POST Example'}
+        on : {
+            start: function (transactionid, arguments) {
+                Y.log("start");
+                Y.log(transactionid);
+            },
+            complete: function (transactionid, response, arguments) {
+                Y.log("complete");
+                Y.log(response);
+            },
+            success: function (id, o, a) {
+                var a = {};
+                Y.log("success");
+                try {
+                    a = Y.JSON.parse(o.responseText);
+                    for (i in a) {
+                        Y.log("- " + i + ": " + a[i]);
+                    }
+                } catch (e) {
+                    Y.log("error");
+                }
+            },
+            failure: function (transactionid, response, arguments) {
+                Y.log("failure");
+                Y.log(response);
+            },
+            end: function (transactionid, arguments) {
+                Y.log("end");
+                Y.log(transactionid);
+            }
+        }
     };
+
+    Y.on("io:start", function (transactionid, arguments) {
+        ajaxing = true;
+        Y.log("io:start");
+        Y.log(transactionid, arguments);
+    });
+    Y.on("io:complete", function (transactionid, response, arguments) {
+        Y.log("io:complete");
+        Y.log(transactionid, response, arguments);
+    });
+    Y.on("io:success", function (transactionid, response, arguments) {
+        Y.log("io:success");
+        Y.log(transactionid, response, arguments);
+    });
+    Y.on("io:failure", function (transactionid, response, arguments) {
+        Y.log("io:failure");
+        Y.log(transactionid, response, arguments);
+    });
+    Y.on("io:end", function (transactionid, arguments) {
+        ajaxing = false;
+        Y.log("io:end");
+        Y.log(transactionid, arguments);
+    });
+
+    Y.one("a").on("click", function () {
+        if (ajaxing) {
+            Y.log("by pass");
+            return;
+        }
+        Y.io("01.php", cfg);
+    });
+
     window.Y = Y;
 });
 </script>
