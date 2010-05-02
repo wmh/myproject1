@@ -26,6 +26,7 @@ ul li {
 </ul>
 <br /><br /><br />
 <ul id="list2">
+    <li>d</li>
 </ul>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
@@ -33,6 +34,7 @@ ul li {
 <script type="text/javascript">
 $(function () {
     $("#list1 li").draggable({helper: 'clone',revert: true});
+    $("#list2").sortable({revert: true});
     $("#list2").droppable({
         accept: '#list1 li, #list2 li',
         drop: function(ev, ui) {
