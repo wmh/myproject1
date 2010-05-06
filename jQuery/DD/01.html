@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Testing</title>
+<style>
+ul {
+    border: 1px solid red;
+    height: 200px;
+}
+ul li {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border: 1px solid silver;
+}
+</style>
+</head>
+
+<body>
+<ul id="list1">
+    <li>a</li>
+    <li>b</li>
+    <li>c</li>
+</ul>
+<br /><br /><br />
+<ul id="list2">
+</ul>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    $("#list1 li").draggable({helper: 'clone',revert: true});
+    $("#list2").droppable({
+        accept: '#list1 li, #list2 li',
+        drop: function(ev, ui) {
+            if (ui.draggable.parent().attr("id") == "list2") {
+                var $a = $(ui.draggable);
+            } else {
+                var $a = $(ui.draggable).clone();
+            }
+            $(this).append($a);
+            $a.draggable();
+        }
+    });
+    $('body').droppable({
+        accept: '#list2 li',
+        drop: function(ev, ui) {
+            $a = $(ui.draggable);
+            $(this).append($a);
+            $a.remove();
+        }
+    });
+});
+</script>
+</body>
+</html>
