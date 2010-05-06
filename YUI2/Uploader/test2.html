@@ -174,6 +174,7 @@ YAHOO.util.Event.onDOMReady(function () {
 	// Fired when the user selects files in the "Browse" dialog
 	// and clicks "Ok".
 	function onFileSelect(event) {
+	    console.log(event);
 		if('fileList' in event && event.fileList != null) {
 			fileList = event.fileList;
 			createDataTable(fileList);
@@ -232,6 +233,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		prog = Math.round(100*(event["bytesLoaded"]/event["bytesTotal"]));
 		progbar = "<div style='height:5px;width:100px;background-color:#CCC;'><div style='height:5px;background-color:#F00;width:100px;'></div></div>";
 		singleSelectDataTable.updateRow(rowNum, {name: dataArr[rowNum]["name"], size: dataArr[rowNum]["size"], progress: progbar});
+		console.log(event);
 	}
 
 	// Do something if a file upload throws an error.
@@ -248,7 +250,7 @@ YAHOO.util.Event.onDOMReady(function () {
 
 	// Do something when data is received back from the server.
 	function onUploadResponse(event) {
-
+        console.log(event);
 	}
 
 </script>
