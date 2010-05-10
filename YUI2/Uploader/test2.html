@@ -167,7 +167,9 @@ YAHOO.util.Event.onDOMReady(function () {
     	if (fileList != null) {
     		uploader.setSimUploadLimit(parseInt(document.getElementById("simulUploads").value));
     		//uploader.uploadAll("http://www.yswfblog.com/upload/upload_simple.php", "POST", null, "Filedata");
-    		uploader.uploadAll("./upload_simple.php", "POST", null, "Filedata");
+
+    		var conf = {'tt': 123};
+    		uploader.uploadAll("./upload_simple.php", "POST", conf, "Filedata");
     	}
 	}
 
@@ -233,7 +235,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		prog = Math.round(100*(event["bytesLoaded"]/event["bytesTotal"]));
 		progbar = "<div style='height:5px;width:100px;background-color:#CCC;'><div style='height:5px;background-color:#F00;width:100px;'></div></div>";
 		singleSelectDataTable.updateRow(rowNum, {name: dataArr[rowNum]["name"], size: dataArr[rowNum]["size"], progress: progbar});
-		console.log(event);
+		console.log("onUploadComplete");
 	}
 
 	// Do something if a file upload throws an error.
@@ -250,7 +252,7 @@ YAHOO.util.Event.onDOMReady(function () {
 
 	// Do something when data is received back from the server.
 	function onUploadResponse(event) {
-        console.log(event);
+        console.log("onUploadResponse");
 	}
 
 </script>
