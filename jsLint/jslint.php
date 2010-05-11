@@ -1,62 +1,104 @@
 <?php
-
-$ignore_dirs = array('yui');
-$ignore_files = array('jslint.js');
-
-$basepath = '/home/hunter_wu/muchiii/index/static';
-$result_file = '/home/hunter_wu/try/hunter/jslint_results.html';
-
-//$basepath = 'D:/Workspace/GitRepositories/myproject1/jsLint';
-//$result_file = 'D:/Workspace/GitRepositories/myproject1/jsLint/jslint_results.html';
-
-file_put_contents($result_file, '<!doctype html><head>
-<title>jsLint reports</title>
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.0.0/build/cssreset/reset-min.css" />
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.0.0/build/cssbase/base-min.css" />
-<style type="text/css">
-pre { margin-left: 2em; padding: 0.5em; border-left: 3px solid #ccc; }
-</style>
-</head>
-<body>
-<h1>Date: '.date('Y-m-d').'</h1>');
-
+define("PWD", $_ENV["PWD"]);
+$check_extensions = array("js");
+$ignore_entries = array("yui");
 $err_cnt = 0;
-build_dir($basepath);
-if ($err_cnt === 0) {
-    file_put_contents($result_file, '<h2>No error found.</h2>');
+$opts = getopt("f:d:o:i:e:hr");
+
+if (isset($opts["h"]))
+{
+    show_help();
+    exit;
+}
+elseif (isset($opts["f"]))
+{
+    // check single file
+    if (substr($opts["f"], 0, 1) !== "/")
+    {
+        $opts["f"] = PWD ."/". $opts["f"];
+    }
+    $err_cnt = check_file($opts["f"]);
+}
+else
+{
+    // check files in specified directory
+    $basepath = (isset($opts["d"]) ? $opts["d"] : PWD);
+    $recursive = isset($opts["r"]) || isset($opts["R"]);
+    $GLOBALS['check_extensions'] = (isset($opts["e"]) ? explode(",", $opts["e"]) : $check_extensions);
+    $GLOBALS['ignore_entries'] = (isset($opts["i"]) ? explode(",", $opts["i"]) : $ignore_entries);
+    $err_cnt = check_dir($basepath, $recursive);
 }
 
-file_put_contents($result_file, '</body>
-</html>', FILE_APPEND);
+if ($err_cnt === 0)
+{
+    echo "No problems found. Congratulations!\n\n";
+}
 
-function build_dir($dir) {
-    global $err_cnt, $ignore_dirs;
+
+function check_dir($dir, $recursive = TRUE)
+{
+    $err_cnt = 0;
     $d = dir($dir);
     //echo "Path: " . $d->path . "\n";
-    while ($entry = $d->read()) {
+    while ($entry = $d->read())
+    {
         if (strlen($entry) <= 2) continue;
-        $full_entry = $dir.'/'.$entry;
-        if (is_dir($full_entry) && !in_array($entry, $ignore_dirs)) {
-            build_dir($full_entry);
-        } else {
-            if (strtolower(substr($entry, -3)) != '.js') continue;
-            $err_cnt += jslint_check($full_entry);
+        $full_entry = $dir .'/'. $entry;
+        if ($recursive && is_dir($full_entry) && !in_array($entry, $GLOBALS['ignore_entries']))
+        {
+            $err_cnt += check_dir($full_entry);
+        }
+        else
+        {
+            $file_extension = pathinfo($entry, PATHINFO_EXTENSION);
+            if (!in_array($file_extension, $GLOBALS['check_extensions']))
+            {
+                continue;
+            }
+            $err_cnt += check_file($full_entry);
         }
     }
+    return $err_cnt;
 }
 
-function jslint_check($file) {
-    $rtn = exec('java -jar js.jar jslint-rhino.js '.$file, $output, $rtn_var);
+// use jslint to check single file
+function check_file($file)
+{
+    $rtn = exec("java -jar js.jar jslint-rhino.js ". $file, $output, $rtn_var);
 
     //Note: jslint always return 0
     //if ($rtn_var == 0) return 0;
-    if (count($output) === 1 && strpos($output[0], 'jslint: No problems found') !== FALSE) {
+    if (count($output) === 1 && strpos($output[0], "jslint: No problems found") !== FALSE)
+    {
         return 0;
     }
 
-    global $result_file;
-    file_put_contents($result_file, "<h2>".$file."</h2><pre>".join("\n", $output)."</pre>", FILE_APPEND);
+    //global $result_file;
+    //file_put_contents($result_file, "<h2>".$file."</h2><pre>".join("\n", $output)."</pre>", FILE_APPEND);
+    echo $file, "\n\n  ", join("\n  ", $output), "\n";
     return 1;
 }
 
+
+// show help
+function show_help()
+{
+    echo <<<HELP
+Usage: jslint [options]
+              [-f <filename> | -d <directory>]
+              [-o <output_file>]
+              [-i <ignore_entries>]
+              [-e <extensions>]
+
+  -h        This help
+  -r, -R    Check sub directories recursively
+  -f        Specify a filename to do jslint check
+  -d        Specify a directory to do jslint check. By default, jslint runs the check in current directory.
+  -o        Ouput file (not implement yet.)
+  -i        Ignore entries seperate by comma. The default value is 'yui'
+  -e        Extensions seperate by comma. The default value is 'js'
+
+
+HELP;
+}
 ?>

@@ -1,0 +1,38 @@
+=== 2010-05-07 17:57:12 ===Array
+(
+    [Filedata] => Array
+        (
+            [name] => vim-cheat-sheet-full.png
+            [type] => application/octet-stream
+            [tmp_name] => C:\WINDOWS\temp\php132.tmp
+            [error] => 0
+            [size] => 564898
+        )
+
+)
+Array
+(
+    [Filename] => vim-cheat-sheet-full.png
+    [tt] => 123
+    [Upload] => Submit Query
+)
+
+=== 2010-05-07 17:57:12 ===Array
+(
+    [Filedata] => Array
+        (
+            [name] => vim-cheat-sheet-full.png
+            [type] => application/octet-stream
+            [tmp_name] => C:\WINDOWS\temp\php133.tmp
+            [error] => 0
+            [size] => 564898
+        )
+
+)
+Array
+(
+    [Filename] => vim-cheat-sheet-full.png
+    [tt] => 123
+    [Upload] => Submit Query
+)
+
