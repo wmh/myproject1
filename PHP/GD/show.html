@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Title</title>
+<style>
+.thumb_180_75 {
+    background-image: url(thumbs_100_75.jpg);
+    border: 1px solid dimgray;
+    display: inline-block;
+    height: 180px;
+    margin-left: 3px;
+    width: 180px;
+}
+.thumb_100_75 {
+    background-image: url(thumbs_100_75.jpg);
+    border: 1px solid dimgray;
+    display: inline-block;
+    height: 100px;
+    margin-left: 3px;
+    width: 100px;
+}
+.thumb_100_75_small {
+    background-image: url(thumbs_100_75.jpg);
+    border: 1px solid dimgray;
+    display: inline-block;
+    height: 75px;
+    margin-left: 3px;
+    width: 75px;
+}
+.thumb_100_85 {
+    background-image: url(thumbs_100_85.jpg);
+    height: 100px;
+    width: 100px;
+    display: inline-block;
+    margin-left: 3px;
+}
+.thumb_100_85_small {
+    background-image: url(thumbs_100_85.jpg);
+    height: 75px;
+    width: 75px;
+    display: inline-block;
+    margin-left: 3px;
+}
+.thumb_100_95 {
+    background-image: url(thumbs_100_95.jpg);
+    height: 100px;
+    width: 100px;
+    display: inline-block;
+    margin-left: 3px;
+}
+.thumb_100_95_small {
+    background-image: url(thumbs_100_95.jpg);
+    height: 75px;
+    width: 75px;
+    display: inline-block;
+    margin-left: 3px;
+}
+</style>
+</head>
+
+<body>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript">
+var i, total = 13, qualities = [75];
+for (j in qualities) {
+    $("body").append("<h3>180x180</h3>");
+    $("body").append('<div class="thumb_180_' + qualities[j] + '" style="background-position: 0 0"></div>');
+    $("body").append("<h3>100x100</h3>");
+    for (i = 0; i < total; ++i) {
+        $("body").append('<div id="t"' + i + '" class="thumb_100_' + qualities[j] + '" style="background-position: 0 ' + (-100 * i -180) + 'px"></div>');
+    }
+    $("body").append("<h3>75x75</h3>");
+    for (i = 0; i < total; ++i) {
+        $("body").append('<div id="ts"' + i + '" class="thumb_100_' + qualities[j] + '_small" style="background-position: -12px ' + (-100 * i - 12 -180) + 'px"></div>');
+    }
+    $("body").append("<br>");
+}
+$("body").append('<h3>thumbs:</h3><img src="thumbs_100_75.jpg">');
+</script>
+</body>
+</html>
