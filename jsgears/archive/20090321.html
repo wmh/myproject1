@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+<style type="text/css">
+/*""""""""""""""" Basic controls of - LHS Menu  """""""""""""""""""""""*/
+/* STYLE: Menu's config.  */
+#Menu_LHS {
+  width:190px;
+  float:left;
+  margin-left:5px;
+  margin-right:5px;
+}
+
+#Menu_LHS ul {
+  list-style:none;
+  margin:77px 0 0 0;
+  padding:0;
+  border-top:solid 1px #d8d8d8;
+}
+
+#Menu_LHS ul li{  /* normal item */
+  border-bottom:solid 1px #ebebeb;
+}
+
+#Menu_LHS ul li.ttfirst { /*  Title with bg */
+  border-bottom:solid 1px #ebebeb;
+  background:url(images/main_pic/menu_bg_03.png);
+}
+
+#Menu_LHS ul li a.ttsub { /*  Sub-link item (STYLE: menulinka) */
+  font-weight:bold;
+  font-size:14px;
+  color:#a4c2ba;
+  text-decoration:none;
+  display:block;
+  padding:5px 0 6px 9px;
+}
+
+#Menu_LHS ul li a.ttnor { /*  Sub-link item (STYLE: menulinkb) */
+  font-weight:bold;
+  color:#7ea421;
+  text-decoration:none;
+  display:block;
+  padding:5px 0 6px 9px;
+}
+
+#Menu_LHS ul li a.ttsub:hover, a.ttnor:hover {  /* 2 Sub-link item (MOUSE OVER)  */
+  background:#eff5f5;
+}
+
+#Menu_LHS ul li a.Selected {
+  color:#EFC850;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+<div id="Menu_LHS">
+<ul>
+  <li class="ttfirst"><a class="ttsub" href="milestone.php">Milestone</a></li>
+  <li class="ttfirst"><a class="ttsub" href="20090321.html">20090321</a></li>
+  <li> </li>
+  <li class="ttfirst"><a class="ttsub" href="#">Corporate Management</a></li>
+  <li><a class="ttnor" href="chairmans-message.php"><img src="images/main_pic/arrowgreen.gif" width="12" height="12" border="0" /> Chairman's Message</a></li>
+  <li><a class="ttnor" href="chairmans-profile.php"><img src="images/main_pic/arrowgreen.gif" width="12" height="12" border="0" /> Chairman's Profile</a></li>
+</ul>
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+  var path = location.href.split('/');
+  var filename = path[path.length - 1];
+  $('a[class=ttsub][href=' + filename + ']').addClass('Selected');
+});
+</script>
+
+</body>
+
+</html>

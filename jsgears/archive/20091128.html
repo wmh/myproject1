@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+</head>
+
+<body>
+<input type="button" id="test1" class="test" value="test1" />
+<input type="button" id="test2" class="test" value="test2" />
+
+<div id="debug"></div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    var debugX = $('#debug');
+    $('.test').mytoolbox();
+});
+
+$.fn.mytoolbox = function(settings) { //加入settings 參數
+
+//_defaultSettings,它能幫我們在使用者沒有指定任何設定值給 settings 時，還能夠提供預設的設定值。
+    var _defaultSettings = {
+        callback: function () { alert(this.id); }
+    };
+
+        // extend 方法,將 settings 中有設定的值覆蓋掉 _defaultSettings 所設定的預設值
+        //，再把結果存放在 _settings 這個變數中
+    var _settings = $.extend(_defaultSettings, settings);
+
+    return this.each(function() {
+                /*現在我們在 _settings 中指定了一個 callback 項目 (預設是用 alert )
+                  ，然後將它指定給 div 元素的 click 觸發器。 */
+        $(this).click(_settings.callback);//html中的callback: function ()
+    });
+};
+</script>
+
+
+</body>
+
+</html>

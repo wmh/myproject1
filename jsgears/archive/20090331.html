@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+</head>
+
+<body>
+<input type="text" id="color1" value="color1" />
+<input type="text" id="color2" value="color2" />
+<input type="text" id="color3" value="color3" />
+<input type="text" id="color4" value="color4" />
+<input type="text" id="color5" value="color5" />
+<input type="text" id="color6" value="color6" />
+<input type="text" id="color7" value="color7" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+function createXHR() {
+ return window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+}
+
+function ajaxloop(num10) {
+
+ for (i=1;i<=num10;i++) {
+  (function() {
+
+    var xmlHttp = createXHR();
+    var requestString="20090331.php?colorid="+document.getElementById('color'+i).value;
+    xmlHttp.open('GET',requestString,true);
+    xmlHttp.onreadystatechange = function() {
+      catchGetTimeajax(xmlHttp, i);
+    };
+    xmlHttp.send(null);
+  })();
+
+ }
+}
+
+function catchGetTimeajax(xmlHttp, i) {
+ if (xmlHttp.readyState==4 || xmlHttp.readyState=='complete') {
+  if (xmlHttp.status == 200) {
+   var result = xmlHttp.responseText;
+   alert(result);
+  }
+ } else {
+  alert(xmlHttp.readyState);
+ }
+}
+ajaxloop(3);
+</script>
+</body>
+
+</html>

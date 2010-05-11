@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+var j = [{name:"aa", text:"hello"},{name:"bb", text:"world"}];
+
+alert(j[0]['name']); //aa
+alert(j[0]['text']); //hello
+alert(j[1]['name']); //bb
+alert(j[1]['text']); //world
+
+for (var idx in j[0]) {
+  alert(idx);
+}
+
+
+</script>
+</html>

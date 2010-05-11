@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+<link rel="stylesheet" type="text/css" href="/js/jquery.autocomplete.css" />
+</head>
+
+<body>
+<input type="text" name="t1" id="t1" />
+
+<script type="text/javascript" src="/js/jquery-1.2.6.pack.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript">
+$(function() {
+  var data = ['台北市中正區','台北市大同區','台北市中山區','台北市松山區','台北市大安區'];
+  $("#t1").autocomplete(data, {matchContains: true});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+<style type="text/css">
+div {border: 1px solid red;}
+</style>
+</head>
+
+<body>
+<input type="button" id="copy" value="copy" />
+<div>
+<input type="button" id="t1" value="t1" />
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+  $('#t1').click(function() {
+    console.log($(this).attr('id'));
+    alert($(this).attr('id'));
+  });
+  $('#copy').click(function() {
+    $('body > div:last').clone().appendTo($('body'));
+  });
+
+});
+</script>
+</body>
+
+</html>

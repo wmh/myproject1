@@ -1,0 +1,89 @@
+<html>
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+<script>
+$(function(){
+var $container = $('#container');
+$(".obj").draggable({
+        cursor: 'move',
+        helper:'clone',
+        scope:'mydrag'
+ });
+$container.droppable({
+  accept: '.obj',
+  activeClass: 'myactive',
+  hoverClass: 'myhover',
+  scope:'mydrag',
+  drop: function(e, ui) {
+    $(ui.draggable).clone().appendTo($(this)).resizable().parent().draggable({containment: '#container'});
+  }
+});
+
+$("img").live('click', function () {
+  $("#textfield").val($("#textfield").val() + ' ' + $(this).attr("id"));
+});
+
+
+});
+</script>
+<link type="text/css" href="css/smoothness/jquery-ui-1.7.1.custom.css" rel="stylesheet" />
+
+<style>
+
+#container {
+        height: 98%;
+        width: 50%;
+        border: 3px solid #ccc;
+        float: left;
+}
+#headlist {
+        float: right;
+        height: 20%;
+        width: 48%;
+        border: 1px solid #ccc;
+        clear: none;
+}
+
+#hairlist {
+        height: 20%;
+        width: 48%;
+        border: 1px solid #ccc;
+        float: right;
+        margin-top: 5px;
+}
+.myactive {
+        opacity: 0.2;
+        filter:alpha(opacity:20);
+}
+.myhover {
+        border: 5px solid red;
+}
+#headlist  img {
+        cursor: move;
+}
+#hairlist  img {
+        cursor: move;
+}
+</style>
+
+
+</head>
+<body>
+
+
+<div id="container"></div>
+
+<div id="headlist">
+  <img src="images/1.jpg" width="100" height="100" class="obj" id="a"/>
+  <img src="images/2.jpg" width="100" height="100" class="obj" id="b"/>
+  <img src="images/a.png" width="100" height="100" class="obj" id="c"/>
+  <img src="images/b.png" width="100" height="100" class="obj" id="d"/>
+  <img src="images/c.png" width="100" height="100" class="obj" id="e"/>
+  <img src="images/d.png" width="100" height="100" class="obj" id="f"/>
+</div>
+
+<input name="" type="text" id="textfield">
+
+</body>
+</html>

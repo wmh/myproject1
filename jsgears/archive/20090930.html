@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+</head>
+
+<body>
+<textarea id="tt" cols="80" rows="15">Hello Hello Hello Hello Hello
+
+123
+
+456</textarea>
+<div id="log" style="border: 1px solid red">
+test
+</div>
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+function isUndefined(x) {
+  return typeof x == 'undefined';
+}
+function getSel() {
+  var editdoc = document.getElementById('tt');
+	if(!isUndefined(editdoc.selectionStart)) {
+		return editdoc.value.substr(editdoc.selectionStart, editdoc.selectionEnd - editdoc.selectionStart);
+	} else if(document.selection && document.selection.createRange) {
+		return document.selection.createRange().text;
+	} else if(window.getSelection) {
+		return window.getSelection() + '';
+	} else {
+		return false;
+	}
+}
+
+$(function() {
+  $('#tt').mouseup(function() {
+    $('#log').html(getSel());
+  });
+
+});
+</script>
+
+</body>
+
+</html>

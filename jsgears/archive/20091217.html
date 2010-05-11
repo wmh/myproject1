@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+</head>
+
+<body>
+<script type="text/javascript" src="/js/jquery-1.2.6.pack.js"></script>
+<script type="text/javascript">
+/*
+http://lifesinger.org/blog/2009/12/easy-ignorable-js-code/
+*/
+var g_bar = "bar";
+function foo(container, config) {
+    var container = container || document,
+        name = config.name || "?¦W¤ó",
+        isLive = config.isLive || true;
+
+    var g_bar = g_bar || "";
+
+    if(window.g_foo) {
+        /* your code */
+    }
+}
+foo(document, {isLive: false});
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>無標題文件</title>
+</head>
+
+<body>
+<script type="text/JavaScript">
+function exam(a)
+{
+        if(a != '1_1')
+        {
+                window.alert('第1題答錯了!');
+        }
+}
+
+function exam2(b)
+{
+        if(b != '2_3')
+        {
+                window.alert('第2題答錯了!');
+        }
+}
+
+function show_div() {
+  var radioGroup1 = document.forms['form1'].elements['RadioGroup1'];
+  var radioGroup1Value = null;
+  for (var i = 0; i < radioGroup1.length; i++) {
+    if (radioGroup1[i].checked) {
+      radioGroup1Value = radioGroup1[i].value;
+    }
+  }
+  alert(radioGroup1Value);
+}
+
+</script>
+<form id="form1" name="form1" method="post" action="">
+<input type="radio" name="RadioGroup1" value="11" onclick="exam('1_1');show_div();"/>1
+<input type="radio" name="RadioGroup1" value="22" onclick="exam('1_2');show_div();"/>2
+<input type="radio" name="RadioGroup1" value="33" onclick="exam('1_3');show_div();"/>3
+<input type="radio" name="RadioGroup1" value="44" onclick="exam('1_4');show_div();"/>4
+
+<input type="radio" name="RadioGroup2" value="AA" onClick="exam2('2_1');show_div();"/>AA
+<input type="radio" name="RadioGroup2" value="BB" onClick="exam2('2_2');show_div();"/>BB
+<input type="radio" name="RadioGroup2" value="CC" onClick="exam2('2_3');show_div();"/>CC
+<input type="radio" name="RadioGroup2" value="DD" onClick="exam2('2_4');show_div();"/>DD
+<div name="div1" id="div1"><input type="submit" name="submit2" id="submit2" value="送出" disabled="disabled"></div>
+</form>
+</body>
+</html>

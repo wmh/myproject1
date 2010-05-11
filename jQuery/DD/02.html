@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>TEST4</title>
+<style>
+h2 {
+	border-bottom: #f6f6f6 2px solid;
+	margin: 5px;
+	text-align: center;
+}
+#Main {
+	text-align: center;
+	margin: 0px auto;
+	width: 600px;
+	height: 560px;}
+
+#MyTravel {
+	background-color: #dedede;
+	width: 250px;
+	float: right;
+	min-height: 560px;}
+
+#AllPlace {
+	background-color: #dedede;
+	width: 250px;
+	float: left;}
+
+.Place {
+	border-top: #999 1px solid;
+	border-bottom: #999 1px solid;
+	border-right: #999 1px solid;
+	border-left: #999 1px solid;
+	text-align: center;
+	line-height: 40px;
+	background-color: #00FF66;
+	margin: 5px auto;
+	width: 200px;
+	height: 40px;
+	cursor: move;
+}
+
+#list1, #list2 {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+<div id=Main>
+	<div id=AllPlace>
+		<h2>List1</h2>
+		<div id=list1>
+			<div id="p1" class="Place">Place(1)</div>
+			<div id="p2" class="Place">Place(2)</div>
+			<div id="p3" class="Place">Place(3)</div>
+			<div id="p4" class="Place">Place(4)</div>
+			<div id="p5" class="Place">Place(5)</div>
+			<div id="p6" class="Place">Place(6)</div>
+			<div id="p7" class="Place">Place(7)</div>
+			<div id="p8" class="Place">Place(8)</div>
+			<div id="p9" class="Place">Place(9)</div>
+		</div>
+	</div>
+
+	<div id=MyTravel>
+		<h2>List2</h2>
+		<div id=list2>
+			<div id="Start" class="Place">Start</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    $("#list1 .Place").draggable({
+    	connectToSortable: '#list2',
+    	helper: 'clone',
+    	revert: 'invalid',
+    	scroll: false
+	});
+
+    $("#list2").sortable({
+        revert: true
+    });
+
+    $("#list2").droppable({
+        drop: function(ev, ui) {
+            if (ui.draggable.parent().attr("id") != "list2") {
+                var $a = $(ui.draggable).clone();
+                $(this).append($a);
+                $a.draggable();
+            }
+    	}
+    });
+
+    $('body').droppable({
+        accept: '#list2 .Place',
+        drop: function(ev, ui) {
+    	    $a = $(ui.draggable);
+    	    $(this).append($a);
+    	    $a.remove();
+        }
+    });
+
+
+});
+</script>
+</body>
+</html>

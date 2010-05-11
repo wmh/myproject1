@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<link rel="stylesheet" type="text/css" href="/js/jquery.autocomplete.css" />
+<title>New Page</title>
+</head>
+
+<body>
+<input type="text" name="home_address" id="home_address" value="" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript">
+
+$().ready(function() {
+  $("#home_address").autocomplete('20090728.php', {
+    minChars: 0,
+    width: 310,
+
+    matchContains: true,
+    autoFill: true
+  });
+});
+</script>
+
+</body>
+</html>

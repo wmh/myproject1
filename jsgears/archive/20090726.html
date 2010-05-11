@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+</head>
+
+<body onkeydown="keydown(event);">
+<input type="button" id="b1" value="b1" />
+<input type="button" id="b2" value="b2" />
+<input type="button" id="b3" value="b3" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+$('#b1').focus();
+var buttons = ['b1', 'b2', 'b3'];
+
+function keydown(e) {
+  var keynum;
+  var keychar;
+  var numcheck;
+  if(window.event) {
+    keynum = e.keyCode;
+  }
+  else if(e.which) {
+    keynum = e.which;
+  }
+  //keychar = String.fromCharCode(keynum);
+  if (keynum == 38) {
+
+  } else if (keynum == 40) {
+
+  }
+}
+</script>
+</body>
+
+</html>

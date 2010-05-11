@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAXOLVRIWsCG5G3tN4BJ8sIhRcdmPlwX9q6Bf74wo2AuSwtqvg_BRSuMwQDRKWdt7G79PMoNSd_K_EIQ"
+        type="text/javascript"></script>
+
+    <script language="javascript">
+
+    var map = null;
+        var gdir;
+    var geocoder = null;
+    var marker;
+        var addressMarker;
+
+    function initialize()  {
+        if (GBrowserIsCompatible())  {
+            map = new GMap2(document.getElementById("map"));
+                        gdir = new GDirections(map, document.getElementById("directions"));
+                         GEvent.addListener(gdir, "load", onGDirectionsLoad);
+        GEvent.addListener(gdir, "error", handleErrors);
+
+            map.addControl(new GLargeMapControl());                 //加入地圖縮放工具
+
+            map.setCenter(new GLatLng(25.037102,121.564515), 15);   //設定台灣為中心點
+            geocoder = new GClientGeocoder();
+                        function setDirections(fromAddress, toAddress, locale) {
+      gdir.load("from: " + fromAddress + " to: " + toAddress,
+                { "locale": locale });
+    }
+
+    function handleErrors(){
+           if (gdir.getStatus().code == G_GEO_UNKNOWN_ADDRESS)
+             alert("No corresponding geographic location could be found for one of the specified addresses. This may be due to the fact that the address is relatively new, or it may be incorrect.\nError code: " + gdir.getStatus().code);
+           else if (gdir.getStatus().code == G_GEO_SERVER_ERROR)
+             alert("A geocoding or directions request could not be successfully processed, yet the exact reason for the failure is not known.\n Error code: " + gdir.getStatus().code);
+
+           else if (gdir.getStatus().code == G_GEO_MISSING_QUERY)
+             alert("The HTTP q parameter was either missing or had no value. For geocoder requests, this means that an empty address was specified as input. For directions requests, this means that no query was specified in the input.\n Error code: " + gdir.getStatus().code);
+
+        //   else if (gdir.getStatus().code == G_UNAVAILABLE_ADDRESS)  <--- Doc bug... this is either not defined, or Doc is wrong
+        //     alert("The geocode for the given address or the route for the given directions query cannot be returned due to legal or contractual reasons.\n Error code: " + gdir.getStatus().code);
+
+           else if (gdir.getStatus().code == G_GEO_BAD_KEY)
+             alert("The given key is either invalid or does not match the domain for which it was given. \n Error code: " + gdir.getStatus().code);
+
+           else if (gdir.getStatus().code == G_GEO_BAD_REQUEST)
+             alert("A directions request could not be successfully parsed.\n Error code: " + gdir.getStatus().code);
+
+           else alert("An unknown error occurred.");
+
+        }
+
+        function onGDirectionsLoad(){
+      // Use this function to access information about the latest load()
+      // results.
+
+      // e.g.
+      // document.getElementById("getStatus").innerHTML = gdir.getStatus().code;
+          // and yada yada yada...
+        }
+    function createMarker(point,title,html){
+        var marker = new GMarker(point);
+          GEvent.addListener(marker, "click", function()
+        {
+            marker.openInfoWindowHtml(
+                html,
+                {
+                    maxContent: html,
+                    maxTitle: title}
+                );
+        });
+        return marker;
+    }
+
+    function showAddress(address)
+    {
+        if (geocoder)
+        {
+            geocoder.getLatLng(
+                address,
+                function(point)
+                {
+                    if (!point)
+                    {
+                        alert(address + " not found");
+                    }
+                    else
+                    {
+                        if(marker)  //移除上一個點
+                        {
+                            map.removeOverlay(marker);
+                        }
+
+                        map.setCenter(point, 13);
+
+                        var title = "地址";
+
+                        marker = createMarker(point,title,address);
+
+                        map.addOverlay(marker);
+
+                        marker.openInfoWindowHtml(
+                            address,
+                            {
+                                maxContent: address,
+                                maxTitle: title}
+                            );
+                    }
+                }
+            );
+        }
+    }
+    </script>
+
+</head>
+<body onLoad="initialize()" onUnload="GUnload()">
+    <form action="#" onSubmit="showAddress(this.address.value); return false">
+        <p>
+            <input type="text" size="60" name="address" value="台北縣新店市安忠路99號" />
+            <input type="submit" value="Go!" />
+        </p><table>
+
+   <tr><th align="right">起點地址:&nbsp;</th>
+
+   <td><input type="text" size="25" id="fromAddress" name="from"
+     value="台北縣新店市"/></td>
+   <th align="right">&nbsp;終點地址:&nbsp;</th>
+   <td align="right"><input type="text" size="25" id="toAddress" name="to"
+     value="台北縣永和市" /><input name="submit" type="submit" value="Get Directions!" /></td></tr>
+   </table>
+        <body onload="initialize()" onunload="GUnload()">
+  <form action="#" onSubmit="setDirections(this.from.value, this.to.value, this.locale.value); return false">
+
+        <div id="map" style="width: 750px; height: 500px">
+    <div id="left" style="width: 495px">
+    <div id="map" style="width: 750px; height: 500px"></div>
+    </form>
+
+</body>
+</html>
+        <tr>
+                <td height="495" colspan="2" align="left" valign="top" background="images/Attractions_12.gif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://fs2.just.edu.tw/~s961234227/Attractions1.php" target="_parent">微笑單車租賃站</a>              </p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://fs2.just.edu.tw/~s961234227/AttractionsA.php" target="_parent">八里左岸自行車道</a></p>
+                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://fs2.just.edu.tw/~s961234227/AttractionsB.php" target="_parent">淡水河岸自行車道</a>              </p>
+                  <p> &nbsp;&nbsp;&nbsp;&nbsp; <a href="http://fs2.just.edu.tw/~s961234227/AttractionsC.php" target="_parent">金色水岸自行車道</a></p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://fs2.just.edu.tw/~s961234227/AttractionsD.php" target="_parent">舊草嶺隧道自行車道</a></p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://fs2.just.edu.tw/~s961234227/AttractionsE.php" target="_parent">白齡右岸公園自行車道</a>              </p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://fs2.just.edu.tw/~s961234227/AttractionsF.php" target="_parent">彩虹河濱公園自行車道</a>              </p>
+       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://fs2.just.edu.tw/~s961234227/AttractionsG.php" target="_parent">漁人碼頭自行車道</a>              </p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://fs2.just.edu.tw/~s961234227/AttractionsH.php" target="_parent">北投焚化爐自行車道</a>              </p></td>
+  </tr>
+        <tr>
+                <td colspan="2" align="left" valign="top">
+                        <img src="images/Attractions_13.gif" width="275" height="28" alt=""></td>
+        </tr>
+        <tr>
+                <td colspan="9" align="left" valign="top">
+                        <img src="images/Attractions_14.gif" width="1024" height="32" alt=""></td>
+        </tr>
+        <tr>
+                <td>
+                        <img src="images/Spacer.gif" width="144" height="1" alt=""></td>
+                <td>
+                        <img src="images/Spacer.gif" width="131" height="1" alt=""></td>
+                <td>
+                        <img src="images/Spacer.gif" width="379" height="1" alt=""></td>
+                <td>
+                        <img src="images/Spacer.gif" width="67" height="1" alt=""></td>
+                <td>
+                        <img src="images/Spacer.gif" width="61" height="1" alt=""></td>
+                <td>
+                        <img src="images/Spacer.gif" width="63" height="1" alt=""></td>
+                <td>
+                        <img src="images/Spacer.gif" width="62" height="1" alt=""></td>
+                <td>
+                        <img src="images/Spacer.gif" width="62" height="1" alt=""></td>
+                <td>
+                        <img src="images/Spacer.gif" width="55" height="1" alt=""></td>
+        </tr>
+</table>
+<!-- End ImageReady Slices -->
+</body>
+</html>

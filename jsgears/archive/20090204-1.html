@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/js/jquery.autocomplete.css" />
+<script type="text/javascript" src="/js/jquery-1.3.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.pack.js"></script>
+</head>
+<body>
+<input type="text" name="t1" id="t1" />
+<script type="text/javascript">
+$(function() {
+  var data = ['aaa','aaaaa','aabbb','aaccc','dddd'];
+  $("#t1").autocomplete(data, {
+    minChars: 0,
+    width: 310,
+    matchContains: true,
+    autoFill: false
+  });
+alert("over here");
+
+});
+</script>
+</body>
+</html>

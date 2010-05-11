@@ -1,0 +1,24 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<link rel="stylesheet" type="text/css" href="jquery.autocomplete.css" />
+<script type="text/javascript" src="jquery-1.4.2.js"></script>
+<script type="text/javascript" src="jquery.autocomplete.js"></script>
+<body>
+<input type="text" name="t1" id="t1" />
+
+<input type="text" name="t2" id="t2" />
+
+
+<script type="text/javascript">
+$(function() {
+  var data = ['台北市中正區','台北大同區','台北市中山區','台北市松山區','台北市大安區'];
+  $("#t1").autocomplete(data, {matchContains: true});
+});
+
+</script>
+<script type="text/javascript">
+$("#t2").autocomplete('1.php');
+</script>
+</body>
+</html>

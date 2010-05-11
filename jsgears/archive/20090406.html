@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+</head>
+
+<body>
+  <div id="idbau1"></div>
+  <div id="idbau2"></div>
+  <div id="idbau3"></div>
+  <div id="idbau4"></div>
+  <div id="idbau5"></div>
+  <div id="idbau6"></div>
+  <div id="idbau7"></div>
+  <div id="idbau8"></div>
+
+<script language="javascript">
+var xmlHttp;
+
+function createXHR() {
+ if (window.XMLHttpRequest) {
+  xmlHttp = new XMLHttpRequest();
+ } else if (window.ActiveXObject) {
+  xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+ }
+ if (!xmlHttp) {
+   alert('您使用的瀏覽器不支援 XMLHTTP 物件');
+   return false;
+ }
+}
+
+function ajaxloop(num10) {
+createXHR();
+
+ for (i=1;i<=num10;i++) {
+ var requestString="order_input_querybau1.php?colorid="+document.getElementById('color'+i).value+"&styleid="+document.getElementById(  'style'+i).value+"&level="+i+"&id="+document.getElementById('id'+i).value;
+ xmlHttp.open('GET',requestString,true);
+
+  (function() {
+   var unique_i = i;
+   xmlHttp.onreadystatechange = function() {
+   catchGetTimeajax(unique_i);
+   };
+  }
+  )();
+
+  xmlHttp.send(null);
+ }
+}
+
+function catchGetTimeajax(unique_i) {
+ if (xmlHttp.readyState==4 || xmlHttp.readyState=='complete')
+ {
+  if (xmlHttp.status == 200)
+  {
+  var result = xmlHttp.responseText;
+  document.getElementById('idbau'+unique_i).innerHTML=result;
+  }
+
+ }
+
+}
+//ajaxloop(8);
+</script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+
+  for (i=1; i <= 8; i++) {
+    var requestString='20090406.php?colorid=' + i;
+
+    (function() {
+      var unique_i = i;
+      var callback = function(data, textStatus) {
+        $('#idbau' + unique_i).html(data);
+      };
+      $.get(requestString, {}, callback, 'text');
+    })();
+  }
+
+});
+</script>
+</body>
+</html>

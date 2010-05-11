@@ -1,0 +1,336 @@
+@charset "utf-8";
+/* CSS Document */
+html, body {
+	width:100%;
+	height:100%;
+	padding:0;
+	margin:0 auto;
+	behavior:url(csshover.htc);
+}
+#WAPPER {
+	display:block;
+	width:100%;
+	height:708px;
+	margin:0 auto;
+	padding:0;
+}
+#leftbar {
+	display:block;
+	float:left;
+	height:700px;
+	margin:0;
+	padding:0;
+	width:500px;
+
+	background-image: url(http://freskyhouse.bigflybird.com/image/left-image1.jpg);
+	background-repeat:no-repeat;
+	background-position:  bottom left;
+}
+#rightbar {
+	float:right;
+	margin:0;
+	padding:0;
+	width:480px;
+}
+#centerbar {
+	margin:0;
+	padding:0;
+	display:block;
+	width:200px;
+	float:right;
+	height:700px;
+	background-image: url(http://freskyhouse.bigflybird.com/image/centerline.gif);
+	background-position:right;
+	background-repeat:no-repeat;
+	position:relative;
+}
+#centerbar h1 {
+z-index:5;
+position:absolute;
+width:200px;
+top:0px;
+left:0px;
+	height:108px;
+	text-indent:-9999px;
+	margin:0px;
+	padding:0px;
+
+	background-image:url(http://freskyhouse.bigflybird.com/image/LOGO.jpg);
+	background-position:top left;
+	background-repeat:no-repeat;
+}
+
+#navmenu{
+z-index:40;
+position:absolute;
+top:150px;
+left:0px;
+width:100px;
+
+
+
+}
+
+#navmenu ul.level1{
+
+margin:0px;
+padding:0px;
+width:100px;
+}
+
+#navmenu li{
+ list-style-type:none;
+margin:0px;
+padding:0px;
+position:relative;
+text-align:right;
+
+
+
+}
+
+#navmenu li a{
+margin:0px;
+padding:0px;
+display:block;
+width:100px;
+font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight:bold;
+	font-size:16px;
+	text-decoration:none;
+	color:#B7AFA2;
+line-height:30px;
+}
+
+#navmenu li a:hover{
+
+text-decoration:underline;
+color: #0066FF;}
+
+
+#navmenu li.submenu{
+  border: 1px solid white
+}
+
+#navmenu li.submenu:hover{color: #0066FF;
+}
+UNKNOWN {
+	WIDTH: auto;}
+
+	#navmenu ul.level2{
+DISPLAY: none ;
+	LEFT: 100px;
+	POSITION: absolute;
+	TOP: 0px
+
+	}
+
+		#navmenu li.submenu:hover ul.level2{
+DISPLAY: block ;
+border: 1px solid red;
+	}
+
+			#navmenu li.submenu:hover ul.level2 li{
+			text-align:left;
+
+	}
+
+			#navmenu li.submenu:hover ul.level2 li a{
+			padding-left:20px;
+			margin:0px 0px -10px 0px;
+			letter-spacing:1px;
+
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size:10px;
+	text-decoration:none;
+
+	}
+
+	#navmenu li.submenu:hover ul.level2 li a:hover{
+		background-color: #FFFFFF;
+	text-decoration:underline;
+	font-size:10px;
+
+	}
+
+
+
+
+
+
+/* ul.level1{
+
+ padding-top:100px;
+margin:0px;
+width:100px;
+
+}
+
+ li{
+ list-style-type:none;
+margin:0px;
+padding:0px;
+position:relative;
+text-align:right;
+height:30px;
+line-height:30px;
+
+}
+
+li a{
+
+
+
+font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight:bold;
+	font-size:16px;
+	text-decoration:none;
+	color:#B7AFA2;
+
+}
+
+li a:hover{
+text-decoration:underline;
+color: #0066FF;
+
+}
+
+
+
+li.submenu{
+
+
+}
+
+li.submenu:hover{
+COLOR: #f26522
+
+}
+
+ul ul{
+display: ;
+left:100px;
+top:4px;
+width:100px;
+
+
+
+position:absolute;
+
+}
+
+li.submenu:hover ul.level2{
+display:block;
+
+}
+
+ul.level2 li{
+
+
+}
+ul.level2 li a{
+
+display:block;
+margin:0px;
+padding:0px;
+text-align:left;
+font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight:bold;
+	font-size:10px;
+	text-decoration:none;
+	color:#B7AFA2;
+}*/
+
+
+/*#linkbar {
+
+	height:600px;
+	 margin:0;
+    padding:0;
+
+
+	width:200px;
+}
+#linkbar ul.level1 {
+
+padding-top:100px;
+	padding-right:100px;
+	text-align:right;
+	margin:0px;
+
+}
+#linkbar ul.level1 li {
+padding-top:5px;
+padding-bottom:5px;
+ margin:0px;
+    padding:0px;
+
+}
+a:focus {
+	outline:0
+}
+#linkbar ul.level1 li a {
+
+display:block;
+height:20px;
+font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight:bold;
+	font-size:16px;
+	text-decoration:none;
+	color:#B7AFA2;
+}
+
+
+#linkbar ul.level1 li a:hover {
+	text-decoration:underline;
+
+	color: #0066FF;
+	 margin:0;
+    padding:0;
+}
+#linkbar ul.level1 li.submenu {
+ margin:0;
+    padding:0;
+	position: relative;
+}
+#linkbar ul.level1 li.submenu ul.level2 {
+display:;
+ margin:0;
+    padding:0;
+
+	position: absolute;
+	left: 100px;
+	top: 155px;
+
+}
+#linkbar ul.level1 li.submenu:hover ul.level2 {
+ margin:0;
+    padding:0;
+	display: block;
+}
+#linkbar ul.level1 li.submenu ul.level2 li {
+
+
+	margin:0 ;
+	padding:0;
+	text-align:left;
+}
+#linkbar ul.level1 li.submenu ul.level2 li a {
+display:block;
+height:20px;
+
+	background-color: #000000;
+	font-size:9px;
+}
+#linkbar ul.level1 li.submenu ul.level2 li a:hover {
+ margin:0;
+    padding:0;
+	background-color: #FFFFFF;
+	text-decoration:underline;
+	font-size:10px;
+}*/
+
+
+
+

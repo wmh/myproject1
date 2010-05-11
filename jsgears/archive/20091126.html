@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+<style type="text/css">
+div {border: 1px solid red;}
+</style>
+</head>
+
+<body>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+
+var b = 3;
+//var a = {};
+//a[b] = '123';
+
+var Data = {
+  localTesting: false,
+  elm: null,
+  binded: false,
+  fetch_ts: -1,
+  tmpCallback: null,
+  addingRows: 0,
+  maxRows: 10,
+  a: {}
+};
+Data.a[b] = '123';
+
+//alert(typeof a.length);
+$.each(Data.a, function(i, v) {
+  alert(i + ':' + v);
+});
+
+});
+</script>
+</body>
+
+</html>
