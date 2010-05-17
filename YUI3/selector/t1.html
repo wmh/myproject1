@@ -24,6 +24,7 @@ var YUIConfig = {
     debug : true
 };
 YUI(YUIConfig).use("node", function (Y) {
+    if (1)
     Y.all(".a1, .a2, .a3").on("click", function (e) {
 
         //用 this 會死!!!
@@ -32,6 +33,12 @@ YUI(YUIConfig).use("node", function (Y) {
     });
 
     window.Y = Y;
+});
+$(function () {
+    if (0)
+    $(".a1, .a2, .a3").click(function () {
+        alert($(this).html());
+    });
 });
 </script>
 </body>
