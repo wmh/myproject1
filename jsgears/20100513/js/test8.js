@@ -11,7 +11,7 @@ $(function() {
      accept: '.Place',
      drop: function(ev, ui)
      {
-    	 if (ui.draggable.parent().attr("id") == "list2")
+         if (ui.draggable.parent().attr("id") == "list2")
     	 {
     		 var $a = $(ui.draggable);
     	 }
