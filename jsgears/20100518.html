@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+<style>
+.selectdisplay{display:none;}
+</style>
+</head>
+
+<body>
+  <select name="level" id="level">
+    <option value="1">1th</option>
+    <option value="2">2th</option>
+  </select>
+      <select name="parent1" id="parent1" style="display::none;">
+        <option value="">null</option>
+  </select>
+      <select name="parent2" id="parent2" style="display::none;">
+         <option value="1">1</option>
+         <option value="2">2</option>
+      </select>
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    $("#level").change(function(){
+        console.log("select!");
+        var test=$("#level").val();
+        if (test==1)
+        {
+                ("#parent1").addclass('selectdisplay');
+        }
+        if(test==2)
+        {
+                ("#parent2").addclass('selectdisplay');
+        }
+    });
+});
+</script>
+</body>
+
+</html>
