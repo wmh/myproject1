@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Testing</title>
+<style>
+#json {
+    border: 1px solid navy;
+    border-right: 3px double;
+    border-bottom: 3px double;
+    color: navy;
+    font-family: monaco, monospace;
+    width: 400px;
+    overflow-x: hidden;
+    position: fixed;
+    top:10px;
+    right: 10px;
+    padding: 1em;
+    background-color: yellow;
+}
+</style>
+</head>
+<pre id="json">
+    this is a test
+</pre>
+
+<link type="text/css" href="http://jqueryui.com/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link type="text/css" href="http://jqueryui.com/demos/demos.css" rel="stylesheet" />
+
+<script src="http://cdn.jquerytools.org/1.2.1/full/jquery.tools.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+
+<script type="text/javascript">
+$(function () {
+    $("#json").resizable();
+    $("#json").bind("resizestop", function(event, ui) {
+        //console.log(ui);
+        $(this).css("left", "auto");
+    });
+});
+</script>
+</body>
+</html>

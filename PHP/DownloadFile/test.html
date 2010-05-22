@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Title</title>
+<style>
+</style>
+</head>
+
+<body>
+test
+<img src="downloadIMG.php" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    $.get('downloadIMG.php', null, function (o) {
+        console.log(o);
+    });
+});
+
+</script>
+</body>
+</html>
