@@ -8,6 +8,56 @@
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssfonts/fonts-min.css">
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssgrids/grids.css">
 <style type="text/css">
+#hd {
+    background-color: #dddddd;
+}
+.mybd {
+    margin-top: 10px;
+    height: 30px;
+}
+#ft {
+    background-color: #dddddd;
+}
+.yui3-b {
+    border: 1px dashed dimgray;
+}
+.yui3-gf .yui3-u {
+    border: 1px dashed silver;
+}
+/********************
+    custom .miii-yui3-t7
+*********************/
+.miii-yui3-t7 {
+	margin: auto;
+	text-align: left;
+	width: 100%;
+}
+.miii-yui3-t7 .yui3-main {
+	float: right;
+	/* IE: preserve layout at narrow widths */
+	margin-left: -25em;
+}
+.miii-yui3-t7 .yui3-b {
+	float: left;
+	width: 18.4615em;
+	*width: 18.00em;
+}
+.miii-yui3-t7 .yui3-main .yui3-b {
+	margin-left: 19.4615em;
+	*margin-left: 18.975em;
+	width: auto;
+	float: none;
+}
+.miii-yui3-t7:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.miii-yui3-t7 {
+	zoom: 1;
+}
 </style>
 </head>
 
@@ -18,7 +68,49 @@
 </div>
 
 <div id="bd">
-    Body
+
+    <div class="mybd yui3-d3">
+        <div class="yui3-t5">
+            <div class="yui3-main">
+                <div class="yui3-b">
+                    <div class="yui3-gb">
+                        <div class="yui3-u first">First U</div>
+                        <div class="yui3-u">U</div>
+                        <div class="yui3-u">U</div>
+                    </div>
+                </div>
+            </div>
+            <div class="yui3-b">side</div>
+        </div>
+    </div>
+
+    <div class="mybd yui3-d3">
+        <div class="yui3-t3">
+            <div class="yui3-main">
+                <div class="yui3-b">
+                    main
+                </div>
+            </div>
+            <div class="yui3-b">side</div>
+        </div>
+    </div>
+    <div class="mybd yui3-d3">
+        <div class="miii-yui3-t7">
+            <div class="yui3-main">
+                <div class="yui3-b">
+                    main
+                </div>
+            </div>
+            <div class="yui3-b">side</div>
+        </div>
+    </div>
+
+    <div class="mybd yui3-d3">
+        <div class="yui3-gf">
+            <div class="yui3-u">Main</div>
+            <div class="yui3-u first">side</div>
+        </div>
+    </div>
 </div>
 
 <div id="ft">
