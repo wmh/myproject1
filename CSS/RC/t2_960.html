@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Title</title>
+<link rel="stylesheet" href="../reset.css" />
+<link rel="stylesheet" href="../text.css" />
+<link rel="stylesheet" href="../960.css" />
+<style>
+.func-hd {
+    background-color: #f0855d;
+    color: #ffffff;
+    font-size: 116%;
+    font-weight: bold;
+    line-height: 2.1883;
+    padding-left: 0.6em;
+}
+/*
+ * miii rounded corner
+ */
+.miii-rc5 {
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.miii-rc5-decorations span {
+    background-image: url(sp_rc5.png);
+    height: 5px;
+    width: 5px;
+    position: absolute;
+    _background-image: url(sp_rc5_png8.png);
+    _font-size: 0;
+}
+.miii-rc5-tl {
+    background-position: 0 0;
+    left: 0;
+    top: 0;
+}
+.miii-rc5-tr {
+    background-position: -5px 0;
+    right: 0;
+    top: 0;
+}
+.miii-rc5-bl {
+    background-position: 0 -5px;
+    bottom: 0;
+    left: 0;
+    _bottom: -1px;
+}
+.miii-rc5-br {
+    background-position: -5px -5px;
+    bottom: 0;
+    right: 0;
+    _bottom: -1px;
+}
+
+h1 {
+    position: relative;
+    height: 100%;
+}
+
+.bgblack {
+    background-color: #000;
+    _zoom: 1;
+}
+.bgblack .miii-rc5-decorations span {
+    background-image: url(sp_rc5_black.png);
+    _background-image: url(sp_rc5_black_png8.png);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container_12">
+    <div class="clearfix">
+        <div class="grid_3">
+            <h1 class="func-hd miii-rc5">Hello world</h1>
+        </div>
+        <div class="grid_3">
+            <h2 class="func-hd miii-rc5">Hello world</h2>
+        </div>
+        <div class="grid_3">
+            <h3 class="func-hd miii-rc5">Hello world</h3>
+        </div>
+        <div class="grid_3">
+            <h4 class="func-hd miii-rc5">Hello world Hello world Hello world Hello world Hello world Hello world</h4>
+        </div>
+    </div>
+    <div class="clearfix bgblack">
+        <div class="grid_4">
+            <h1 class="func-hd miii-rc5">Hellooo world Hellooo world Hellooo world </h1>
+        </div>
+        <div class="grid_4">
+            <h2 class="func-hd miii-rc5">Hello world</h2>
+        </div>
+        <div class="grid_4">
+            <h3 class="func-hd miii-rc5">Hello world</h3>
+        </div>
+    </div>
+</div>
+
+<script src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+YUI().use("node", function (Y) {
+    if (Y.UA.ie) {
+        Y.all(".miii-rc5").each(function(node) {
+            var position, xy, w, h, rcTL, rcTR, rcBL, rcBR;
+            position = node.getStyle("position");
+            if (position === "relative" || position === "absolute") {
+                node.append('<span class="miii-rc5-decorations"><span class="miii-rc5-tl"></span><span class="miii-rc5-tr"></span><span class="miii-rc5-bl"></span><span class="miii-rc5-br"></span></span>');
+            } else {
+                xy = node.getXY();
+                w = node.get('offsetWidth');
+                h = node.get('offsetHeight');
+                rcTL = Y.Node.create('<span class="miii-rc5-tl"></span>').setStyles({
+                    top: xy[1],
+                    left: xy[0]
+                });
+                rcTR = Y.Node.create('<span class="miii-rc5-tr"></span>').setStyles({
+                    top: xy[1],
+                    left: xy[0] + w - 5
+                });
+                rcBL = Y.Node.create('<span class="miii-rc5-bl"></span>').setStyles({
+                    top: xy[1] + h - 5,
+                    left: xy[0]
+                });
+                rcBR = Y.Node.create('<span class="miii-rc5-br"></span>').setStyles({
+                    top: xy[1] + h - 5,
+                    left: xy[0] + w - 5
+                });
+                node.append(Y.Node.create('<span class="miii-rc5-decorations"></span>').append(rcTL).append(rcTR).append(rcBL).append(rcBR));
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>

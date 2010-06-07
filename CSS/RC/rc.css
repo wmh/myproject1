@@ -1,0 +1,39 @@
+/*
+ * miii rounded corner
+ */
+.miii-rc5 {
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.miii-rc5-decorations span {
+    background-image: url(sp_rc5.png);
+    height: 5px;
+    width: 5px;
+    position: absolute;
+    _background-image: url(sp_rc5_png8.png);
+    _font-size: 0;
+}
+.miii-rc5-tl {
+    background-position: 0 0;
+    left: 0;
+    top: 0;
+}
+.miii-rc5-tr {
+    background-position: -5px 0;
+    right: 0;
+    top: 0;
+}
+.miii-rc5-bl {
+    background-position: 0 -5px;
+    bottom: 0;
+    left: 0;
+    _bottom: -1px;
+}
+.miii-rc5-br {
+    background-position: -5px -5px;
+    bottom: 0;
+    right: 0;
+    _bottom: -1px;
+}
