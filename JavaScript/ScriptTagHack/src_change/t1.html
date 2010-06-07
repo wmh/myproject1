@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Title</title>
+</head>
+
+<body>
+
+<button>a.js</button>
+<button>b.js</button>
+<button>c.js</button>
+
+<script type="text/javascript" src="a.js" id="myjs"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    $("body").delegate("button", "click", function () {
+        $("#myjs").attr("src", $(this).html());
+        return false;
+    });
+});
+</script>
+</body>
+</html>

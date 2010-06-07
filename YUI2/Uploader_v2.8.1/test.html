@@ -187,6 +187,7 @@ function onUploadProgress(event) {
     //console.log(arguments);
     rowNum = fileIdHash[event["id"]];
     prog = Math.round(100*(event["bytesLoaded"]/event["bytesTotal"]));
+    console.log(prog);
     progbar = "<div style='height:5px;width:100px;background-color:#CCC;'><div style='height:5px;background-color:#F00;width:" + prog + "px;'></div></div>";
     singleSelectDataTable.updateRow(rowNum, {name: dataArr[rowNum]["name"], size: dataArr[rowNum]["size"], progress: progbar});
 }
