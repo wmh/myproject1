@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssfonts/fonts-min.css">
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssbase/base-min.css">
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssgrids/grids.css">
+<link rel="stylesheet" type="text/css" href="../960.css">
 <link rel="stylesheet" type="text/css" href="rc.css">
 <style>
 .yui3-b, .yui3-gb {
@@ -29,10 +30,33 @@
     background-image: url(sp_rc5_black.png);
     _background-image: url(sp_rc5_black_png8.png);
 }
+
+/* testing */
+.relative {
+    position: relative;
+    *height: 100%;
+}
+.b1 {
+    margin: 0 auto;
+    width: 80%;
+}
+.w50p {
+    width: 50%;
+}
+body .miii-rc5 span {
+    border: 1px solid red;
+}
 </style>
 </head>
 
 <body>
+
+<div class="b1">
+    <div class="yui3-b">
+        <h1 class="func-hd miii-rc5 w50p">Hello world</h1>
+    </div>
+</div>
+
 
 <div class="yui3-d3">
     <div class="yui3-b">
@@ -42,11 +66,13 @@
 <span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; font-weight:bold; '>h1</span> class=<span style='color:#2a00ff; '>"func-hd miii-rc5"</span><span style='color:#7f0055; '>></span>Hello world<span style='color:#7f0055; '>&lt;/</span><span style='color:#7f0055; font-weight:bold; '>h1</span><span style='color:#7f0055; '>></span>
 </pre>
     </div>
+
     <div class="yui3-gb">
         <div class="yui3-u first">
             <h1 class="func-hd miii-rc5">Hello world</h1>
         </div>
         <div class="yui3-u">
+            <h1 class="func-hd miii-rc5 relative">Hello world</h1>
         </div>
         <div class="yui3-u">
         </div>
