@@ -15,7 +15,7 @@
 label {
     padding-right: 6px;
 }
-.miii-checkbox {
+.test-checkbox {
     background: url(http://www.dfc-e.com/sites/theme/jscripts/vendors/jqtransformplugin/img/checkbox.gif) no-repeat scroll center top transparent;
     width: 18px;
     height: 19px;
@@ -27,8 +27,28 @@ label {
     *top: 0;
     *left: 0;
 }
+.miii-checkbox {
+    background: url(sp_checkbox.png) no-repeat scroll 0 top transparent;
+    width: 19px;
+    height: 19px;
+    text-indent: -9999px;
+    position: absolute;
+    overflow: hidden;
+}
+.miii-checkbox {
+    top: -1px;
+    left: -2px;
+    *top: 0;
+    *left: 0;
+}
+.xxmiii-checkbox-hidden {
+    visibility: hidden;
+}
 .miii-checkbox-checked {
-    background-position:center bottom;
+    background-position-y: -18px;
+}
+.miii-checkbox-blue {
+    background-position-x: -18px;
 }
 .row span {
     position: relative;
@@ -39,7 +59,11 @@ label {
 <body>
 
 <div class="row"><label for="t1">This is a label</label><input type="checkbox" name="t1" id="t1"></div>
-<div class="row"><label for="t2">This is a label</label><span><input type="checkbox" name="t2" id="t2"><a href="#" id="t2alt" class="miii-checkbox">X</a></span></div>
+<div class="row"><label for="t2">This is a label</label><span><input type="checkbox" name="t2" id="t2"><a href="#" id="t2-miii-checkbox" class="test-checkbox"></a></span></div>
+<div class="row"><label for="t3">This is a label</label><span><input type="checkbox" name="t3" id="t3" class="miii-checkbox-hidden" checked="checked"><a href="#" id="t3-miii-checkbox" class="miii-checkbox"></a></span></div>
+<div class="row"><label for="t4">This is a label</label><span><input type="checkbox" name="t4" id="t4" class="miii-checkbox-hidden"><a href="#" id="t4-miii-checkbox" class="miii-checkbox miii-checkbox-blue"></a></span></div>
+
+<div class="row"><label for="test-all">Check all</label><span><input type="checkbox" name="test-all" id="test-all" class="miii-checkbox-hidden"><a href="#" id="test-all-miii-checkbox" class="miii-checkbox"></a></span></div>
 
 
 <script src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
@@ -50,13 +74,68 @@ var YUIConfig = {
 };
 YUI(YUIConfig).use("node", "node-event-simulate", function (Y) {
     var handleChange = function (id) {
-        var checked = Y.one("#" + id).get("checked");
-        if (checked) {
-            Y.one("#" + id + "alt").addClass("miii-checkbox-checked");
+        var isChecked = Y.one("#" + id).get("checked");
+        if (isChecked) {
+            Y.one("#" + id + "-miii-checkbox").addClass("miii-checkbox-checked");
         } else {
-            Y.one("#" + id + "alt").removeClass("miii-checkbox-checked");
+            Y.one("#" + id + "-miii-checkbox").removeClass("miii-checkbox-checked");
         }
     };
+
+    var bindCheckbox = function (id, mid) {
+        var checkboxNode = Y.one("#" + id),
+            miiiCheckboxNode = Y.one("#" + mid);
+        checkboxNode.on("click", function (e) {
+            handleChange(e.currentTarget.get("id"));
+        });
+        miiiCheckboxNode.on("click", function (e) {
+            if (Y.UA.ie) {
+                checkboxNode._node.click();
+                handleChange(id);
+            } else {
+                checkboxNode.simulate("click");
+            }
+        });
+        miiiCheckboxNode.on("keypress", function (e) {
+            if (e.charCode === 32) {
+                if (Y.UA.ie) {
+                    checkboxNode._node.click();
+                    handleChange(id);
+                } else {
+                    checkboxNode.simulate("click");
+                }
+            }
+        });
+        handleChange(id);
+        //checkboxNode.setStyle("visibility", "hidden");
+    };
+    var autoBind = function () {
+        Y.all(".miii-checkbox").each(function (node) {
+            var mid = node.get("id"),
+                id = mid.replace("-miii-checkbox", "");
+            bindCheckbox(id, mid);
+        });
+    };
+    autoBind();
+
+    //check all test
+    Y.one("#test-all").on("click", function (e) {
+        var isChecked = e.currentTarget.get("checked");
+        Y.all(".miii-checkbox").each(function (node) {
+            var mid = node.get("id"),
+                id = mid.replace("-miii-checkbox", ""),
+                checkboxNode = Y.one("#" + id);
+            if (checkboxNode.get("checked") !== isChecked) {
+                if (Y.UA.ie) {
+                    checkboxNode._node.click();
+                    handleChange(id);
+                } else {
+                    checkboxNode.simulate("click");
+                }
+            }
+        });
+    });
+
 
     Y.one("#t2").on("click", function (e) {
         if (Y.UA.ie) {
@@ -66,7 +145,7 @@ YUI(YUIConfig).use("node", "node-event-simulate", function (Y) {
     Y.one("#t2").on("change", function (e) {
         handleChange(e.currentTarget.get("id"));
     });
-    Y.one("#t2alt").on("click", function (e) {
+    Y.one("#t2-miii-checkbox").on("click", function (e) {
         if (Y.UA.ie) {
             Y.one("#t2")._node.click();
             handleChange("t2");
@@ -75,6 +154,44 @@ YUI(YUIConfig).use("node", "node-event-simulate", function (Y) {
             Y.one("#t2").simulate("click");
         }
     });
+
+    /*
+    Y.one("#t3").on("click", function (e) {
+        if (Y.UA.ie) {
+            e.currentTarget.blur();
+        }
+    });
+    Y.one("#t3").on("change", function (e) {
+        handleChange(e.currentTarget.get("id"));
+    });
+    Y.one("#t3alt").on("click", function (e) {
+        if (Y.UA.ie) {
+            Y.one("#t3")._node.click();
+            handleChange("t3");
+
+        } else {
+            Y.one("#t3").simulate("click");
+        }
+    });
+
+    Y.one("#t4").on("click", function (e) {
+        if (Y.UA.ie) {
+            e.currentTarget.blur();
+        }
+    });
+    Y.one("#t4").on("change", function (e) {
+        handleChange(e.currentTarget.get("id"));
+    });
+    Y.one("#t4alt").on("click", function (e) {
+        if (Y.UA.ie) {
+            Y.one("#t4")._node.click();
+            handleChange("t4");
+
+        } else {
+            Y.one("#t4").simulate("click");
+        }
+    });
+    */
 
     window.Y = Y;
 });
