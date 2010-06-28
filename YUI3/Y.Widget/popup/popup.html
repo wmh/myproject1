@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Popup using WidgetStdMod</title>
+<style>
+body {
+    background-color: yellow;
+}
+xxdiv {
+    border: 1px solid silver;
+}
+
+#pop1 .yui3-widget-bd {
+    padding: 20px;
+}
+#popup_content {
+    height: 100%;
+    position: relative;
+}
+#popup_content p {
+    height: 12em;
+    overflow: auto;
+    position: absolute;
+    bottom: 20px;
+    margin: 0;
+}
+#pop1 {
+    z-index: 1;
+    position: absolute;
+    width: 300px;
+    height: 300px;
+}
+#pop1 .x1 {
+    background-image: url(bg_popup.png);
+    position: absolute;
+    width: 50%;
+    height: 50%;
+}
+#pop1 .x2 {
+    background-image: url(bg_popup.png);
+    background-position: right top;
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 0;
+    right: 0;
+}
+#pop1 .x3 {
+    background-image: url(bg_popup.png);
+    background-position: left bottom;
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    bottom: 0;
+    left: 0;
+}
+#pop1 .x4 {
+    background-image: url(bg_popup.png);
+    background-position: right bottom;
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    bottom: 0;
+    right: 0;
+}
+#pop1 .yui3-standardmodule-content {
+    z-index: 2;
+}
+</style>
+</head>
+
+<body>
+<div id="pop1" class="yui3-widget yui3-standardmodule">
+    <span class="x1"></span><span class="x2"></span>
+    <span class="x3"></span><span class="x4"></span>
+    <div class="yui3-standardmodule-content">
+        <div class="yui3-widget-bd">
+        </div>
+    </div>
+</div>
+
+<div id="popup_content">
+    <h1>Hello world</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec dolor lectus, id suscipit tortor. Integer vel mi nec turpis sagittis dictum vitae quis erat. Cras id orci eu quam interdum congue. Sed vestibulum vulputate arcu laoreet convallis. Sed tellus ligula, suscipit ac gravida accumsan, tempus et mauris. Donec dapibus mollis sem, et tincidunt justo lacinia quis. Sed ultrices mattis pulvinar. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer vel neque lorem. Donec ante enim, condimentum ac faucibus at, tristique nec risus.</p>
+</div>
+
+<script src="http://yui.yahooapis.com/3.1.1/build/yui/yui.js"></script>
+<script type="text/javascript">
+
+YUI().use('widget', 'widget-stdmod',  function(Y) {
+
+    var PopUpModule     = Y.Base.build("standardModule", Y.Widget, [Y.WidgetStdMod]),
+        StdModHEADER    = Y.WidgetStdMod.HEADER,
+        StdModBODY      = Y.WidgetStdMod.BODY,
+        StdModFOOTER    = Y.WidgetStdMod.FOOTER;
+
+    var popup = new PopUpModule({
+        boundingBox: "#pop1",
+        contentBox : "#pop1 .yui3-standardmodule-content",
+        width  : "300px",
+        height : "300px"
+    });
+    popup.render();
+    //popup.setStdModContent('header', '');
+    popup.setStdModContent('body', Y.one("#popup_content"));
+    //popup.setStdModContent('footer', '');
+    //popup.set('width', 500);
+    //popup.set('height', 100);
+    popup.fillHeight(popup.getStdModNode(StdModBODY));
+
+});
+
+</script>
+</body>
+</html>
