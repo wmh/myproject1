@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Recyle callback</title>
+<style>
+</style>
+</head>
+
+<body>
+<button id="test1">test 1</button>
+<button id="test2">test 2</button>
+<button id="test3">test 3</button>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript">
+var to = [5000, 1000, 1000, 1000, 1000, 1000, 1000, 1000], toidx = 0;
+
+$(function () {
+    window.miiiGlobal = {};
+
+    //method 1 - 每次都是不同的 function
+    $("#test1").click(function () {
+        (function () {
+            var cb = "cb" + new Date().getTime();
+            console.log(cb);
+            miiiGlobal[cb] = function () {
+                console.log('Hello world from ' + cb);
+                delete miiiGlobal[cb];
+            };
+            setTimeout(miiiGlobal[cb], to[toidx]);
+            toidx++;
+        }());
+    });
+
+    //method 2 - 如果 callback 比較大，可透過一個小的 function 來 call
+    var callback = function (cb) {
+        console.log('Hello world from ' + cb);
+        delete miiiGlobal[cb];
+    };
+    $("#test2").click(function () {
+        (function () {
+            var cb = "cb" + new Date().getTime();
+            console.log(cb);
+            miiiGlobal[cb] = function() {
+                callback(cb);
+            };
+            setTimeout(miiiGlobal[cb], to[toidx]);
+            toidx++;
+        }());
+    });
+
+    //method 3 - 不用 global function
+    var callback = function (cb) {
+        console.log('Hello world from ' + cb);
+    };
+    $("#test3").click(function () {
+        (function () {
+            var cb = "cb" + new Date().getTime();
+            console.log(cb);
+            setTimeout(function() {
+                callback(cb);
+            }, to[toidx]);
+            toidx++;
+        }());
+    });
+
+
+
+});
+</script>
+</body>
+</html>

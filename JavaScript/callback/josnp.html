@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Recyle callback</title>
+<style>
+</style>
+</head>
+
+<body>
+<a href="#" id="test0">test 0</a>
+<button id="test1">test 1</button>
+<button id="test2">test 2</button>
+<button id="test3">test 3</button>
+
+<script src="http://yui.yahooapis.com/3.1.0/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+var to = [5000, 1000, 1000, 1000, 1000, 1000, 1000, 1000], toidx = 0;
+
+YUI().use("node", "event", function (Y) {
+    window.miiiGlobal = {};
+
+    Y.on("click", function() {
+        alert(1);
+    }, Y.one("#test1"));
+
+    Y.one("#test0").on("click", function () {
+        //TypeError: Cannot read property 'config' of undefined
+    });
+
+    window.Y = Y;
+
+/*
+
+    Y.one("#test1").on("click", function () {
+        //TypeError: Cannot read property 'config' of undefined
+    });
+
+    //method 1 - 每次都是不同的 function
+    Y.one("#test1").on('click', function () {
+        (function () {
+            var cb = "cb" + new Date().getTime();
+            console.log(cb);
+            miiiGlobal[cb] = function () {
+                console.log('Hello world from ' + cb);
+                delete miiiGlobal[cb];
+            };
+            Y.Get.script("jsonp.php?callback=" + cb);
+            toidx++;
+        }());
+    });
+
+
+    //method 2 - 如果 callback 比較大，可透過一個小的 function 來 call
+    var callback = function (cb) {
+        console.log('Hello world from ' + cb);
+        delete miiiGlobal[cb];
+    };
+    Y.one("#test2").on('click' , function () {
+        (function () {
+            var cb = "cb" + new Date().getTime();
+            console.log(cb);
+            miiiGlobal[cb] = function() {
+                callback(cb);
+            };
+            setTimeout(miiiGlobal[cb], to[toidx]);
+            toidx++;
+        }());
+    });
+
+    //method 3 - 不用 global function
+    var callback = function (cb) {
+        console.log('Hello world from ' + cb);
+    };
+    Y.one("#test3").on('click', function () {
+        (function () {
+            var cb = "cb" + new Date().getTime();
+            console.log(cb);
+            setTimeout(function() {
+                callback(cb);
+            }, to[toidx]);
+            toidx++;
+        }());
+    });
+*/
+
+});
+</script>
+</body>
+</html>
