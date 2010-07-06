@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI node test</title>
+<style>
+</style>
+</head>
+
+<body>
+<ol>
+    <li id="l1">1</li>
+    <li id="l2">2</li>
+    <li id="l3">3</li>
+    <li id="l4">4</li>
+</ol>
+
+<script src="http://yui.yahooapis.com/3.1.1/build/yui/yui.js"></script>
+<script type="text/javascript">
+
+YUI().use("node", function (Y) {
+
+    window.Y = Y;
+});
+
+</script>
+</body>
+</html>
