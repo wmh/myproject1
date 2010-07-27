@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Title</title>
+<style>
+</style>
+</head>
+
+<body>
+
+<script type="text/javascript">
+
+function wbrZZ (str, num) {
+    return str.replace(new RegExp("(\\w{" + num + "})(\\w)", "g"), function (all, text, ch) {
+        return text + "<wbr>" + ch;
+    });
+}
+/**
+ * NOTE: YUI compressor will cause error if we use new RegExp() to
+ *       combine reg pattern here.
+ */
+function wbr (str, num) {
+    var pattern;
+    switch (num) {
+    case 2 :
+        pattern = /(\w{2})(\w)/g;
+        break;
+    case 3 :
+        pattern = /(\w{3})(\w)/g;
+        break;
+    case 4 :
+        pattern = /(\w{4})(\w)/g;
+        break;
+    case 5 :
+        pattern = /(\w{5})(\w)/g;
+        break;
+    case 6 :
+        pattern = /(\w{6})(\w)/g;
+        break;
+    default:
+        return str; //all other not support!
+    }
+    return str.replace(pattern, function (all, text, ch) {
+        return text + "<wbr>" + ch;
+    });
+}
+
+
+</script>
+</body>
+</html>

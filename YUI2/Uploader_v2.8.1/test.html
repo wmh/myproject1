@@ -118,7 +118,7 @@ function handleContentReady () {
                        {description:"Videos", extensions:"*.avi;*.mov;*.mpg"});
 
     // Apply new set of file filters to the uploader.
-    uploader.setFileFilters(ff);
+    //uploader.setFileFilters(ff);
 }
 
 // Actually uploads the files. In this case,
@@ -137,7 +137,7 @@ function upload() {
 // Fired when the user selects files in the "Browse" dialog
 // and clicks "Ok".
 function onFileSelect(event) {
-    //console.log(arguments);
+    console.log(event);
     if('fileList' in event && event.fileList != null) {
         fileList = event.fileList;
         createDataTable(fileList);
@@ -206,12 +206,14 @@ function onUploadComplete(event) {
 // (When uploadAll() is used, the Uploader will
 // attempt to continue uploading.
 function onUploadError(event) {
-
+    console.log("onUploadError");
+    console.log(event);
 }
 
 // Do something if an upload is cancelled.
 function onUploadCancel(event) {
-
+    console.log("onUploadCancel");
+    console.log(event);
 }
 
 // Do something when data is received back from the server.
