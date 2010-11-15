@@ -131,7 +131,8 @@ function handleContentReady () {
 function upload() {
     if (fileList != null) {
         uploader.setSimUploadLimit(parseInt(document.getElementById("simulUploads").value));
-        uploader.uploadAll("http://www.yswfblog.com/upload/upload_simple.php", "POST", null, "Filedata");
+        //uploader.uploadAll("http://www.yswfblog.com/upload/upload_simple.php", "POST", null, "Filedata");
+        uploader.uploadAll("http://localhost:8000/test/Uploader/3/simRouterUploadFile.php", "POST", null, "Filedata");
     }
 }
 

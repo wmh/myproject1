@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Margin changes in IE</title>
+<style>
+.clearfix {
+    zoom: 1;
+}
+.clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.storage {
+    border: 1px solid silver;
+    width: 721px;
+}
+.storage ol {
+    display: block;
+    list-style-type: decimal;
+    margin: 0px;
+    padding: 0px;
+}
+.storage ol li {
+    margin: 10px 30px 1px 16px;
+    float: left;
+    height: 230px;
+    position: relative;
+    width: 133px;
+    list-style: none;
+    background-color: #FFFFD2;
+}
+a {
+    display: block;
+}
+#test {
+    border: 1px solid silver;
+    background-color: yellow;
+}
+</style>
+</head>
+
+<body>
+
+<div id="test"><span>mouse over me!</span></div>
+<div class="storage clearfix">
+    <ol>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+    </ol>
+</div>
+
+
+<script src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+
+YUI().use('node', 'event', function(Y) {
+    var mouseClickEvent = function (e) {
+        //alert(e.currentTarget.get("tagName"));
+        alert(e.currentTarget.one("a").get("tagName"));
+    };
+    var liNodes = Y.all("li");
+    Y.on("click", mouseClickEvent, liNodes);
+});
+
+</script>
+</body>
+</html>
