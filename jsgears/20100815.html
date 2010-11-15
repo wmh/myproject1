@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+<link rel="stylesheet" type="text/css" href="http://jsgears.com/_lib/jquery/plugins/jquery.datePicker.css" />
+<style type="text/css">
+a.dp-choose-date {
+float: left;
+width: 16px;
+height: 16px;
+padding: 0;
+margin: 5px 3px 0;
+display: block;
+text-indent: -2000px;
+overflow: hidden;
+background: url(http://jsgears.com/_lib/jquery/plugins/date_16x16.gif) no-repeat;
+}
+a.dp-choose-date.dp-disabled {
+background-position: 0 -20px;
+cursor: default;
+}
+input.dp-applied {
+width: 100px;
+float: left;
+}
+</style>
+</head>
+
+<body>
+<input type="text" name="date1" id="date1" class="date-pick" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://jsgears.com/_lib/jquery/plugins/date.js"></script>
+<script type="text/javascript" src="http://jsgears.com/_lib/jquery/plugins/jquery.datePicker.js"></script>
+<script type="text/javascript">
+$(function(){
+    Date.format = 'yyyy-mm-dd';
+    //$('#date1').datePicker();
+    $('#date1')
+                .datePicker({inline:false, startDate:'1996-01-01'})
+                .bind(
+                        'dateSelected',
+                        function(e, selectedDate, $td)
+                        {
+                                console.log('You selected ' + selectedDate.getTime());
+                                //$("#setday").val(selectedDate);
+                        }
+                );
+});
+</script>
+</body>
+
+</html>

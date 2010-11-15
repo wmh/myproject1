@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript">
+var ri=[],pointer=-1;
+
+Array.prototype.indexOf=function(v,b,s){
+for(var i=+b || 0,l=this.length;i<l;i++){
+if(this[i]===v || s && this[i]==v){return i;}
+}
+return -1;
+};
+
+
+function doOutput(n,d)
+{
+var obj=n;
+
+var len = obj.length;
+var checked = false;
+for (i = 0; i < len; i++)
+{
+if (obj[i].checked == true)
+{
+checked = true;
+break;
+}
+}
+if(checked == true){
+addNewLine(n,d);}
+else if(checked == false){
+var obj=document.getElementById('tbl');
+var sIndex=ri.indexOf(n);
+
+obj.deleteRow(sIndex);
+
+ri.splice(sIndex,1);
+}
+}
+
+function addNewLine(n,d){
+
+var obj=document.getElementById('tbl');
+var n=obj.rows.length;
+pointer++;
+
+var tr=obj.insertRow(n);
+td0=tr.insertCell(0);
+td0.innerHTML=n;
+
+td1=tr.insertCell(1);
+td1.innerHTML='<input type="hidden" name="A'+n+'" id="A'+n+'" value= "'+d.value+'" >'+d.value;
+
+td2=tr.insertCell(2);
+td2.innerHTML='<input type="text" name="B'+n+'" >';
+
+td3=tr.insertCell(3);
+td3.innerHTML='<input type="text" name="C'+n+'" >';
+
+td4=tr.insertCell(4);
+td4.innerHTML='<input type="text" name="D'+n+'" >';
+
+}
+
+function clearCurrent(){
+var a,obj=document.getElementById('tabsF');
+var div,li=obj.getElementsByTagName('li');
+
+for (var i=0;i<li.length;i++){
+li[i].setAttribute('id',null);
+a=li[i].childNodes[0];
+div=a.getAttribute('div');
+document.getElementById(div).style.display='none';
+}
+}
+function loadTab(obj){
+var layer=obj.getAttribute('div');
+
+clearCurrent();
+
+obj.parentNode.setAttribute('id','current');
+document.getElementById(layer).style.display='inline';
+
+}
+
+//_______________________問題點______________________________//
+function inputnums(){
+var mums = document.getElementById('onloadclose').getElementsByTagName('input').length;
+
+
+for(g=1;g<mums;g++){
+        document.write(document.getElementById('A'+g).value+'-'+
+                        document.getElementById('B'+g).value+'-'+
+                        document.getElementById('C'+g).value+'-'+
+                        document.getElementById('D'+g).value  );
+}
+
+}
+//這邊我先取onloadclose DIV裡面所有動態產生INPUT的欄位
+//接著我想把動態產生的欄位 內容物寫在畫面上
+//勾幾個就產生幾個內容物內容
+//但是不管怎麼寫就是沒法全部寫出  只會跑出一個
+//希望大大可以為我解答
+//_______________________問題點______________________________//
+</script>
+</head>
+<body bgcolor="#FEFFAF">
+
+<div id="tabsF">
+<ul>
+<li align="center"><a href="javascript://" div="S3" onclick="loadTab(this);"><span>C、社會參與</span></a></li>
+
+</ul>
+</div>
+<div id="tabsC" >
+<div id="S3" style="display:none;" >
+<table width="100%" border="0" cellspacing="1" cellpadding="2" >
+<tr>
+<td valign="top" align="center">
+<input type="checkbox" name="checkboxA65" id="A65" value="體育" onclick="javascript:return doOutput(document.getElementsByName('checkboxA65'),document.getElementById('A65'))">1.體育<br>
+<input type="checkbox" name="checkboxA66" id="A66" value="公共" onclick="javascript:return doOutput(document.getElementsByName('checkboxA66'),document.getElementById('A66'))">2.公共<br>
+<input type="checkbox" name="checkboxA68" id="A68" value="交通" onclick="javascript:return doOutput(document.getElementsByName('checkboxA68'),document.getElementById('A68'))">4.交通<br>
+<input type="checkbox" name="checkboxA69" id="A69" value="社會" onclick="javascript:return doOutput(document.getElementsByName('checkboxA69'),document.getElementById('A69'))">5.社會<br>
+<input type="checkbox" name="checkboxA70" id="A70" value="權益" onclick="javascript:return doOutput(document.getElementsByName('checkboxA70'),document.getElementById('A70'))">6.權益<br>
+<input type="checkbox" name="checkboxA71" id="A71" value="社區" onclick="javascript:return doOutput(document.getElementsByName('checkboxA71'),document.getElementById('A71'))">7.社區<br>
+<input type="checkbox" name="checkboxA73" id="A73" value="其他" onclick="javascript:return doOutput(document.getElementsByName('checkboxA73'),document.getElementById('A73'))">9.其他<br>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+
+<div id="onloadclose">
+<form id="form1" name="form1" method="post" action="">
+<table align="center" border="1" cellpadding="2" cellspacing="1" class="csshover" id="tbl" width="761">
+<tr class="tbltitle">
+<td width="110">編號</td>
+<td width="110">服務項目</td>
+<td width="110">起始時間</td>
+<td width="110">結素時間</td>
+<td width="110">備註</td>
+</tr>
+</table>
+</form>
+</div>
+<input type="button" onclick="inputnums()" value="SEND">
