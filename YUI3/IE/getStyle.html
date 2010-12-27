@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>className in IE</title>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssfonts/fonts-min.css">
+<style type="text/css">
+</style>
+</head>
+
+<body>
+
+<script src="http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+
+YUI({filter: "raw"}).use("node", function(Y) {
+/*
+http://yui.yahooapis.com/combo?
+    3.2.0/build/oop/oop.js
+    3.2.0/build/dom/dom.js
+    3.2.0/build/event-custom/event-custom-base.js
+    3.2.0/build/event/event-base.js
+    3.2.0/build/pluginhost/pluginhost.js
+    3.2.0/build/node/node.js
+    3.2.0/build/event/event-delegate.js
+
+http://yui.yahooapis.com/combo
+    3.2.0/build/oop/oop.js
+    3.2.0/build/dom/dom.js
+    3.2.0/build/dom/dom-style-ie.js                     // IE !!
+    3.2.0/build/event-custom/event-custom-base.js
+    3.2.0/build/event/event-base.js
+    3.2.0/build/pluginhost/pluginhost.js
+    3.2.0/build/node/node.js
+    3.2.0/build/event/event-delegate.js
+*/
+
+    alert(Y.one("body").getStyle("overflow"));
+
+    window.Y = Y;
+});
+
+</script>
+</body>
+</html>

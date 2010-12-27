@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Sub Attr</title>
+</head>
+
+<body>
+<script src="http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+YUI().use('jsonp', function(Y) {
+    var getScripts,
+        finishCheck,
+        onsuccess,
+        onfailure,
+        ontimeout;
+
+    /*
+       The first url will timeout,
+       The second url should be success, but will fail if the first url is
+       timeout or failed (Firefox).
+    */
+    getScripts = [
+        "http://vlab.info/labs/yui/jsonp_response.php?callback={callback}&sleep=6",
+        "http://vlab.info/labs/yui/jsonp_response.php?callback={callback}"
+    ];
+    onsuccess = function (o, i) {
+        Y.log("onsuccess, " + i);
+    };
+    onfailure = function (e, i) {
+        Y.log("onfailure, " + i);
+    };
+    ontimeout = function (e, i) {
+        Y.log("ontimeout, " + i);
+    };
+    Y.each(getScripts, function (url, i) {
+        var cfg = {
+            on: {
+                success: onsuccess,
+                failure: onfailure,
+                timeout: ontimeout
+            },
+            timeout: 3000,
+            args: [i]
+        };
+        Y.log("[jsonp] " + url);
+        Y.jsonp(url, cfg);
+    });
+
+    window.Y = Y;
+});
+</script>
+</body>
+</html>
