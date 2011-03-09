@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Title</title>
+<style>
+#demo div {
+    border: 1px solid red;
+}
+img {
+    display: block;
+    margin-top: 200px;
+}
+</style>
+</head>
+
+<body>
+
+<div class='everything' id='everything'>
+	<img id='img1' />
+	<img id='img2' />
+	<img id='img3' />
+	<img id='img4' />
+	<img id='img5' />
+</div>
+
+<script src="http://yui.yahooapis.com/3.3.0/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+
+YUI().use('imageloader', function(Y) {
+
+ 	var foldGroup = new Y.ImgLoadGroup({ name: 'fold group', foldDistance: 200 });
+	foldGroup.registerImage({ domId: 'img1', srcUrl: 'http://developer.yahoo.com/yui/docs/assets/examples/exampleimages/small/museum.jpg' });
+	foldGroup.registerImage({ domId: 'img2', srcUrl: 'http://developer.yahoo.com/yui/docs/assets/examples/exampleimages/small/uluru.jpg' });
+	foldGroup.registerImage({ domId: 'img3', srcUrl: 'http://developer.yahoo.com/yui/docs/assets/examples/exampleimages/small/katatjuta.jpg' });
+	foldGroup.registerImage({ domId: 'img4', srcUrl: 'http://developer.yahoo.com/yui/docs/assets/examples/exampleimages/small/morraine.jpg' });
+	foldGroup.registerImage({ domId: 'img5', srcUrl: 'http://developer.yahoo.com/yui/docs/assets/examples/exampleimages/small/japan.jpg' });
+
+});
+</script>
+</body>
+</html>

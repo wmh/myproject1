@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI3 Events</title>
+</head>
+<style style="text/css">
+#t1 {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+}
+#t1:hover {
+    background-color: yellow;
+}
+</style>
+<body>
+
+<div id="t1"></div>
+<button id="t2">mouseover</button>
+<button id="t3">mouseout</button>
+
+<script src="http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript">
+$("#t1").mouseover(function (e) {
+    $(this).css();
+});
+YUI().use("node", "event", "node-event-simulate", function (Y) {
+    var t1Node = Y.one("#t1");
+    Y.one("#t2").on("click", function () {
+        t1Node.simulate("click");
+        t1Node.simulate("mouseover");
+    });
+    Y.one("#t3").on("click", function () {
+        t1Node.simulate("mouseout");
+    });
+});
+</script>
+</body>
+</html>

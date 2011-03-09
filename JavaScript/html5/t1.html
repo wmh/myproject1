@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>a</title>
+<link rel="stylesheet" href="http://html5demos.com/css/html5demos.css" type="text/css" />
+</head>
+<body>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec dolor lectus, id suscipit tortor. Integer vel mi nec turpis sagittis dictum vitae quis erat. Cras id orci eu quam interdum congue. Sed vestibulum vulputate arcu laoreet convallis. Sed tellus ligula, suscipit ac gravida accumsan, tempus et mauris. Donec dapibus mollis sem, et tincidunt justo lacinia quis. Sed ultrices mattis pulvinar. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer vel neque lorem. Donec ante enim, condimentum ac faucibus at, tristique nec risus.</p>
+
+<section id="drop">
+    <p class="info">Drop here for info about the dragged item</p>
+</section>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript">
+function cancel(e) {
+    console.log("Yo");
+    if (e.preventDefault) e.preventDefault(); // required by FF + Safari
+    return false; // required by IE
+}
+var addEvent = (function () {
+  if (document.addEventListener) {
+    return function (el, type, fn) {
+      if (el && el.nodeName || el === window) {
+        el.addEventListener(type, fn, false);
+      } else if (el && el.length) {
+        for (var i = 0; i < el.length; i++) {
+          addEvent(el[i], type, fn);
+        }
+      }
+    };
+  } else {
+    return function (el, type, fn) {
+      if (el && el.nodeName || el === window) {
+        el.attachEvent('on' + type, function () { return fn.call(el, window.event); });
+      } else if (el && el.length) {
+        for (var i = 0; i < el.length; i++) {
+          addEvent(el[i], type, fn);
+        }
+      }
+    };
+  }
+})();
+
+var drop = document.getElementById('drop');
+addEvent(drop, 'dragover', cancel);
+addEvent(drop, 'dragenter', cancel);
+addEvent(drop, 'drop', function (e) {
+    console.log("Drop");
+});
+
+$(function () {
+
+});
+</script>
+</body>
+</html>

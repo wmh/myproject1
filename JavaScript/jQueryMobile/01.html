@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>Test</title>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css" />
+	<link rel="stylesheet" href="http://jquerymobile.com/demos/1.0a3/docs/_assets/css/jqm-docs.css" />
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.js"></script>
+</head>
+
+<body>
+
+<!-- Start of first page -->
+<div data-role="page" id="foo"  data-theme="b">
+
+	<div data-role="header">
+		<h1>Foo</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
+		<p>I'm first in the source order so I'm shown as the page.</p>
+		<p>View internal page called <a href="#bar">bar</a></p>
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /header -->
+</div><!-- /page -->
+
+
+<!-- Start of second page -->
+<div data-role="page" id="bar">
+
+	<div data-role="header">
+		<h1>Bar</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
+        <ol data-role="listview" data-theme="g" data-inset="true">
+        	<li><a href="acura.html">Acura</a></li>
+        	<li><a href="audi.html">Audi</a></li>
+        	<li><a href="bmw.html">BMW</a></li>
+        </ol>
+		<p>I'm first in the source order so I'm shown as the page.</p>
+		<p><a href="#foo">Back to foo</a></p>
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /header -->
+</div><!-- /page -->
+</body>
+View
+</html>
