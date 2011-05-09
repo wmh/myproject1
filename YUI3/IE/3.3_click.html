@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>YUI 3.3 click in IE</title>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssfonts/fonts-min.css">
+<style type="text/css">
+</style>
+</head>
+
+<body>
+
+<script src="http://yui.yahooapis.com/3.3.0/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+var documentClickHandler = function (e) {
+    var target,
+        targetParent;
+    target = e.target;
+    if (target.test(".first-name")) {
+        alert("test result - 1");
+    } else {
+        alert("test result - 2");
+    }
+};
+
+YUI({filter: "raw"}).use("node", "event", function(Y) {
+    Y.one("html").on("click", documentClickHandler);
+});
+</script>
+</body>
+</html>

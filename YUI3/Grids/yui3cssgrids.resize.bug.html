@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>YUI3 Grids CSS </title>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssfonts/fonts-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssgrids/grids.css">
+<style type="text/css">
+#doc-bar {
+    margin: 0 auto;
+    min-width: 851px;
+    max-width: 971px;
+    width: 100%;
+    _width: 971px;
+}
+ol {
+   /* reproduce the bug*/
+    border: 1px solid red;
+}
+ol li {
+    float: left;
+    height: 230px;
+    padding: 10px 18px 1px 16px;
+    position: relative;
+    width: 133px;
+
+    /* reproduce the bug*/
+    margin-left: 10px;
+    border: 1px solid red;
+}
+.clearfix {
+    zoom: 1;
+}
+.clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+</style>
+</head>
+
+<body>
+
+<div id="doc-bar">
+    <div id="bd" class="yui3-g doc-content">
+        <div class="yui3-u-1-6">
+            <div class="grid-content">YA!</div>
+        </div>
+        <div class="yui3-u-5-6">
+            <div class="grid-content">
+                <ol class="clearfix">
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

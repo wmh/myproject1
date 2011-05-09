@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssfonts/fonts-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssbase/base-min.css">
+<title>Word wrap</title>
+<style>
+h1 {
+    clear: both;
+    color: #569EA4;
+    font-weight: bold;
+}
+a {
+    color: #569EA4;
+    text-decoration: none;
+}
+ul {
+    position: relative;
+    width: 550px;
+}
+.file {
+    float: left;
+    height: 230px;
+    list-style: none;
+    padding: 10px 18px 1px 16px;
+    position: relative;
+    width: 133px;
+}
+.file .folder-mask {
+    background-image: url(http://a.mimgs.com/space/sp_bg_photo_mask.png);
+    background-position: 0 -230px;
+    height: 230px;
+    left: 16px;
+    position: absolute;
+    top: 10px;
+    width: 133px;
+}
+.file .file-info {
+    left: 24px;
+    position: absolute;
+    top: 178px;
+}
+.file .file-info .file-name {
+    color: #569EA4;
+    display: block;
+    font-size: 116%;
+    font-weight: bold;
+    max-height: 36px;
+    overflow: hidden;
+    width: 116px;
+}
+.file .file-info .file-date {
+    font-size: 93%;
+}
+.break-all {
+    word-break: break-all;
+}
+.break-word {
+    word-wrap: break-word;
+}
+.chosen {
+    border: 1px solid red;
+}
+</style>
+</head>
+
+<body>
+<h1>斷字的範例請看「湛藍色字體」的部份，紅色框框內是最後選定的方式</h1>
+<ul>
+<li class="file">
+    <span class="folder-mask">連續英數字<br>break-all + break-word</span>
+    <span class="file-info">
+        <a href="#" title="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"><span class="file-name break-all break-word">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span></a>
+        <span class="file-date">Apr 12, 2011</span>
+    </span>
+</li>
+<li class="file">
+    <span class="folder-mask">連續英數字<br>break-all</span>
+    <span class="file-info">
+        <a href="#" title="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"><span class="file-name break-all">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span></a>
+        <span class="file-date">Apr 12, 2011</span>
+    </span>
+</li>
+<li class="file chosen">
+    <span class="folder-mask">連續英數字<br>break-word</span>
+    <span class="file-info">
+        <a href="#" title="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"><span class="file-name break-word">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span></a>
+        <span class="file-date">Apr 12, 2011</span>
+    </span>
+</li>
+
+<li class="file">
+    <span class="folder-mask">短字+連續英數字<br>break-all + break-word</span>
+    <span class="file-info">
+        <a href="#" title="AAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"><span class="file-name break-all break-word">AAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span></a>
+        <span class="file-date">Apr 12, 2011</span>
+    </span>
+</li>
+<li class="file">
+    <span class="folder-mask">短字+連續英數字<br>break-all</span>
+    <span class="file-info">
+        <a href="#" title="AAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"><span class="file-name break-all">AAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span></a>
+        <span class="file-date">Apr 12, 2011</span>
+    </span>
+</li>
+<li class="file chosen">
+    <span class="folder-mask">短字+連續英數字<br>break-word</span>
+    <span class="file-info">
+        <a href="#" title="AAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"><span class="file-name break-word">AAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span></a>
+        <span class="file-date">Apr 12, 2011</span>
+    </span>
+</li>
+
+<li class="file">
+    <span class="folder-mask">正常英數字<br>break-all + break-word</span>
+    <span class="file-info">
+        <a href="#" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."><span class="file-name break-all break-word">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span></a>
+        <span class="file-date">Apr 12, 2011</span>
+    </span>
+</li>
+<li class="file">
+    <span class="folder-mask">正常英數字<br>break-all</span>
+    <span class="file-info">
+        <a href="#" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."><span class="file-name break-all">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span></a>
+        <span class="file-date">Apr 12, 2011</span>
+    </span>
+</li>
+<li class="file chosen">
+    <span class="folder-mask">正常英數字<br>break-word</span>
+    <span class="file-info">
+        <a href="#" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."><span class="file-name break-word">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span></a>
+        <span class="file-date">Apr 12, 2011</span>
+    </span>
+</li>
+
+<li class="file">
+    <span class="folder-mask">字少也ok<br>break-all + break-word</span>
+    <span class="file-info">
+        <a href="#" title="Lorem ipsum"><span class="file-name break-all break-word">Lorem ipsum</span></a>
+        <span class="file-date">Apr 12, 2011</span>
+    </span>
+</li>
+<li class="file">
+    <span class="folder-mask">字少也ok<br>break-all</span>
+    <span class="file-info">
+        <a href="#" title="Lorem ipsum"><span class="file-name break-all">Lorem ipsum</span></a>
+        <span class="file-date">Apr 12, 2011</span>
+    </span>
+</li>
+<li class="file chosen">
+    <span class="folder-mask">字少也ok<br>break-word</span>
+    <span class="file-info">
+        <a href="#" title="Lorem ipsum"><span class="file-name break-word">Lorem ipsum</span></a>
+        <span class="file-date">Apr 12, 2011</span>
+    </span>
+</li>
+</ul>
+
+<h1>結論</h1>
+<ol>
+    <li>firefox, opera 不支援 break-all，只有 break-word 有效</li>
+    <li>break-all 會把正常字斷掉，不被 Producer 採納</li>
+    <li>所以有固定寬度時，可以用 break-word 把多餘的字換行並且遮掉</li>
+    <li>沒有固定寬度時，仍用截字的方式處理，遇到需要決定字數的地方請直接找 Tony 或 Holly</li>
+</ol>
+</body>
+</html>
