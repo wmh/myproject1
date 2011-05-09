@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+</head>
+
+<body>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    var a = $('<div><div id="first">第一行</div><div id="third">第三行</div></div>');
+    console.log(a.find("#third"));
+    console.log(a.find("#third")[0]);
+});
+</script>
+</body>
+
+</html>
+
