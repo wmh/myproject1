@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>onAvailable test</title>
+<script src="http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js"></script>
+<script type="text/javascript">
+YUI().use("node", "event", function (Y) {
+    Y.log("YUI block1 - " + document.readyState);
+    Y.Event.onAvailable("#t1", function () {
+        Y.log("t1 onAvailable - 1 " + document.readyState)
+    });
+    Y.Event.onAvailable("#t2", function () {Y.log("t2 onAvailable - 1 " + document.readyState)});
+    Y.Event.onAvailable("#t3", function () {Y.log("t3 onAvailable - 1 " + document.readyState)});
+    Y.Event.onAvailable("#t4", function () {Y.log("t4 onAvailable - 1 " + document.readyState)});
+    Y.Event.onAvailable("#t5", function () {Y.log("t5 onAvailable - 1 " + document.readyState)});
+    Y.Event.onContentReady("#t1", function () {Y.log("t1 onContentReady - 1 " + document.readyState)});
+    Y.Event.onContentReady("#t2", function () {Y.log("t2 onContentReady - 1 " + document.readyState)});
+    Y.Event.onContentReady("#t3", function () {Y.log("t3 onContentReady - 1 " + document.readyState)});
+    Y.Event.onContentReady("#t4", function () {Y.log("t4 onContentReady - 1 " + document.readyState)});
+    Y.Event.onContentReady("#t5", function () {Y.log("t5 onContentReady - 1 " + document.readyState)});
+    Y.on("available", function () {Y.log("tx onAvailable - 1.5 " + document.readyState)}, "#t1, #t2, #t3, #t4, #t5");
+    window.Y = Y;
+});
+</script>
+</head>
+<body>
+<div id="t1">t1t1t1</div>
+<div id="t2">tttttt</div>
+<div id="t3">tttttt</div>
+<div id="t4">tttttt</div>
+<div id="t5">tttttt</div>
+<div id="insert-node"></div>
+
+</body>
+<script type="text/javascript">
+YUI().use("node", "event", function (Y) {
+    Y.log("YUI block2 - " + document.readyState);
+    Y.Event.onAvailable("#t1", function () {Y.log("t1 onAvailable - 2 " + document.readyState)});
+    Y.Event.onAvailable("#t2", function () {Y.log("t2 onAvailable - 2 " + document.readyState)});
+    Y.Event.onAvailable("#t3", function () {Y.log("t3 onAvailable - 2 " + document.readyState)});
+    Y.Event.onAvailable("#t4", function () {Y.log("t4 onAvailable - 2 " + document.readyState)});
+    Y.Event.onAvailable("#t5", function () {Y.log("t5 onAvailable - 2 " + document.readyState)});
+    Y.Event.onContentReady("#t1", function () {Y.log("t1 onContentReady - 2 " + document.readyState)});
+    Y.Event.onContentReady("#t2", function () {Y.log("t2 onContentReady - 2 " + document.readyState)});
+    Y.Event.onContentReady("#t3", function () {Y.log("t3 onContentReady - 2 " + document.readyState)});
+    Y.Event.onContentReady("#t4", function () {Y.log("t4 onContentReady - 2 " + document.readyState)});
+    Y.Event.onContentReady("#t5", function () {Y.log("t5 onContentReady - 2 " + document.readyState)});
+    Y.on("available", function () {Y.log("t1 onAvailable - 2.5 " + document.readyState)}, "#t1");
+});
+
+function massInsert() {
+    var alerted = false;
+    var iNode = document.getElementById("insert-node");
+    for (i = 0; i < 1000; ++i) {
+        if (!alerted) {
+            alerted = true;
+            console.log("RUN - " + document.readyState);
+        }
+        var e   = document.createElement("script");
+        e.type  = "text/javascript";
+        e.src   = "http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js?" + new Date().getTime() + "_" + i;
+        e.async = true;
+        iNode.appendChild(e);
+    }
+}
+setTimeout(massInsert, 240);
+console.log("LAST LINE - " + document.readyState);
+</script>
+</html>
