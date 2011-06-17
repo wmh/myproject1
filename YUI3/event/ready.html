@@ -6,6 +6,8 @@
 <title>onAvailable test</title>
 <script src="http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js"></script>
 <script type="text/javascript">
+var hasWin = (typeof window != 'undefined');
+alert(hasWin);
 YUI().use("node", "event", function (Y) {
     Y.log("YUI block1 - " + document.readyState);
     Y.Event.onAvailable("#t1", function () {
