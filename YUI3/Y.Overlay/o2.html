@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Test Panel</title>
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.0.0/build/cssreset/reset-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.0.0/build/cssfonts/fonts-min.css">
+<style>
+#overlay-panel {
+}
+#overlay-panel .yui3-widget-hd {
+    color: red;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+#overlay-panel .yui3-widget-ft {
+    padding: 3px;
+}
+.mod-popup {
+    position: absolute;
+    min-width: 300px;
+}
+.mod-popup .x1 {
+    background-image: url(http://a.staging.mimgs.com/index/space/bg_popup.png);
+    left: 0;
+    position: absolute;
+    width: 50%;
+    height: 50%;
+}
+.mod-popup .x2 {
+    background-image: url(http://a.staging.mimgs.com/index/space/bg_popup.png);
+    background-position: right top;
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 0;
+    right: 0;
+}
+.mod-popup .x3 {
+    background-image: url(http://a.staging.mimgs.com/index/space/bg_popup.png);
+    background-position: left bottom;
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    bottom: 0;
+    left: 0;
+}
+.mod-popup .x4 {
+    background-image: url(http://a.staging.mimgs.com/index/space/bg_popup.png);
+    background-position: right bottom;
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    bottom: 0;
+    right: 0;
+}
+.mod-popup .mod-content {
+    z-index: 2;
+    position: relative;
+}
+</style>
+</head>
+<body>
+
+<div id="overlay-panel" class="yui3-widget yui3-overlay mod-popup">
+    <span class="x1"></span><span class="x2"></span>
+    <span class="x3"></span><span class="x4"></span>
+    <div class="yui3-overlay-content yui3-widget-stdmod mod-content">
+        <div class="yui3-widget-hd">1</div>
+        <div class="yui3-widget-bd">2</div>
+        <div class="yui3-widget-ft">3</div>
+    </div>
+</div>
+
+<script src="http://yui.yahooapis.com/3.2.0/build/yui/yui.js"></script>
+<script type="text/javascript">
+YUI().use("overlay", "event", function (Y) {
+
+    var panel = new Y.Overlay({
+        boundingBox : "#overlay-panel",
+        contentBox : "#overlay-panel .yui3-widget-stdmod",
+        width  : "90%",
+        height : "90%",
+        headerContent: "Aligned Overlay",
+        //bodyContent: "Hello world!!!",
+        centered : true,
+        zIndex:101
+    });
+    panel.render();
+
+    Y.on("windowresize", function () {
+        panel.set("width", "90%");
+        panel.set("height", "90%");
+        panel.set("centered", true);
+        panel.fillHeight(panel.getStdModNode("body"));
+    });
+
+});
+</script>
+</body>
+</html>
