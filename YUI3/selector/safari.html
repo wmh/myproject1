@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MAC Safari</title>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.0.0/build/cssreset/reset-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.0.0/build/cssfonts/fonts-min.css">
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style>
+#t1 {
+    border: 3px solid silver;
+}
+.aa {
+    border: 3px solid red;
+    height: 100px;
+    width: 100px;
+}
+</style>
+</head>
+<body>
+
+<div id="t1">
+    <div class="aa">
+    </div>
+</div>
+
+
+<script src="http://yui.yahooapis.com/3.2.0/build/yui/yui.js"></script>
+<script type="text/javascript">
+YUI().use("node", function (Y) {
+    var t1 = Y.one("#t1");
+        aa = t1.one("div.aa");
+
+    aa.setStyle("width", "200px").setStyle("backgroundColor", "yellow");
+
+    window.Y = Y;
+});
+
+</script>
+</body>
+</html>

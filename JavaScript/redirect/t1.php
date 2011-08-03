@@ -1,4 +1,5 @@
 <?php
+header("X-XSS-Protection: 0");
 $str = "'梁()";
 $str = "'%A()";
 ?>
