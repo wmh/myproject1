@@ -46,16 +46,19 @@
     padding: 4px 0 0 12px;
     width: 40%;
 }
-form div span.message p {
+.demo form div span.message p {
+    display: inline;
     font-size: 1.2em;
+}
+.demo form div span.message-init {
+    visibility: hidden;
+}
+.demo form div span.message-error {
+    color: red;
 }
 </style>
 </head>
 <body>
-
-<input type="text" class="aa" name="a1" value="1" />
-<input type="text" class="aa" name="a2" value="1" />
-
 <section class="row demo">
     <h2 class="fontface">Form Validator Demo</h2>
 	<form class="col col_16" name="fm1">
@@ -64,17 +67,17 @@ form div span.message p {
             <div>
             	<label for="email">email</label>
                 <input type="text" id="email" name="email" class="box_shadow" />
-                <span class="message" id="email-messsage"><p></p></span>
+                <span class="message message-init email-message"><p></p></span>
             </div>
             <div>
             	<label for="password">password</label>
                 <input type="text" id="password" name="password" class="box_shadow" />
-            	<span class="message" id="password-messsage"><p></p></span>
+            	<span class="message message-init password-message"><p></p></span>
             </div>
             <div>
             	<label for="confirm_password">password again</label>
                 <input type="text" id="confirm_password" name="confirm_password" class="box_shadow" />
-            	<span class="message" id="confirm_password-messsage"><p></p></span>
+            	<span class="message message-init confirm_password-message"><p></p></span>
             </div>
             <input type="submit" value="submit form &rarr;" />
         </fieldset>
@@ -86,23 +89,47 @@ form div span.message p {
             <div>
             	<label for="email">email</label>
                 <input type="text" id="email" name="email" class="box_shadow" placeholder=":required :max_length;64 :valid_email" />
-                <span class="message" id="email-messsage"><p></p></span>
+                <span class="message message-init email-message"><p></p></span>
             </div>
             <div>
             	<label for="password">password</label>
                 <input type="text" id="password" name="password" class="box_shadow" placeholder=":required :max_length;64 :email" />
-            	<span class="message" id="password-messsage"><p></p></span>
+            	<span class="message message-init password-message"><p></p></span>
             </div>
             <div>
             	<label for="confirm_password">password again</label>
                 <input type="text" id="confirm_password" name="confirm_password" class="box_shadow" placeholder=":required :matches;password" />
-            	<span class="message" id="confirm_password-messsage"><p></p></span>
+            	<span class="message message-init confirm_password-message"><p></p></span>
             </div>
             <div>
             	<label for="pattern">match pattern</label>
-                <input type="text" id="pattern" name="pattern" class="box_shadow" placeholder=":pattern;/^(Hun)+$/i" />
-            	<span class="message" id="pattern-messsage"><p></p></span>
+                <input type="text" id="pattern" name="pattern" class="box_shadow" placeholder=":pattern;/^(Hi)+$/i" />
+            	<span class="message message-init pattern-message"><p></p></span>
             </div>
+            <input type="submit" value="submit form &rarr;" />
+        </fieldset>
+    </form>
+
+	<form class="col col_16" name="fm3">
+    	<fieldset>
+        	<legend>Custom Validators - TRUE/FALSE</legend>
+            <div>
+            	<label for="email">email</label>
+                <input type="text" id="email" name="email" class="box_shadow" />
+                <span class="message message-init email-message"><p></p></span>
+            </div>
+            <div>
+            	<label for="password">password</label>
+                <input type="text" id="password" name="password" class="box_shadow" />
+            	<span class="message message-init password-message"><p></p></span>
+            </div>
+            <input type="submit" value="submit form &rarr;" />
+        </fieldset>
+    </form>
+
+	<form class="col col_16" name="fm4">
+    	<fieldset>
+        	<legend>Custom Validators - Multiple Results</legend>
             <div>
                 <label for="birthday_month">Birthday</label>
                 <span class="inputs">
@@ -300,7 +327,7 @@ form div span.message p {
                         <option value="1871">1871</option>
                     </select>
                 </span>
-        	    <span class="message" id="birthday-messsage"><p></p></span>
+        	    <span class="message message-init birthday-message"><p></p></span>
             </div>
             <input type="submit" value="submit form &rarr;" />
         </fieldset>
@@ -369,69 +396,109 @@ YUI({
     });
     fv2.setRules("email", {
         tips    : {
+            on      : "focus",
             message : "e.g. miiicasa@gmail.com",
-            on : "focus",
         },
         // Note: 有順序性(才會用 array)
-        validators : [{
-            rule : "required",
-            message : "Please enter your miiiCasa ID.",
-        }, {
-            rule : "max_length;64",
-            message : "This e-mail length exceeds 64 characters. Please try another.",
-            on : "blur,keypress",
-        }, {
-            rule : "valid_email",
-            message : "The format of your primary e-mail is incorrect, please check again."
-        }]
+        validators : [
+            {
+                on      : "blur",
+                rule    : "required",
+                message : "Please enter your miiiCasa ID.",
+                class   : "message-error",
+            }, {
+                on      : "blur,keypress",
+                rule    : "max_length;64",
+                message : "This e-mail length exceeds 64 characters. Please try another.",
+            }, {
+                rule : "valid_email",
+                message : "The format of your primary e-mail is incorrect, please check again."
+            }
+        ]
     });
     fv2.setRules("confirm_password", {
         tips    : {
             message : "Enter your password again."
         },
-        validators : [{
-            rule : "required",
-            message : "Please confirm your password."
-        }, {
-            rule : "matches;password",  // 'name' attribute, not 'id'
-            message : "Please verify your password again."
-        }]
+        validators : [
+            {
+                rule : "required",
+                message : "Please confirm your password."
+            }, {
+                rule : "matches;password",  // 'name' attribute, not 'id'
+                message : "Please verify your password again."
+            }
+        ]
     });
     fv2.setRules("password", {
         tips    : {
             message : "Between 8 to 20 characters in length, alphanumeric only."
         },
-        validators : [{
-            rule : "required",
-            message : "Please enter your password."
-        }, {
-            rule : "min_length;8",
-            message : "Passwords must be between 8 to 20 characters in length. Please try another, thank you!",
-        }, {
-            rule : "max_length;20",
-            message : "Your password is longer than 20 characters. Please try another, thank you!",
-        }, {
-            // 同時包含兩個 rule
-            rule : "valid_password",
-            message : "Your password must include alphabets and numbers. Please try another.",
-        }, {
-            // 客製 (檢查 email & password 的關係)
-            rule : function (formNode) {
+        validators : [
+            {
+                rule : "required",
+                message : "Please enter your password."
+            }, {
+                rule : "min_length;8",
+                message : "Passwords must be between 8 to 20 characters in length. Please try another, thank you!",
+            }, {
+                rule : "max_length;20",
+                message : "Your password is longer than 20 characters. Please try another, thank you!",
+            }, {
+                // 同時包含兩個 rule
+                rule : "valid_password",
+                message : "Your password must include alphabets and numbers. Please try another.",
+            }, {
+                // 客製 (檢查 email & password 的關係)
+                rule : function (formNode) {
 
-                //return true or false;
-                return false;
-            },
-            message : "The password cannot include your e-mail address. Please try another, thank you!",
-        }]
+                    //return true or false, false will show the message;
+                    return false;
+                },
+                message : "The password cannot include your e-mail address. Please try another, thank you!",
+            }
+        ]
     });
     fv2.setRules("pattern", {
         tips    : {
-            message : "Should be repetition of the phrase \"Hun\" in any case"
+            message : "Should be repetition of the phrase \"Hi\" in any case"
         },
-        validators : [{
-            rule : "pattern;/^(Hun)+$/i",
-            message : "The value should match the /^(Hun)+$/i pattern.",
-        }]
+        validators : [
+            {
+                rule : "pattern;/^(Hi)+$/i",
+                message : "The value should match the /^(Hi)+$/i pattern.",
+            }
+        ]
+    });
+    fv2.setRules("birthday_day", {
+        tips    : {
+            message : "Please select your birth day."
+        },
+        validators : [
+            {
+                // 客製 (檢查三個生日下拉清單的結果，多種回傳結果)
+                rule : function (formNode) {
+                    //return true or false;
+                    var a = 1;
+                    switch (a) {
+                    case 1:
+                        return 1;
+                        break;
+                    case 2:
+                        return 2;
+                        break;
+                    default:
+                        return 0;
+                    }
+                    return true;    // means ok
+                },
+                message : [
+                    "Please complete your birthday info.",
+                    "The date you choose is not existed",
+                    "Your birthday shouldn't be in the future."
+                ]
+            }
+        ]
     });
 
     /*

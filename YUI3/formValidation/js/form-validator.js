@@ -68,11 +68,84 @@ YUI.add("form-validator", function (Y) {
             alert(this.formName);
             e.halt();
         },
+        _showTipsHandler : function (message) {
+            var node = Y.one(this),
+                nodeName = node.get("name"),
+                formNode = node.ancestor("form"),
+                messageNode;
+            if (!formNode || !nodeName) {
+                Y.log("formNode or nodeName missing, skip show tip.", "warn");
+                return;
+            }
+            messageNode = formNode.one("." + nodeName + "-message");
+            if (!messageNode) {
+                Y.log("messageNode missing, skip show tip.", "warn");
+                return;
+            }
+            //TODO: need tuning for performance issue
+            messageNode.removeClass("message-error").removeClass("message-ok").removeClass("message-init");
+            messageContentNode = messageNode.one("p");
+            if (!messageContentNode) {
+                Y.log("creating messageContentNode");
+                messageContentNode = Y.Node.create("<p></p>");
+                messageNode.insert(messageContentNode);
+            }
+            messageContentNode.set("innerHTML", message);
+        },
+        _validationHandler : function (validators, eventType) {
+            var breakLoop = false;
+            Y.each(validators, function (validator) {
+                if (breakLoop) {
+                    return;
+                }
+                if (Y.Array.indexOf(validator.on.split(","), eventType) === -1) {
+                    return;
+                }
+                Y.log("checking : " + validator.rule);
+            });
+        },
         //===========================
         // Public Methods
         //===========================
         setRules : function (fieldName, config) {
-            //
+            // DEBUG only
+            if (fieldName !== "email") {
+                return;
+            }
+
+            var fieldElement, tips, validators, eventTypes = [], self = this;
+            config = config || {};
+
+            // check node
+            fieldElement = this.formElement.elements[fieldName];
+            if (!fieldElement) {
+                Y.log("field '" + fieldName + "' is not exist!", "error", MODULE_ID);
+                return;
+            }
+
+            // bind tips
+            tips = config.tips;
+            if (tips && tips.message) {
+                // show tips on focus as default
+                tips.on = tips.on || "focus";
+                Y.one(fieldElement).on(tips.on, Y.bind(this._showTipsHandler, fieldElement, tips.message));
+            }
+            // bind validators
+            validators = config.validators;
+            if (validators && Y.Lang.isArray(validators)) {
+                Y.each(validators, function (validator) {
+                    validator.on = validator.on || "blur";
+                    Y.each(validator.on.split(","), function (eventType) {
+                        if (Y.Array.indexOf(eventTypes, eventType) === -1) {
+                            eventTypes.push(eventType);
+                        }
+                    });
+                });
+                Y.each(eventTypes, function (eventType) {
+                    // lost focus of 'this', use 'self' instead
+                    Y.one(fieldElement).on(eventType, Y.bind(self._validationHandler, fieldElement, validators, eventType));
+                });
+            }
         },
         /**
          * Say hello to the world.
