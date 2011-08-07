@@ -44,17 +44,24 @@
     border-bottom: 1px dotted silver;
     float: left;
     padding: 4px 0 0 12px;
+    visibility: hidden;
     width: 40%;
+}
+.demo form div span.message-tips {
+    color: #840;
+    visibility: visible;
+}
+.demo form div span.message-error {
+    color: red;
+    visibility: visible;
+}
+.demo form div span.message-ok {
+    color: green;
+    visibility: visible;
 }
 .demo form div span.message p {
     display: inline;
     font-size: 1.2em;
-}
-.demo form div span.message-init {
-    visibility: hidden;
-}
-.demo form div span.message-error {
-    color: red;
 }
 </style>
 </head>
@@ -88,12 +95,12 @@
         	<legend>Pre-defined Validators</legend>
             <div>
             	<label for="email">email</label>
-                <input type="text" id="email" name="email" class="box_shadow" placeholder=":required :max_length;64 :valid_email" />
+                <input type="text" id="email" name="email" class="box_shadow" placeholder=":required :maxLength;64 :validEmail" />
                 <span class="message message-init email-message"><p></p></span>
             </div>
             <div>
             	<label for="password">password</label>
-                <input type="text" id="password" name="password" class="box_shadow" placeholder=":required :max_length;64 :email" />
+                <input type="text" id="password" name="password" class="box_shadow" placeholder=":required :maxLength;64 :validPassword" />
             	<span class="message message-init password-message"><p></p></span>
             </div>
             <div>
@@ -402,16 +409,20 @@ YUI({
         // Note: 有順序性(才會用 array)
         validators : [
             {
-                on      : "blur",
                 rule    : "required",
                 message : "Please enter your miiiCasa ID.",
                 class   : "message-error",
             }, {
-                on      : "blur,keypress",
-                rule    : "max_length;64",
+                rule    : "maxLength;64",
                 message : "This e-mail length exceeds 64 characters. Please try another.",
             }, {
-                rule : "valid_email",
+                rule    : "validEmail",
+                message : "The format of your primary e-mail is incorrect, please check again."
+            }, {
+                on      : "blur",
+                rule    : "ajax",
+                url     : "/check_email.php",
+                method  : "post",
                 message : "The format of your primary e-mail is incorrect, please check again."
             }
         ]
@@ -439,19 +450,19 @@ YUI({
                 rule : "required",
                 message : "Please enter your password."
             }, {
-                rule : "min_length;8",
+                on      : "blur,keyup",
+                rule    : "minLength;8",
                 message : "Passwords must be between 8 to 20 characters in length. Please try another, thank you!",
             }, {
-                rule : "max_length;20",
+                rule : "maxLength;20",
                 message : "Your password is longer than 20 characters. Please try another, thank you!",
             }, {
                 // 同時包含兩個 rule
-                rule : "valid_password",
+                rule : "validPassword",
                 message : "Your password must include alphabets and numbers. Please try another.",
             }, {
                 // 客製 (檢查 email & password 的關係)
                 rule : function (formNode) {
-
                     //return true or false, false will show the message;
                     return false;
                 },
@@ -466,11 +477,15 @@ YUI({
         validators : [
             {
                 rule : "pattern;/^(Hi)+$/i",
-                message : "The value should match the /^(Hi)+$/i pattern.",
+                message : 'The value should match the /^(Hi)+$/i pattern.',
             }
         ]
     });
-    fv2.setRules("birthday_day", {
+
+    var fv4 = new Y.FormValidator({
+        formName : "fm4"
+    });
+    fv4.setRules("birthday_day", {
         tips    : {
             message : "Please select your birth day."
         },
