@@ -135,7 +135,7 @@
             </div>
             <div>
             	<label for="password">password</label>
-                <input type="text" id="password" name="password" class="box_shadow" placeholder=":required :maxLength;20 :validPassword" />
+                <input type="text" id="password" name="password" class="box_shadow" placeholder=":required :maxLength;20 :validPassword :trigger;confirm_password;blur" />
             	<span class="message password-message"><p></p></span>
             </div>
             <div>
@@ -516,6 +516,8 @@ YUI({
             }, {
                 rule : "validPassword", // 同時包含兩個 rule
                 message : "Your password must include alphabets and numbers. Please try another.",
+            }, {
+                rule : "trigger;confirm_password;blur",
             }
         ]
     });
@@ -583,8 +585,8 @@ YUI({
             monthValue = formNode.one("[name=birthday_month]").get("value"),
             dayValue   = formNode.one("[name=birthday_day]").get("value");
         if (!yearValue && !monthValue && !dayValue) {
-            //return true;              // not required
-            return "birthdayLackError"; // required
+            return null;
+            //return "birthdayLackError"; // required
         }
         if (yearValue && monthValue && dayValue) {
             if (!_isValidDate(yearValue + "/" + monthValue + "/" + dayValue)) {
@@ -652,16 +654,16 @@ YUI({
                 rule    : "required",
                 message : "Please enter your password."
             }, {
-                on      : "focus,keyup,submit",
+                on      : "focus,blur,keyup,submit",
                 message : "Your password is too weak!",
-                rule    : function (eventType) {
+                rule    : function (e) {
                     var p          = this.value,
                         intScore   = 0,
                         node       = Y.one(this),
                         formNode   = node.ancestor("form"),
                         resultNode = formNode.one(".password-strength span");
 
-                    if (eventType === "focus") {
+                    if (e.type === "focus") {
                         resultNode.set("className", "");
                         return null;
                     }

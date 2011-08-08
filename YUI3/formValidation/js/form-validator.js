@@ -26,30 +26,24 @@ YUI.add("form-validator", function (Y) {
     FormValidator.NAME  = "form-validator";
     FormValidator.ATTRS = {};
     FormValidator.VALIDATORS = {
-        ajax : function () {
+        ajax : function (e) {
             if (this.value === "") {
-                return true;
+                return null;
             }
             return true;
         },
-        alpha : function () {
+        alpha : function (e) {
             if (this.value === "") {
-                return true;
+                return null;
             }
             var filter = /[a-zA-Z]/,
                 result = FormValidator.VALIDATORS.pattern.call(this, filter);
             return result;
         },
-        required : function () {
+        matches : function (anotherFieldName, e) {
+            // this === fieldElement
             if (this.value === "") {
-                return false;
-            }
-            return true;
-        },
-        matches : function (anotherFieldName) {
-            // this === formElement
-            if (this.value === "") {
-                return true;
+                return null;
             }
             var node = Y.one(this),
                 formNode = node.ancestor("form"),
@@ -63,35 +57,35 @@ YUI.add("form-validator", function (Y) {
             }
             return true;
         },
-        maxLength : function (len) {
+        maxLength : function (len, e) {
             if (this.value === "") {
-                return true;
+                return null;
             }
             if (this.value.length > parseInt(len, 10)) {
                 return false;
             }
             return true;
         },
-        minLength : function (len) {
+        minLength : function (len, e) {
             if (this.value === "") {
-                return true;
+                return null;
             }
             if (this.value.length < parseInt(len, 10)) {
                 return false;
             }
             return true;
         },
-        numeric : function () {
+        numeric : function (e) {
             if (this.value === "") {
-                return true;
+                return null;
             }
             var filter = /\d/,
                 result = FormValidator.VALIDATORS.pattern.call(this, filter);
             return result;
         },
-        pattern : function (filter) {
+        pattern : function (filter, e) {
             if (this.value === "") {
-                return true;
+                return null;
             }
             if (Lang.isString(filter)) {
                 var params = filter.match(/^\/(((\\\/)|[^\/])*)\/(((\\\/)|[^\/])*)$/),
@@ -116,17 +110,33 @@ YUI.add("form-validator", function (Y) {
             }
             return true;
         },
-        validEmail : function () {
+        required : function (e) {
             if (this.value === "") {
-                return true;
+                return false;
+            }
+            return true;
+        },
+        trigger : function (anotherFieldName, eventType, e) {
+            var node = Y.one(this),
+                formNode = node.ancestor("form"),
+                anotherFieldNode = formNode.one("[name=" + anotherFieldName + "]");
+            if (anotherFieldNode) {
+                anotherFieldNode.simulate(eventType);
+            }
+            //always return true
+            return true;
+        },
+        validEmail : function (e) {
+            if (this.value === "") {
+                return null;
             }
             var filter = /^([a-z0-9_\-]+)((\.|\+)[a-z0-9_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/i,
                 result = FormValidator.VALIDATORS.pattern.call(this, filter);
             return result;
         },
-        validPassword : function () {
+        validPassword : function (e) {
             if (this.value === "") {
-                return true;
+                return null;
             }
             var VALIDATORS = FormValidator.VALIDATORS,
                 hasAlpha = VALIDATORS.alpha.call(this),
@@ -181,7 +191,7 @@ YUI.add("form-validator", function (Y) {
                 self = this;
             Y.each(rules, function (config, fieldName) {
                 var fieldElement = self.formElement.elements[fieldName],
-                    result = self._validationHandler.call(self, fieldElement, config.validators, "submit", config.messageContainer);
+                    result = self._validationHandler.call(self, fieldElement, config.validators, "submit", config.messageContainer, e);
                 if (result !== null && result !== true) {
                     failed = true;
                 }
@@ -192,7 +202,7 @@ YUI.add("form-validator", function (Y) {
             }
         },
         _showMessageHandler : function (message, messageContainer, className) {
-            // this === formElement
+            // this === fieldElement
             var node = Y.one(this),
                 nodeName = node.get("name"),
                 formNode = node.ancestor("form"),
@@ -200,13 +210,13 @@ YUI.add("form-validator", function (Y) {
                 classNames,
                 newClassNames = [];
             if (!formNode || !nodeName) {
-                Y.log("formNode or nodeName missing, skip show tip.", "warn");
+                Y.log("formNode or nodeName missing, skip show message.", "warn");
                 return;
             }
             messageContainer = messageContainer || "." + nodeName + "-message";
             messageNode = formNode.one(messageContainer);
             if (!messageNode) {
-                Y.log("messageNode missing, skip show tip.", "warn");
+                Y.log("messageNode missing, skip show message.", "warn");
                 return;
             }
 
@@ -229,7 +239,8 @@ YUI.add("form-validator", function (Y) {
             messageContentNode.set("innerHTML", message);
         },
 
-        _validationHandler : function (fieldElement, validators, eventType, messageContainer) {
+        _validationHandler : function (fieldElement, validators, eventType, messageContainer, e) {
+            Y.log(e);
             Y.log("_validationHandler(" + eventType + "): " + fieldElement.name);
             // this === this object
             var breakLoop = false,
@@ -258,12 +269,11 @@ YUI.add("form-validator", function (Y) {
                     rule = guid;
                 }
                 ruleArguments = rule.split(";");
-                ruleArguments.push(eventType);
+                ruleArguments.push(e);
                 ruleName = ruleArguments.shift();
                 if (Lang.isFunction(FormValidator.VALIDATORS[ruleName])) {
                     Y.log("checking : " + ruleName);
                     result = FormValidator.VALIDATORS[ruleName].apply(fieldElement, ruleArguments);
-                    Y.log("result:" + result);
                     if (result === null) {
                         showMessage = false;
                         return;
@@ -345,4 +355,4 @@ YUI.add("form-validator", function (Y) {
     Y.FormValidator = FormValidator;
     window.Y = Y;
 
-}, "0.0.1", {"requires" : ["base", "node"]});
+}, "0.0.1", {"requires" : ["base", "node", "node-event-simulate"]});
