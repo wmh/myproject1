@@ -19,6 +19,9 @@
 .row {
     margin-bottom: 30px;
 }
+.hide {
+    display: none;
+}
 .demo form {
     border-bottom: 3px solid #DDD;
     margin-bottom: 30px;
@@ -26,6 +29,9 @@
 .demo form legend {
     color: blue;
     font-weight: bold;
+}
+.demo form div {
+    position: relative;
 }
 .demo form div label {
     float: left;
@@ -63,6 +69,35 @@
     display: inline;
     font-size: 1.2em;
 }
+.password-strength {
+    position: absolute;
+    top: 0;
+    right: 10px;
+}
+.password-strength span {
+    background-image: url(http://img.t.sinajs.cn/t35/appstyle/regedit/images/pwbg.png);
+    display: block;
+    width: 105px;
+    height: 22px;
+    overflow: hidden;
+    visibility: hidden;
+}
+.password-strength .empty {
+    visibility: visible;
+    background-position: 0 0;
+}
+.password-strength .weak {
+    visibility: visible;
+    background-position: 0 -25px;
+}
+.password-strength .ok {
+    visibility: visible;
+    background-position: 0 -50px;
+}
+.password-strength .good {
+    visibility: visible;
+    background-position: 0 -75px;
+}
 </style>
 </head>
 <body>
@@ -74,17 +109,17 @@
             <div>
             	<label for="email">email</label>
                 <input type="text" id="email" name="email" class="box_shadow" />
-                <span class="message message-init email-message"><p></p></span>
+                <span class="message email-message"><p></p></span>
             </div>
             <div>
             	<label for="password">password</label>
                 <input type="text" id="password" name="password" class="box_shadow" />
-            	<span class="message message-init password-message"><p></p></span>
+            	<span class="message password-message"><p></p></span>
             </div>
             <div>
             	<label for="confirm_password">password again</label>
                 <input type="text" id="confirm_password" name="confirm_password" class="box_shadow" />
-            	<span class="message message-init confirm_password-message"><p></p></span>
+            	<span class="message confirm_password-message"><p></p></span>
             </div>
             <input type="submit" value="submit form &rarr;" />
         </fieldset>
@@ -96,22 +131,22 @@
             <div>
             	<label for="email">email</label>
                 <input type="text" id="email" name="email" class="box_shadow" placeholder=":required :maxLength;64 :validEmail" />
-                <span class="message message-init email-message"><p></p></span>
+                <span class="message email-message"><p></p></span>
             </div>
             <div>
             	<label for="password">password</label>
-                <input type="text" id="password" name="password" class="box_shadow" placeholder=":required :maxLength;64 :validPassword" />
-            	<span class="message message-init password-message"><p></p></span>
+                <input type="text" id="password" name="password" class="box_shadow" placeholder=":required :maxLength;20 :validPassword" />
+            	<span class="message password-message"><p></p></span>
             </div>
             <div>
             	<label for="confirm_password">password again</label>
                 <input type="text" id="confirm_password" name="confirm_password" class="box_shadow" placeholder=":required :matches;password" />
-            	<span class="message message-init confirm_password-message"><p></p></span>
+            	<span class="message confirm_password-message"><p></p></span>
             </div>
             <div>
             	<label for="pattern">match pattern</label>
                 <input type="text" id="pattern" name="pattern" class="box_shadow" placeholder=":pattern;/^(Hi)+$/i" />
-            	<span class="message message-init pattern-message"><p></p></span>
+            	<span class="message pattern-message"><p></p></span>
             </div>
             <input type="submit" value="submit form &rarr;" />
         </fieldset>
@@ -119,16 +154,16 @@
 
 	<form class="col col_16" name="fm3">
     	<fieldset>
-        	<legend>Custom Validators - TRUE/FALSE</legend>
+        	<legend>Custom Validator - TRUE/FALSE</legend>
             <div>
             	<label for="email">email</label>
                 <input type="text" id="email" name="email" class="box_shadow" />
-                <span class="message message-init email-message"><p></p></span>
+                <span class="message email-message"><p></p></span>
             </div>
             <div>
             	<label for="password">password</label>
                 <input type="text" id="password" name="password" class="box_shadow" />
-            	<span class="message message-init password-message"><p></p></span>
+            	<span class="message password-message"><p></p></span>
             </div>
             <input type="submit" value="submit form &rarr;" />
         </fieldset>
@@ -136,7 +171,7 @@
 
 	<form class="col col_16" name="fm4">
     	<fieldset>
-        	<legend>Custom Validators - Multiple Results</legend>
+        	<legend>Custom Validator - Multiple Results</legend>
             <div>
                 <label for="birthday_month">Birthday</label>
                 <span class="inputs">
@@ -334,7 +369,20 @@
                         <option value="1871">1871</option>
                     </select>
                 </span>
-        	    <span class="message message-init birthday-message"><p></p></span>
+        	    <span class="message birthday-message"><p></p></span>
+            </div>
+            <input type="submit" value="submit form &rarr;" />
+        </fieldset>
+    </form>
+
+	<form class="col col_16" name="fm5">
+    	<fieldset>
+        	<legend>Custom Validator - Password strength</legend>
+            <div>
+            	<label for="password">password</label>
+                <input type="text" id="password" name="password" class="box_shadow" placeholder=":required" />
+            	<span class="message password-message"><p></p></span>
+            	<p class="password-strength"><span></span></p>
             </div>
             <input type="submit" value="submit form &rarr;" />
         </fieldset>
@@ -342,7 +390,7 @@
 
 </section>
 
-<section class="row">
+<section class="row hide">
     <h2 class="fontface">HTML5 Forms Demo</h2>
 	<form class="col col_6" name="t11">
     	<fieldset>
@@ -398,6 +446,16 @@ YUI({
     filter: 'raw'
 }).use('form-validator', 'nodeAA', function(Y) {
 
+    var _isValidDate = function (dateString) {
+        var userDate = new Date(dateString),
+            userMonth = dateString.split("/")[1];
+        // Date is not valid.
+        if (userDate.getMonth() !== parseInt(userMonth, 10) - 1) {
+            return false;
+        }
+        return true;
+    };
+
     var fv2 = new Y.FormValidator({
         formName : "fm2"
     });
@@ -411,7 +469,6 @@ YUI({
             {
                 rule    : "required",
                 message : "Please enter your miiiCasa ID.",
-                class   : "message-error",
             }, {
                 rule    : "maxLength;64",
                 message : "This e-mail length exceeds 64 characters. Please try another.",
@@ -450,23 +507,15 @@ YUI({
                 rule : "required",
                 message : "Please enter your password."
             }, {
-                on      : "blur,keyup",
+                on      : "blur,keyup,submit",
                 rule    : "minLength;8",
                 message : "Passwords must be between 8 to 20 characters in length. Please try another, thank you!",
             }, {
                 rule : "maxLength;20",
                 message : "Your password is longer than 20 characters. Please try another, thank you!",
             }, {
-                // 同時包含兩個 rule
-                rule : "validPassword",
+                rule : "validPassword", // 同時包含兩個 rule
                 message : "Your password must include alphabets and numbers. Please try another.",
-            }, {
-                // 客製 (檢查 email & password 的關係)
-                rule : function (formNode) {
-                    //return true or false, false will show the message;
-                    return false;
-                },
-                message : "The password cannot include your e-mail address. Please try another, thank you!",
             }
         ]
     });
@@ -482,8 +531,89 @@ YUI({
         ]
     });
 
+    var fv3 = new Y.FormValidator({
+        formName : "fm3"
+    });
+    fv3.setRules("email", {
+        tips    : {
+            on      : "focus",
+            message : "e.g. miiicasa@gmail.com",
+        },
+        validators : [
+            {
+                rule    : "required",
+                message : "Please enter your miiiCasa ID.",
+            }
+        ]
+    });
+    fv3.setRules("password", {
+        tips    : {
+            message : "Different from your account."
+        },
+        validators : [
+            {
+                rule : "required",
+                message : "Please enter your password."
+            }, {
+                // custom  - 檢查 email & password 的關係
+                rule : function () {
+                    // this === formElement
+                    var node = Y.one(this),
+                        formNode = node.ancestor("form"),
+                        emailNode = formNode.one("[name=email]"),
+                        emailId = emailId = emailNode.get("value").split("@", 1)[0];
+                    if (this.value === emailId) {
+                        return false;
+                    }
+                    return true;
+                },
+                message : "The password cannot include your e-mail address. Please try another, thank you!",
+            }
+        ]
+    });
+
     var fv4 = new Y.FormValidator({
         formName : "fm4"
+    });
+    // Custom (檢查三個生日下拉清單的結果，多種回傳結果)
+    var birthValidator = function () {
+        var node       = Y.one(this),
+            formNode   = node.ancestor("form"),
+            yearValue  = formNode.one("[name=birthday_year]").get("value"),
+            monthValue = formNode.one("[name=birthday_month]").get("value"),
+            dayValue   = formNode.one("[name=birthday_day]").get("value");
+        if (!yearValue && !monthValue && !dayValue) {
+            //return true;              // not required
+            return "birthdayLackError"; // required
+        }
+        if (yearValue && monthValue && dayValue) {
+            if (!_isValidDate(yearValue + "/" + monthValue + "/" + dayValue)) {
+                return "birthdayDateError";
+            }
+            if (new Date(yearValue + "/" + monthValue + "/" + dayValue) > new Date()) {
+                return "birthdayFutureError";
+            }
+            return true;
+        } else {
+            return "birthdayLackError";
+        }
+    };
+    var birthMessages = {
+        birthdayLackError   : "Please complete your birthday info.",
+        birthdayDateError   : "The date you choose is not existed",
+        birthdayFutureError : "Your birthday shouldn't be in the future."
+    };
+    fv4.setRules("birthday_month", {
+        tips    : {
+            message : "Please select your birth month."
+        },
+        validators : [
+            {
+                rule : birthValidator,
+                message : birthMessages
+            }
+        ],
+        messageContainer : ".birthday-message"
     });
     fv4.setRules("birthday_day", {
         tips    : {
@@ -491,36 +621,121 @@ YUI({
         },
         validators : [
             {
-                // 客製 (檢查三個生日下拉清單的結果，多種回傳結果)
-                rule : function (formNode) {
-                    //return true or false;
-                    var a = 1;
-                    switch (a) {
-                    case 1:
-                        return 1;
-                        break;
-                    case 2:
-                        return 2;
-                        break;
-                    default:
-                        return 0;
+                rule : birthValidator,
+                message : birthMessages
+            }
+        ],
+        messageContainer : ".birthday-message"
+    });
+    fv4.setRules("birthday_year", {
+        tips    : {
+            message : "Please select your birth year."
+        },
+        validators : [
+            {
+                rule : birthValidator,
+                message : birthMessages
+            }
+        ],
+        messageContainer : ".birthday-message"
+    });
+
+    var fv5 = new Y.FormValidator({
+        formName : "fm5"
+    });
+    fv5.setRules("password", {
+        tips    : {
+            message : "Between 8 to 20 characters in length, alphanumeric only."
+        },
+        validators : [
+            {
+                rule    : "required",
+                message : "Please enter your password."
+            }, {
+                on      : "focus,keyup,submit",
+                message : "Your password is too weak!",
+                rule    : function (eventType) {
+                    var p          = this.value,
+                        intScore   = 0,
+                        node       = Y.one(this),
+                        formNode   = node.ancestor("form"),
+                        resultNode = formNode.one(".password-strength span");
+
+                    if (eventType === "focus") {
+                        resultNode.set("className", "");
+                        return null;
                     }
-                    return true;    // means ok
-                },
-                message : [
-                    "Please complete your birthday info.",
-                    "The date you choose is not existed",
-                    "Your birthday shouldn't be in the future."
-                ]
+
+                    // PASSWORD LENGTH
+                    intScore += p.length;
+
+                    if(p.length > 0 && p.length <= 4) {                    // length 4 or less
+                        intScore += p.length;
+                    }
+                    else if (p.length >= 5 && p.length <= 7) {  // length between 5 and 7
+                        intScore += 6;
+                    }
+                    else if (p.length >= 8 && p.length <= 15) { // length between 8 and 15
+                        intScore += 12;
+                        //alert(intScore);
+                    }
+                    else if (p.length >= 16) {               // length 16 or more
+                        intScore += 18;
+                        //alert(intScore);
+                    }
+
+                    // LETTERS (Not exactly implemented as dictacted above because of my limited understanding of Regex)
+                    if (p.match(/[a-z]/)) {              // [verified] at least one lower case letter
+                        intScore += 1;
+                    }
+                    if (p.match(/[A-Z]/)) {              // [verified] at least one upper case letter
+                        intScore += 5;
+                    }
+                    // NUMBERS
+                    if (p.match(/\d/)) {                // [verified] at least one number
+                        intScore += 5;
+                    }
+                    if (p.match(/.*\d.*\d.*\d/)) {            // [verified] at least three numbers
+                        intScore += 5;
+                    }
+
+                    // SPECIAL CHAR
+                    if (p.match(/[!,@,#,$,%,^,&,*,?,_,~]/)) {           // [verified] at least one special character
+                        intScore += 5;
+                    }
+                    // [verified] at least two special characters
+                    if (p.match(/.*[!,@,#,$,%,^,&,*,?,_,~].*[!,@,#,$,%,^,&,*,?,_,~]/)) {
+                        intScore += 5;
+                    }
+
+                    // COMBOS
+                    if (p.match(/(?=.*[a-z])(?=.*[A-Z])/)) {        // [verified] both upper and lower case
+                        intScore += 2;
+                    }
+                    if (p.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/)) { // [verified] both letters and numbers
+                        intScore += 2;
+                    }
+                    // [verified] letters, numbers, and special characters
+                    if (p.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!,@,#,$,%,^,&,*,?,_,~])/)) {
+                        intScore += 2;
+                    }
+                    Y.log(intScore);
+                    // show suggestion
+                    if (intScore === 0) {
+                        resultNode.set("className", "empty");
+                    } else if (intScore < 20) {
+                        resultNode.set("className", "weak");
+                    } else if (intScore < 50) {
+                        resultNode.set("className", "ok");
+                    } else {
+                        resultNode.set("className", "good");
+                    }
+                    return intScore >= 20;
+                }
             }
         ]
     });
 
-    /*
-    var fv2 = new Y.FormValidator({
-        formName : "t2"
-    });
-    */
 });
 </script>
 </body>

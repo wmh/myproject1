@@ -22,69 +22,121 @@ YUI.add("form-validator", function (Y) {
         FormValidator.superclass.constructor.apply(this, arguments);
     }
 
-    // Attributes for user.
-    Y.mix(FormValidator, {
-        NS    : "form-validator",
-        NAME  : "form-validator",
-        ATTRS : {
-        },
-        VALIDATORS : {
-            ajax : function () {
-                return true;
-            },
-            alpha : function () {
-                var filter = /[a-zA-Z]/,
-                    result = FormValidator.VALIDATORS.pattern.call(this, filter);
-                return result;
-            },
-            required : function () {
-                if (this.value === "") {
-                    return false;
-                }
-                return true;
-            },
-            matches : function () {
-                return true;
-            },
-            maxLength : function (len) {
-                if (this.value.length > len) {
-                    return false;
-                }
-                return true;
-            },
-            minLength : function (len) {
-                if (this.value.length < len) {
-                    return false;
-                }
-                return true;
-            },
-            numeric : function () {
-                var filter = /\d/,
-                    result = FormValidator.VALIDATORS.pattern.call(this, filter);
-                return result;
-            },
-            pattern : function (filter) {
-                if (filter.test(this.value) === false) {
-                    return false;
-                }
-                return true;
-            },
-            validEmail : function () {
-                var filter = /^([a-z0-9_\-]+)((\.|\+)[a-z0-9_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/i,
-                    result = FormValidator.VALIDATORS.pattern.call(this, filter);
-                return result;
-            },
-            validPassword : function () {
-                var VALIDATORS = FormValidator.VALIDATORS,
-                    hasAlpha = VALIDATORS.alpha.call(this),
-                    hasNumeric = VALIDATORS.numeric.call(this);
-                if (!hasAlpha || !hasNumeric) {
-                    return false;
-                }
+    FormValidator.NS    = "form-validator";
+    FormValidator.NAME  = "form-validator";
+    FormValidator.ATTRS = {};
+    FormValidator.VALIDATORS = {
+        ajax : function () {
+            if (this.value === "") {
                 return true;
             }
+            return true;
+        },
+        alpha : function () {
+            if (this.value === "") {
+                return true;
+            }
+            var filter = /[a-zA-Z]/,
+                result = FormValidator.VALIDATORS.pattern.call(this, filter);
+            return result;
+        },
+        required : function () {
+            if (this.value === "") {
+                return false;
+            }
+            return true;
+        },
+        matches : function (anotherFieldName) {
+            // this === formElement
+            if (this.value === "") {
+                return true;
+            }
+            var node = Y.one(this),
+                formNode = node.ancestor("form"),
+                anotherFieldNode = formNode.one("[name=" + anotherFieldName + "]");
+            if (!anotherFieldNode) {
+                Y.log("Another field '" + anotherFieldName + "' is not exist!", "warn", MODULE_ID);
+                return true;
+            }
+            if (anotherFieldNode.get("value") !== node.get("value")) {
+                return false;
+            }
+            return true;
+        },
+        maxLength : function (len) {
+            if (this.value === "") {
+                return true;
+            }
+            if (this.value.length > parseInt(len, 10)) {
+                return false;
+            }
+            return true;
+        },
+        minLength : function (len) {
+            if (this.value === "") {
+                return true;
+            }
+            if (this.value.length < parseInt(len, 10)) {
+                return false;
+            }
+            return true;
+        },
+        numeric : function () {
+            if (this.value === "") {
+                return true;
+            }
+            var filter = /\d/,
+                result = FormValidator.VALIDATORS.pattern.call(this, filter);
+            return result;
+        },
+        pattern : function (filter) {
+            if (this.value === "") {
+                return true;
+            }
+            if (Lang.isString(filter)) {
+                var params = filter.match(/^\/(((\\\/)|[^\/])*)\/(((\\\/)|[^\/])*)$/),
+                    rePattern,
+                    reAttributes;
+                Y.log(params);
+                if (params.length == 7) {
+                    rePattern = params[1];
+                    reAttributes = params[4];
+                    try {
+                        filter = new RegExp(rePattern, reAttributes);
+                    } catch(err) {
+                    }
+                }
+            }
+            if (!(filter instanceof RegExp)) {
+                Y.log("'" + filter + "' is not valid Regexp pattern.", "warn", MODULE_ID);
+                return true;
+            }
+            if (filter.test(this.value) === false) {
+                return false;
+            }
+            return true;
+        },
+        validEmail : function () {
+            if (this.value === "") {
+                return true;
+            }
+            var filter = /^([a-z0-9_\-]+)((\.|\+)[a-z0-9_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/i,
+                result = FormValidator.VALIDATORS.pattern.call(this, filter);
+            return result;
+        },
+        validPassword : function () {
+            if (this.value === "") {
+                return true;
+            }
+            var VALIDATORS = FormValidator.VALIDATORS,
+                hasAlpha = VALIDATORS.alpha.call(this),
+                hasNumeric = VALIDATORS.numeric.call(this);
+            if (!hasAlpha || !hasNumeric) {
+                return false;
+            }
+            return true;
         }
-    });
+    };
 
     // Sandbox methods
     Y.extend(FormValidator, Y.Base, {
@@ -117,16 +169,29 @@ YUI.add("form-validator", function (Y) {
         	this.formName = config.formName;
             this.formElement = document.forms[this.formName];
             this.formNode = Y.one(this.formElement);
+            this.rules = {};
 
             // use this FormValidator as context in event handlers
             this.formNode.on("submit", Y.bind(this._formSubmitHandler, this));
         },
         _formSubmitHandler : function (e) {
             // this === this object
-            alert(this.formName);
-            e.halt();
+            var failed = false,
+                rules = this.rules,
+                self = this;
+            Y.each(rules, function (config, fieldName) {
+                var fieldElement = self.formElement.elements[fieldName],
+                    result = self._validationHandler.call(self, fieldElement, config.validators, "submit", config.messageContainer);
+                if (result !== null && result !== true) {
+                    failed = true;
+                }
+            });
+            if (failed) {
+                e.preventDefault();
+                return false;
+            }
         },
-        _showMessageHandler : function (message, className) {
+        _showMessageHandler : function (message, messageContainer, className) {
             // this === formElement
             var node = Y.one(this),
                 nodeName = node.get("name"),
@@ -138,7 +203,8 @@ YUI.add("form-validator", function (Y) {
                 Y.log("formNode or nodeName missing, skip show tip.", "warn");
                 return;
             }
-            messageNode = formNode.one("." + nodeName + "-message");
+            messageContainer = messageContainer || "." + nodeName + "-message";
+            messageNode = formNode.one(messageContainer);
             if (!messageNode) {
                 Y.log("messageNode missing, skip show tip.", "warn");
                 return;
@@ -163,50 +229,76 @@ YUI.add("form-validator", function (Y) {
             messageContentNode.set("innerHTML", message);
         },
 
-        _validationHandler : function (fieldElement, validators, eventType) {
+        _validationHandler : function (fieldElement, validators, eventType, messageContainer) {
+            Y.log("_validationHandler(" + eventType + "): " + fieldElement.name);
             // this === this object
             var breakLoop = false,
-                self = this;
+                self = this,
+                showMessage = true;
             Y.each(validators, function (validator) {
                 // this === validator
                 if (breakLoop) {
                     return;
                 }
+                validator.on = validator.on || "blur,submit";
                 if (Y.Array.indexOf(validator.on.split(","), eventType) === -1) {
                     return;
                 }
-                if (Lang.isFunction(validator.rule)) {
-                    Y.log("custom rule: " + validator.rule);
-                    return;
-                }
-                var rule = validator.rule,
-                    ruleArguments = rule.split(";"),
-                    ruleName = ruleArguments.shift(),
+                var className,
+                    guid,
+                    message,
+                    rule = validator.rule,
+                    ruleArguments,
+                    ruleName,
                     result;
+                if (Lang.isFunction(rule)) {
+                    // converting custom rule
+                    guid = Y.guid();
+                    FormValidator.VALIDATORS[guid] = rule;
+                    rule = guid;
+                }
+                ruleArguments = rule.split(";");
+                ruleArguments.push(eventType);
+                ruleName = ruleArguments.shift();
                 if (Lang.isFunction(FormValidator.VALIDATORS[ruleName])) {
                     Y.log("checking : " + ruleName);
                     result = FormValidator.VALIDATORS[ruleName].apply(fieldElement, ruleArguments);
-                    if (result === false) {
+                    Y.log("result:" + result);
+                    if (result === null) {
+                        showMessage = false;
+                        return;
+                    } else if (result !== true) {
                         breakLoop = true;
                         validator.className = validator.className || "message-error";
-                        self._showMessageHandler.call(fieldElement, validator.message, validator.className);
+                        if (result === false) {
+                            message = validator.message;
+                        } else {
+                            Y.log("error result: " + result);
+                            message = validator.message[result];
+                        }
+                        self._showMessageHandler.call(fieldElement, message, messageContainer || validator.messageContainer, validator.className);
                         return;
                     }
                 } else {
                     Y.log(validator.rule + " not defined yet, skipped!", "warn");
                 }
             });
-            if (!breakLoop) {
-                self._showMessageHandler.call(fieldElement, "OK", "message-ok");
-                return;
+            if (!breakLoop && showMessage) {
+                self._showMessageHandler.call(fieldElement, "OK", messageContainer, "message-ok");
+                return true;
             }
+            return false;
         },
 
         //===========================
         // Public Methods
         //===========================
         setRules : function (fieldName, config) {
-            var fieldElement, tips, validators, eventTypes = [], self = this;
+            var fieldElement,
+                tips,
+                validators,
+                eventTypes = [],
+                self = this;
             config = config || {};
 
             // check node
@@ -222,11 +314,13 @@ YUI.add("form-validator", function (Y) {
                 // show tips on focus as default
                 tips.on = tips.on || "focus";
                 tips.className = tips.className || "message-tips";
-                Y.one(fieldElement).on(tips.on, Y.bind(this._showMessageHandler, fieldElement, tips.message, tips.className));
+                tips.messageContainer = tips.messageContainer || config.messageContainer;
+                Y.one(fieldElement).on(tips.on, Y.bind(this._showMessageHandler, fieldElement, tips.message, tips.messageContainer, tips.className));
             }
             // bind validators
             validators = config.validators;
             if (validators && Y.Lang.isArray(validators)) {
+                this.rules[fieldName] = config;
                 Y.each(validators, function (validator) {
                     validator.on = validator.on || "blur,submit";
                     Y.each(validator.on.split(","), function (eventType) {
@@ -238,23 +332,13 @@ YUI.add("form-validator", function (Y) {
                 Y.each(eventTypes, function (eventType) {
                     // lost focus of 'this', use 'self' instead
                     if (eventType !== "submit") {
-                        Y.one(fieldElement).on(eventType, Y.bind(self._validationHandler, self, fieldElement, validators, eventType));
+                        Y.one(fieldElement).on(eventType, Y.bind(self._validationHandler, self, fieldElement, validators, eventType, config.messageContainer));
                     }
                 });
             }
         },
-        /**
-         * Say hello to the world.
-         *
-         * @method initializer
-         * @private
-         * @param {Object} attrs attribute object
-         */
-        sayHello : function () {
-            alert("Hello world");
-        },
         getForm : function () {
-            alert(this.formName);
+            return this.formName;
         }
     });
 
