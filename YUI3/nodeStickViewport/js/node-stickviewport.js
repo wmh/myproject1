@@ -1,6 +1,11 @@
 /*global YUI, window */
 /**
- * Stick Viewport Node Plugin
+ * Stick Viewport Node Plugin, which can be used to make a DOM element always
+ * stick/floating inside the viewport.
+ *
+ * <p>The current implementation is designed to change the position style of the
+ * node. And you can choose to use a clone element placing on the original
+ * position to keep the page layout if necessary.</p>
  *
  * @module mui
  * @requires base, node
@@ -11,7 +16,7 @@ YUI.add("node-stickviewport", function (Y) {
         MODULE_ID = "NodeNodeStickViewport";
 
     /**
-     * Stick Viewport
+     * A plugin class which can be used to make a floating element easily.
      *
      * @constructor
      * @namespace plugin
@@ -22,28 +27,58 @@ YUI.add("node-stickviewport", function (Y) {
 	    NodeStickViewport.superclass.constructor.apply(this, arguments);
     }
 
+    /**
+     * The NAME of the NodeStickViewport class. Used to prefix events generated
+     * by the plugin.
+     *
+     * @property NodeStickViewport.NAME
+     * @static
+     * @type String
+     * @default "nodeStickViewport"
+     */
     NodeStickViewport.NAME = 'nodeStickViewport';
+
+    /**
+     * The namespace for the plugin. This will be the property on the node,
+     * which will reference the plugin instance, when it's plugged in.
+     *
+     * @property NodeStickViewport.NS
+     * @static
+     * @type String
+     * @default "stickViewport"
+     */
     NodeStickViewport.NS = 'stickViewport';
 
     NodeStickViewport.UTIL = {
+
+        /**
+         * Given a position and two elements' bounding to determine the
+         * relationship, return true if the second one is most far alway from
+         * center.
+         *
+         * @method NodeStickViewport.UTIL.isOutside
+         * @static
+         */
         isOutside : function (pos, viewBounding, nodeBounding) {
             switch (pos) {
             case "top":
             case "left":
                 return (viewBounding > nodeBounding);
-                break;
 
             default:
                 return (nodeBounding > viewBounding);
-                break;
             }
         }
     };
 
-    // Methods
     Y.extend(NodeStickViewport, Y.Plugin.Base, {
 
-    	//	Public methods
+        /**
+         * The initializer lifecycle implementation.
+         *
+         * @method initializer
+         * @param {Object} config The user configuration for the plugin
+         */
         initializer : function (config) {
             var node = config.host;
             this.config = config;
@@ -64,16 +99,27 @@ YUI.add("node-stickviewport", function (Y) {
                 right: false
             };
             this.floating = false;
-            Y.one(document).on("scroll", Y.bind(this._scrollHandler, this));
+            Y.one(window).on("scroll", Y.bind(this._scrollHandler, this));
             Y.one(window).on("resize", Y.bind(this._resizeHandler, this));
         },
 
+        /**
+         * Set bounding of the node.
+         *
+         * @method setBounding
+         * @param pos {String} Which position need to be stick inside viewport,
+         *                     can be one of the top/left/right/bottom.
+         * @param val {Boolean} True to set the position stick inside viewport.
+         */
         setBounding : function (pos, val) {
             this.bounding[pos] = val;
         },
-        boundingTop : function (val) {
-            this.setBounding("top", val);
-        },
+
+        /**
+         * Clone the original element.
+         *
+         * @method clone
+         */
         clone : function () {
             var node = this.config.host,
                 region = this.region;
@@ -84,16 +130,22 @@ YUI.add("node-stickviewport", function (Y) {
                 height  : region.height,
                 position: node.getStyle("position"),
                 width   : region.width,
-                margin  : node.getComputedStyle("marginTop") + " "
-                          + node.getComputedStyle("marginRight") + " "
-                          + node.getComputedStyle("marginBottom") + " "
-                          + node.getComputedStyle("marginLeft")
+                margin  : node.getComputedStyle("marginTop") + " " +
+                            node.getComputedStyle("marginRight") + " " +
+                            node.getComputedStyle("marginBottom") + " " +
+                            node.getComputedStyle("marginLeft")
             });
             this.config.host.insert(this.cloneNode, "before");
         },
 
-        // Private methods
-        _scrollHandler : function () {
+        /**
+         * The scroll event listener.
+         *
+         * @method _scrollHandler
+         * @param e {Event.Facade} The event facade
+         * @protected
+         */
+        _scrollHandler : function (e) {
             //Y.log("_scrollHandler", "INFO", MODULE_ID);
             var basePos,
                 floatingStyles = {},
@@ -104,14 +156,14 @@ YUI.add("node-stickviewport", function (Y) {
                 region = self.region,
                 viewRegion = Y.DOM.viewportRegion();
 
-            //step 1: check need to float or not
+            //step 1: check bounding
             Y.each(this.bounding, function (val, pos) {
                 if (NodeStickViewport.UTIL.isOutside(pos, viewRegion[pos], region[pos]) && val) {
                     needFloating = true;
                 }
             });
 
-            //step 2: change style (FIXME: pos conflict)
+            //step 2: change style
             if (!needFloating) {
                 if (self.floating) {
                     node.setStyles(self.originalStyle);
@@ -125,23 +177,27 @@ YUI.add("node-stickviewport", function (Y) {
                     if (NodeStickViewport.UTIL.isOutside(pos, viewRegion[pos], region[pos]) && val) {
                         floatingStyles[pos] = 0;
                         switch (pos) {
-                        case "bottom":  floatingStyles.top    = "auto"; break;
-                        case "right":   floatingStyles.left   = "auto"; break;
+                        case "bottom":
+                            floatingStyles.top    = "auto";
+                            break;
+                        case "right":
+                            floatingStyles.left   = "auto";
+                            break;
                         }
                     } else {
                         floatingStyles[pos] = region[pos] - viewRegion[pos];
                     }
                 });
-                floatingStyles.height = region.height
-                    - parseInt(node.getComputedStyle("borderTopWidth"), 10)
-                    - parseInt(node.getComputedStyle("borderBottomWidth"), 10)
-                    - parseInt(node.getComputedStyle("paddingTop"), 10)
-                    - parseInt(node.getComputedStyle("paddingBottom"), 10);
-                floatingStyles.width = region.width
-                    - parseInt(node.getComputedStyle("borderLeftWidth"), 10)
-                    - parseInt(node.getComputedStyle("borderRightWidth"), 10)
-                    - parseInt(node.getComputedStyle("paddingLeft"), 10)
-                    - parseInt(node.getComputedStyle("paddingRight"), 10);
+                floatingStyles.height = region.height -
+                    parseInt(node.getComputedStyle("borderTopWidth"), 10) -
+                    parseInt(node.getComputedStyle("borderBottomWidth"), 10) -
+                    parseInt(node.getComputedStyle("paddingTop"), 10) -
+                    parseInt(node.getComputedStyle("paddingBottom"), 10);
+                floatingStyles.width = region.width -
+                    parseInt(node.getComputedStyle("borderLeftWidth"), 10) -
+                    parseInt(node.getComputedStyle("borderRightWidth"), 10) -
+                    parseInt(node.getComputedStyle("paddingLeft"), 10) -
+                    parseInt(node.getComputedStyle("paddingRight"), 10);
                 floatingStyles.position = "fixed";
                 node.setStyles(floatingStyles);
                 self.floating = true;
@@ -150,7 +206,15 @@ YUI.add("node-stickviewport", function (Y) {
                 }
             }
         },
-        _resizeHandler : function () {
+
+        /**
+         * The window resize event listener.
+         *
+         * @method _resizeHandler
+         * @param e {Event.Facade} The event facade
+         * @protected
+         */
+        _resizeHandler : function (e) {
             //Y.log("_resizeHandler", "INFO", MODULE_ID);
             this.region = this.config.host.get("region");   // update region
             this._scrollHandler.call(this);                 // refresh position
