@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>New Page</title>
+<style>
+</style>
+</head>
+
+<body>
+<form id="form1" runat="server">
+<input id="Button4" type="button" value="button4" onclick="getData()" />
+</form>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+function getData() {
+            alert('button4');
+            $.getJSON("20110910.json", function (json) {
+                alert(json);
+                $.each(json, function (i, j) {
+                    alert(i);
+                    var div_data = "<div>" + j.TK001 + "</div>";
+                    $("#show").append(div_data);
+                });
+            });
+}
+</script>
+</body>
+
+</html>
