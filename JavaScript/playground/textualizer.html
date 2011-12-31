@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Title</title>
+<style>
+#txtlzr {
+    border: 1px solid red;
+    height: 200px;
+    padding: 30px;
+    width: 300px;
+}
+</style>
+</head>
+<body>
+<div id="txtlzr"></div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//kiro.me/textualizer/javascript/textualizer.js"></script>
+<script>
+$(function () {
+    var list = [
+        '中選會今天(30日)晚間舉辦第二場總統大選電視政見發表會。國民黨總統候選人馬英九強調清廉的重要性，民進黨總統候選人蔡英文以溫情牌主打政府對弱勢照顧不夠。親民黨主席宋楚瑜依舊強調民生議題，希望大家拋開藍綠。',
+        '第二場總統大選電視政見發表會30日晚間登場，抽到第一位發言的國民黨總統候選人馬英九一開始就強打清廉牌。他表示，自己生平最痛恨貪污，並表示他上任這幾年來，檢調機關對重大弊案都主動偵辦到底，絕不護短。',
+        '馬英九痛批民進黨執政8年貪污腐敗，他也認為，要當總統候選人，絕對要以最高標準接受各界檢驗，因為清廉不光是政策，更該是種態度跟習慣。馬英九：『(原音)今天陳水扁的人馬都回來了，就圍繞在蔡主席身邊，真的讓人民感到非常不安。各位鄉親想想，沒有道德的人一但掌握國家權力，他的危害多大。要競逐總統大位的人，難道不應該接受更高的政治道德檢驗嗎？在民主的台灣人民難道不該有更高資訊去檢驗總統候選人政治操守? 要求政治人物誠實負責與清廉，不就是真正台灣價值？不就是真正台灣共識？』'
+    ];  // list of blurbs
+
+    var options = {
+        duration: 1000,          // Time (ms) each blurb will remain on screen
+        rearrangeDuration: 1000, // Time (ms) a character takes to reach its position
+        effect: 'random',        // Animation effect the characters use to appear
+        centered: true           // Centers the text relative to its container
+    }
+    var txt = $('#txtlzr');  // The container in which to render the list
+    txt.textualizer(list, options); // textualize it!
+    txt.textualizer('start'); // start
+});
+</script>
+</body>
+</html>
