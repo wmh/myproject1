@@ -1,0 +1,28 @@
+body {
+    margin: auto;
+    width: 960px;
+}
+#hd {
+    margin-bottom: 6px;
+}
+#bd {
+    background-color: #E4E4E4;
+    margin-bottom: 6px;
+}
+p {
+    background-color: #F3F3F3;
+}
+.yui3-u-1-2,
+.yui3-u-1-4,
+.yui3-u-3-4,
+.yui3-u-1 {
+    border-bottom: 1px solid gray;
+}
+.yui3-u-1-2 a {
+    background-color: navy;
+    color: #fff;
+    padding: 0 10px;
+}
+.grid-content {
+    padding-right: 10px;
+}
