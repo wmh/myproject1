@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>XHR</title>
+<style>
+</style>
+</head>
+<body>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    var settings = {
+        url: "http://h.miiicasa.com/myproject1/JavaScript/xdomain/ajaxcookie/t1.php",
+        xhrFields: {
+             withCredentials: true
+        },
+        success : function (data, textStatus, jqXHR) {
+            alert(data);
+        }
+    };
+    $.ajax(settings);
+});
+</script>
+</body>
+</html>
