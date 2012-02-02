@@ -1,0 +1,114 @@
+<!DOCTYPE html">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Checkbox</title>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssfonts/fonts-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssbase/base-min.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/gallery-2011.03.23-22-20/build/gallery-carousel/assets/skins/sam/gallery-carousel.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/widget/assets/skins/sam/widget.css">
+<link type="text/css" rel="stylesheet"
+      href="http://yui.yahooapis.com/gallery-2011.03.23-22-20/build/gallery-carousel/assets/skins/sam/gallery-carousel.css">
+
+<style type="text/css">
+.yui3-carousel-content li {
+    width: 200px;
+    height: 200px;
+}
+
+#nav {
+    position: relative;
+    top: -40px;
+    left: 100px;
+}
+#nav li {
+    float: left;
+    list-style: none;
+}
+#nav li a {
+    padding: 0 5px;
+    border: 1px solid silver;
+    margin-left: 3px;
+}
+#nav a.selected {
+    background-color: navy;
+    color: #fff;
+}
+.yui3-carousel-nav {
+    display: none;
+}
+</style>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="container" class="yui3-carousel-loading">
+    <ol>
+        <li>one</li>
+        <li>two</li>
+        <li>three</li>
+    </ol>
+</div>
+<ol id="nav">
+    <li><a href="#" id="goto0" class="selected">1</a></li>
+    <li><a href="#" id="goto1">2</a></li>
+    <li><a href="#" id="goto2">3</a></li>
+</ol>
+
+<script src="http://yui.yahooapis.com/3.3.0/build/yui/yui-min.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/oop/oop.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/event-custom/event-custom.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/attribute/attribute.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/base/base-base.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/pluginhost/pluginhost.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/base/base-pluginhost.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/classnamemanager/classnamemanager.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/dom/dom.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/event/event.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/node/node.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/widget/widget.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/anim/anim.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/plugin/plugin.js"></script>
+<script src="http://yui.yahooapis.com/3.3.0/build/substitute/substitute.js"></script>
+<script src="gallery-carousel.js"></script>
+<script src="gallery-carousel-anim.js"></script>
+<script type="text/javascript">
+var YUIConfig = {
+    filter: 'raw',
+    debug : true,
+    fetchCSS : false
+};
+YUI(YUIConfig).use("gallery-carousel", "anim", "gallery-carousel-anim", "substitute", function (Y) {
+
+    Y.on("contentready", function () {
+        var carousel = new Y.Carousel({
+            boundingBox: "#container",
+            contentBox: "#container > ol",
+            numVisible: 1,
+            autoPlayInterval: 3000,
+            isCircular: false
+        });
+        carousel.plug(Y.CarouselAnimPlugin,{animation:{speed: 0.3}});
+        carousel.render();
+
+        Y.all("#nav a").on("click", function (e) {
+            var id = e.currentTarget.get("id").replace("goto", "");
+            carousel.scrollTo(parseInt(id, 10));
+            e.preventDefault();
+        });
+
+        carousel.anim.on("afterScroll", function (e) {
+            var first = e.first;
+            Y.all("#nav a").removeClass("selected");
+            Y.one("#goto" + first).addClass("selected");
+        });
+
+    }, "#container");
+
+
+    window.Y = Y;
+});
+</script>
+</body>
+</html>
