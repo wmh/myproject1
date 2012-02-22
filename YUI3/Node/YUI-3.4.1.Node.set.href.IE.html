@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>YUI Node with IE</title>
+</head>
+<body>
+<h1>Node.set("href") in IE8</h1>
+
+<ul>
+    <li><a href="http://google.com/">Hello</a></li>
+    <li><a href="http://google.com/">!@#</a></li>
+    <li><a href="http://google.com/">!@#$%^&()_+=-.jpg</a></li>
+</ul>
+<button id="t1">Test1</button>
+<button id="t2">Test2</button>
+<button id="j1">jQuery Test1</button>
+<button id="j2">Test2 with no library</button>
+
+<script src="http://yui.yahooapis.com/3.4.1/build/yui/yui.js"></script>
+<script type="text/javascript">
+var anotherURL = 'http://yahoo.com/';
+YUI().use("node", function (Y) {
+    Y.one("#t1").on("click", function (e) {
+        Y.all("ul a").set("href", anotherURL);    // insanity
+    });
+    Y.one("#t2").on("click", function (e) {
+        Y.all("ul a").each(function () {
+            this._node.href = anotherURL;
+        });
+    });
+});
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    $('#j1').click(function (e) {
+        $('ul a').attr("href", anotherURL);
+    });
+    $('#j2').click(function (e) {
+        var a = document.getElementsByTagName("a"),
+            len = a.length;
+        for (i = 0; i < len; ++i) {
+            a[i].href = anotherURL;
+        }
+    });
+});
+</script>
+</body>
+</html>
