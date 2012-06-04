@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /myproject1/apache/rewrite/001/
+#RewriteRule ddd.txt bbb.txt [L]
+#RewriteRule a603028128323.txt a6/03/a603028128323.txt  [L]
+RewriteRule ([0-9a-f]{2})([0-9a-f]{2})(.*?)$ $1/$2/$1$2$3  [L]
+
+#a603028128323.txt
+
+
+

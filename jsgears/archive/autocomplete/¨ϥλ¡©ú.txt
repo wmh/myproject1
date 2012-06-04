@@ -1,0 +1,14 @@
+資料庫MYSQL部分
+請新增test資料庫
+並將資料表namedata.sql載入
+
+參數設定部分
+Connections/test.php
+$hostname_test = "localhost您的主機位置";
+$database_test = "test您的資料庫名稱";
+$username_test = "root您的帳號";
+$password_test = "720123您的密碼";
+
+執行
+autocomplete.html
+再次感謝
