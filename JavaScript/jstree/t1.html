@@ -4,9 +4,19 @@
 <meta charset="utf-8">
 <title>testing jstree</title>
 <link rel="stylesheet" href="http://html5demos.com/css/html5demos.css" type="text/css" />
+<style type="text/css">
+body {
+    background: #fff url(bg.png);
+    margin-top: 0;
+    margin-left: 20px;
+}
+#tree {
+    background-color: transparent;
+}
+</style>
 </head>
 <body>
-<div id="tree" class="demo" style="height:400px;">
+<div id="tree" class="demo">
 <ul>
     <li id="device-1" rel="device">
         <a href="#">miiiCasa MRT-3000</a>
@@ -19,6 +29,19 @@
                         <ul>
                             <li id="sub-folder-1"><a href="#">Travel</a>
                                 <ul>
+                                    <li id="miiithumb-1"><a href="#">.miiithumbs</a>
+                                        <ul>
+                                            <li rel="photo-file"><a href="#">cover.jpg</a></li>
+                                            <li rel="photo-file"><a href="#">cover_100.jpg</a></li>
+                                            <li rel="text-file"><a href="#">desc.txt</a></li>
+                                            <li rel="photo-file"><a href="#">DSC02919_240_1340881022_122779.jpg</a></li>
+                                            <li rel="photo-file"><a href="#">DSC02919_240_1340881022_122779_l.jpg</a></li>
+                                            <li rel="photo-file"><a href="#">DSC02919_241_1340881028_302494.jpg</a></li>
+                                            <li rel="photo-file"><a href="#">DSC02919_241_1340881028_302494_l.jpg</a></li>
+                                            <li rel="photo-file"><a href="#">DSC02919_242_1340881034_493338.jpg</a></li>
+                                            <li rel="photo-file"><a href="#">DSC02919_242_1340881034_493338_l.jpg</a></li>
+                                        </ul>
+                                    </li>
                                     <li><a href="#">Day1</a></li>
                                     <li rel="photo-file"><a href="#">DSC02919_240.JPG</a></li>
                                     <li rel="photo-file"><a href="#">DSC02919_241.JPG</a></li>
@@ -118,6 +141,11 @@ $(function () {
                         "image" : "http://jsgears.googlecode.com/svn/trunk/fatcow-hosting-icons-1700/16x16/file_extension_jpg.png"
                     }
                 },
+                "text-file" : {
+                    "icon" : {
+                        "image" : "http://jsgears.googlecode.com/svn/trunk/fatcow-hosting-icons-1700/16x16/page_white_text.png"
+                    }
+                },
                 "default" : {
                     "valid_children" : [ "default" ]
                 }
@@ -125,9 +153,10 @@ $(function () {
         },
         "core" : {
             "initially_open" : [
-                "storage-1",
-                "media-folder-1",
+                //"storage-1",
+                //"media-folder-1",
                 "sub-folder-1",
+                "miiithumb-1",
                 "storage-2"
             ]
         },

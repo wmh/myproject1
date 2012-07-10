@@ -1,6 +1,6 @@
 <?php
 //http://localhost/myproject1/PHP/longpolling/01_server.php
-set_time_limit(60);
+set_time_limit(0);
 
 $a = new aa();
 $a->run();
