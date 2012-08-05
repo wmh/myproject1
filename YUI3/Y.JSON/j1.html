@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>YUI JSON test</title>
+<style>
+</style>
+</head>
+
+<body>
+    <div id="tt"></div>
+
+<script src="http://yui.yahooapis.com/3.2.0/build/yui/yui.js"></script>
+<script type="text/javascript">
+YUI().use('node', 'json-parse', 'json-stringify', function (Y) {
+    var a = Y.JSON.parse('{"a":1234}');
+    Y.log(a.a);
+    Y.one("#tt").set("innerHTML", a.a);
+    window.Y = Y;
+});
+</script>
+</body>
+</html>
