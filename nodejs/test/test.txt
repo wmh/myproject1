@@ -1,0 +1,355 @@
+hello
+hello
+[object process]{ nextTick: 
+   { [Function]
+     [caller]: null,
+     [length]: 1,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  _kill: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  _getActiveHandles: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  versions: 
+   { v8: '3.11.10.22',
+     node: '0.8.11',
+     ares: '1.7.5-DEV',
+     zlib: '1.2.3',
+     openssl: '1.0.0f',
+     http_parser: '1.0',
+     uv: '0.8' },
+  hrtime: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  moduleLoadList: 
+   [ 'Binding evals',
+     'Binding natives',
+     'NativeModule events',
+     'NativeModule buffer',
+     'Binding buffer',
+     'NativeModule assert',
+     'NativeModule util',
+     'NativeModule path',
+     'NativeModule module',
+     'NativeModule fs',
+     'Binding fs',
+     'Binding constants',
+     'NativeModule stream',
+     [length]: 13 ],
+  execPath: 'C:\\Program Files\\nodejs\\node.exe',
+  stderr: [Getter],
+  memoryUsage: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  platform: 'win32',
+  _debugProcess: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  umask: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  dlopen: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  pid: 5980,
+  _tickCallback: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: { [callee]: [Circular], [length]: 0 } },
+  openStdin: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  cwd: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  _debugEnd: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  config: 
+   { variables: 
+      { clang: 0,
+        target_arch: 'ia32',
+        node_use_openssl: true,
+        node_use_dtrace: false,
+        node_install_waf: true,
+        node_shared_zlib: false,
+        node_use_etw: true,
+        node_shared_v8: false,
+        node_shared_openssl: false,
+        node_prefix: '',
+        v8_use_snapshot: false,
+        visibility: '',
+        v8_no_strict_aliasing: 1,
+        node_install_npm: true,
+        host_arch: 'ia32' },
+     target_defaults: 
+      { cflags: [ [length]: 0 ],
+        default_configuration: 'Release',
+        include_dirs: [ [length]: 0 ],
+        libraries: [ [length]: 0 ],
+        defines: [ [length]: 0 ] } },
+  argv: 
+   [ 'node',
+     'D:\\Workspace\\github\\myproject1\\nodejs\\test\\fs.js',
+     'fs.js',
+     'fs.js',
+     [length]: 4 ],
+  _getActiveRequests: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  exit: 
+   { [Function]
+     [caller]: null,
+     [length]: 1,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  stdin: [Getter],
+  title: '命令提示字元 - node  fs.js fs.js fs.js',
+  version: 'v0.8.11',
+  _debugPause: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  abort: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  env: 
+   { ALLUSERSPROFILE: 'C:\\ProgramData',
+     APPDATA: 'C:\\Users\\Hunter\\AppData\\Roaming',
+     CommonProgramFiles: 'C:\\Program Files\\Common Files',
+     COMPUTERNAME: 'HUNTERNB',
+     ComSpec: 'C:\\Windows\\system32\\cmd.exe',
+     FP_NO_HOST_CHECK: 'NO',
+     HOMEDRIVE: 'C:',
+     HOMEPATH: '\\Users\\Hunter',
+     LOCALAPPDATA: 'C:\\Users\\Hunter\\AppData\\Local',
+     LOGONSERVER: '\\\\HUNTERNB',
+     NUMBER_OF_PROCESSORS: '2',
+     OPENSSL_CONF: 'D:\\Server\\OpenSSL-Win32\\bin\\openssl.cfg',
+     OS: 'Windows_NT',
+     Path: 'D:\\Server\\php\\;C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Windows Live\\Shared;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files\\TortoiseGit\\bin;C:\\Program Files\\nodejs\\;C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\\;C:\\Program Files\\IDM Computer Solutions\\UEStudio\\;C:\\Program Files\\IDM Computer Solutions\\UltraCompare\\;C:\\Users\\Hunter\\AppData\\Roaming\\npm\\',
+     PATHEXT: '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC',
+     PHPRC: 'D:\\Server\\php\\',
+     PROCESSOR_ARCHITECTURE: 'x86',
+     PROCESSOR_IDENTIFIER: 'x86 Family 6 Model 23 Stepping 10, GenuineIntel',
+     PROCESSOR_LEVEL: '6',
+     PROCESSOR_REVISION: '170a',
+     ProgramData: 'C:\\ProgramData',
+     ProgramFiles: 'C:\\Program Files',
+     PROMPT: '$P$G',
+     PSModulePath: 'C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\',
+     PUBLIC: 'C:\\Users\\Public',
+     SESSIONNAME: 'Console',
+     SystemDrive: 'C:',
+     SystemRoot: 'C:\\Windows',
+     TEMP: 'C:\\Users\\Hunter\\AppData\\Local\\Temp',
+     TMP: 'C:\\Users\\Hunter\\AppData\\Local\\Temp',
+     USERDOMAIN: 'HUNTERNB',
+     USERNAME: 'Hunter',
+     USERPROFILE: 'C:\\Users\\Hunter',
+     VS110COMNTOOLS: 'C:\\Program Files\\Microsoft Visual Studio 11.0\\Common7\\Tools\\',
+     windir: 'C:\\Windows' },
+  arch: 'ia32',
+  kill: 
+   { [Function]
+     [caller]: null,
+     [length]: 2,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  binding: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  uptime: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  uvCounters: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  EventEmitter: 
+   { [Function: EventEmitter]
+     [caller]: null,
+     [length]: 0,
+     [name]: 'EventEmitter',
+     [prototype]: 
+      { addListener: 
+         { [Function]
+           [caller]: null,
+           [length]: 2,
+           [name]: '',
+           [prototype]: { [constructor]: [Circular] },
+           [arguments]: null },
+        on: 
+         { [Function]
+           [caller]: null,
+           [length]: 2,
+           [name]: '',
+           [prototype]: { [constructor]: [Circular] },
+           [arguments]: null },
+        listeners: 
+         { [Function]
+           [caller]: null,
+           [length]: 1,
+           [name]: '',
+           [prototype]: { [constructor]: [Circular] },
+           [arguments]: null },
+        removeAllListeners: 
+         { [Function]
+           [caller]: null,
+           [length]: 1,
+           [name]: '',
+           [prototype]: { [constructor]: [Circular] },
+           [arguments]: null },
+        removeListener: 
+         { [Function]
+           [caller]: null,
+           [length]: 2,
+           [name]: '',
+           [prototype]: { [constructor]: [Circular] },
+           [arguments]: null },
+        emit: 
+         { [Function]
+           [caller]: null,
+           [length]: 0,
+           [name]: '',
+           [prototype]: { [constructor]: [Circular] },
+           [arguments]: null },
+        setMaxListeners: 
+         { [Function]
+           [caller]: null,
+           [length]: 1,
+           [name]: '',
+           [prototype]: { [constructor]: [Circular] },
+           [arguments]: null },
+        once: 
+         { [Function]
+           [caller]: null,
+           [length]: 2,
+           [name]: '',
+           [prototype]: { [constructor]: [Circular] },
+           [arguments]: null },
+        [constructor]: [Circular] },
+     [arguments]: null },
+  stdout: [Getter],
+  features: 
+   { tls: true,
+     debug: false,
+     tls_sni: true,
+     tls_npn: true,
+     ipv6: true,
+     uv: true },
+  execArgv: [ [length]: 0 ],
+  assert: 
+   { [Function]
+     [caller]: null,
+     [length]: 2,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  _needTickCallback: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  debugPort: 5858,
+  reallyExit: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null },
+  mainModule: 
+   { children: [ [length]: 0 ],
+     exports: {},
+     parent: null,
+     paths: 
+      [ 'D:\\Workspace\\github\\myproject1\\nodejs\\test\\node_modules',
+        'D:\\Workspace\\github\\myproject1\\nodejs\\node_modules',
+        'D:\\Workspace\\github\\myproject1\\node_modules',
+        'D:\\Workspace\\github\\node_modules',
+        'D:\\Workspace\\node_modules',
+        'D:\\node_modules',
+        [length]: 6 ],
+     id: '.',
+     loaded: false,
+     filename: 'D:\\Workspace\\github\\myproject1\\nodejs\\test\\fs.js' },
+  chdir: 
+   { [Function]
+     [caller]: null,
+     [length]: 0,
+     [name]: '',
+     [prototype]: { [constructor]: [Circular] },
+     [arguments]: null } }
