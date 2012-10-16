@@ -6,7 +6,7 @@ $mem->set('anumber', 0, 0, 3600);
 
 $start = array_sum(explode(" ", microtime()));
 
-for ($i = 0; $i < 100000; ++$i) {
+for ($i = 0; $i < 10; ++$i) {
     $mem->increment('anumber');
 }
 
