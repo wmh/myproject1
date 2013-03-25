@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-tw" />
+<title>alertify.js</title>
+<link rel="stylesheet" href="http://jsgears.googlecode.com/svn/trunk/alertify.js-shim-0.3.8/themes/alertify.core.css" />
+<link rel="stylesheet" href="http://jsgears.googlecode.com/svn/trunk/alertify.js-shim-0.3.8/themes/alertify.default.css" />
+</head>
+
+<body>
+<a href="#" class="alertify-button alertify-button-ok" id="alertify-1">提示框</a>
+<a href="#" class="alertify-button alertify-button-ok" id="alertify-2">確認框</a>
+<a href="#" class="alertify-button alertify-button-ok" id="alertify-3">輸入框</a>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://jsgears.googlecode.com/svn/trunk/alertify.js-shim-0.3.8/alertify.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    $("#alertify-1").click(function () {
+        alertify.alert("剛有個按鈕被點擊了！");
+    });
+    $("#alertify-2").click(function () {
+        alertify.confirm("是你點到一個按鈕嗎？", function (e) {
+            alert(e);
+        });
+    });
+    $("#alertify-3").click(function () {
+        alertify.prompt("留個言鼓勵一下作者吧！", function (e, str) {
+            alert(str);
+            // str is the input text
+            if (e) {
+                // user clicked "ok"
+            } else {
+                // user clicked "cancel"
+            }
+        }, "太讚了！這網站～");
+    });
+
+});
+</script>
+</body>
+
+</html>
