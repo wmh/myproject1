@@ -1,0 +1,49 @@
+<!doctype html>
+<html ng-app>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+  </head>
+  <body>
+    <div ng-init="projectName='myProject1'">
+      <label>Name:</label>
+      <input type="text" ng-model="yourName" placeholder="Enter a name here">
+      <hr>
+      <h1>{{projectName}}</h1>
+      <h2>Hello {{yourName}}!</h2>
+    </div>
+
+    <div ng-controller="GreetCtrl">
+      Hello {{name}}!
+    </div>
+    <div ng-controller="ListCtrl">
+      <ol>
+        <li ng-repeat="name in names" ng-click="showName()">{{name}}</li>
+      </ol>
+    </div>
+
+    <div ng-controller="MyTest">
+      <input ng-model="list" ng-list> <br>
+      <p>{{list}}</p>
+      <ol>
+        <li ng-repeat="item in list">{{item}}</li>
+      </ol>
+    </div>
+  </body>
+
+<script>
+function GreetCtrl($scope) {
+  $scope.name = 'World';
+}
+
+function ListCtrl($scope) {
+  $scope.names = ['Igor', 'Misko', 'Vojta'];
+  $scope.showName = function () {
+    alert(this.name);
+  };
+}
+
+function MyTest($scope) {
+    $scope.list = ["H", "A", 123];
+}
+</script>
+</html>
