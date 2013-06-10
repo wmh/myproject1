@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>testing jstree</title>
+<link rel="stylesheet" href="http://html5demos.com/css/html5demos.css" type="text/css" />
+<style type="text/css">
+body {
+    background: #fff url(bg.png);
+    margin-top: 0;
+    margin-left: 20px;
+}
+#tree {
+    background-color: transparent;
+}
+</style>
+</head>
+<body>
+<div id="tree" class="demo">
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="//jsgears.googlecode.com/svn/trunk/jstree_pre1.0_fix_1/jquery.jstree.js"></script>
+<script type="text/javascript">
+$(function () {
+    $("#tree").jstree({
+        "plugins" : [
+            "themes","json_data"
+        ],
+        "json_data" : {
+            "ajax" : {
+                "url" : "t2.php",
+                "data" : function (n) {
+                    window.nn = n;
+                    if (n == -1)
+                        return {};
+                    else
+                        return {
+                            'gid' : n.attr('data-gid'),
+                            'path' : n.attr('data-path'),
+                        };
+                }
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>
