@@ -4,7 +4,7 @@ php:
   - 5.3
   - 5.4
 
-script: phpunit PHP/tests/travis/phpunit.xml
+script: phpunit --coverage-text --configuration PHP/tests/travis/phpunit.xml
 
 branches:
   only:
