@@ -4,6 +4,10 @@ php:
   - 5.3
   - 5.4
 
+before_script:
+  - php -v
+  - php -m
+
 script: phpunit --coverage-text --configuration PHP/tests/travis/phpunit.xml
 
 branches:
