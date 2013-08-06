@@ -2,6 +2,11 @@
 
 Sorry, nothing special here...
 
+build-status
+------------
+
+[![Build Status](https://travis-ci.org/wmh/myproject1.png?branch=master)](https://travis-ci.org/wmh/myproject1)
+
 gh-pages
 --------
 
