@@ -12,3 +12,5 @@ gh-pages
 
 __http://wmh.github.io/myproject1/__
 
+
+![octodex](http://octodex.github.com/images/daftpunktocat-guy.gif)
