@@ -2,6 +2,11 @@
 
 Sorry, nothing special here...
 
+THE OPEN SOURCE REPORT CARD
+---------------------------
+
+http://osrc.dfm.io/wmh
+
 build-status
 ------------
 
