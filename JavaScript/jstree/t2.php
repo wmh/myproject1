@@ -6,6 +6,7 @@ if (!isset($_GET['gid'])) {
         "attr" => array(
             'data-gid' => 1,
             'data-path' => '/',
+            'rel' => 'group',
         ),
         "state" => "closed",
         "children" => []
@@ -15,7 +16,27 @@ if (!isset($_GET['gid'])) {
 }
 
 $tree = array(
-    "data" => "file1",
+    array(
+        "data" => "sub-folder",
+        "attr" => array(
+            'rel' => 'folder',
+        ),
+        "state" => "closed",
+    ),
+    array(
+        "data" => "file1",
+        "attr" => array(
+            'rel' => 'text-file',
+        ),
+        "state" => "",
+    ),
+    array(
+        "data" => "file2",
+        "attr" => array(
+            'rel' => 'text-file',
+        ),
+        "state" => "",
+    ),
 );
 echo json_encode($tree);
 return;
