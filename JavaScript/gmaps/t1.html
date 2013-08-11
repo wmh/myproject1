@@ -11,11 +11,13 @@
   box-shadow: 0 0 20px #999;
   border: 1px solid silver;
   padding: 10px;
+  margin-bottom: 10px;
 }
 #map1 {
   height: 300px;
 }
-.overlay {
+#input-place {
+  width: 300px;
 }
 </style>
 </head>
@@ -27,6 +29,10 @@
   <div class="body-content">
     <h2>map1</h2>
     <div id="map1-container"><div id="map1" class="map"></div></div>
+    <form class="form-inline">
+      <input id="input-place" type="text" class="form-control" placeholder="Where do you want to go today?">
+      <button type="button" class="btn btn-default" id="go">Go</button>
+    </form>
   </div>
 </div>
 <script>
@@ -51,6 +57,25 @@ m1.drawOverlay({
   lat:  25.03325959222191,
   lng: 121.56471306914523,
   content: '<div class="overlay btn btn-default">Taipei 101</div>'
+});
+$(function () {
+  $('#go').click(function (e) {
+    var place = $('#input-place').val();
+    GMaps.geocode({
+      address: place,
+      callback: function(results, status) {
+        if (status == 'OK') {
+          var latlng = results[0].geometry.location;
+          m1.setCenter(latlng.lat(), latlng.lng());
+          m1.addMarker({
+            lat: latlng.lat(),
+            lng: latlng.lng()
+          });
+        }
+      }
+    });
+    e.preventDefault();
+  });
 });
 </script>
 </body>
