@@ -58,6 +58,41 @@ m1.drawOverlay({
   lng: 121.56471306914523,
   content: '<div class="overlay btn btn-default">Taipei 101</div>'
 });
+// add route from taipei station to taipei 101
+GMaps.geocode({
+  address: 'Taipei Train Station',
+  callback: function(results, status) {
+    if (status == 'OK') {
+      var taipeiTrainStation = results[0].geometry.location;
+      m1.setCenter(taipeiTrainStation.lat(), taipeiTrainStation.lng());
+      m1.addMarker({
+        lat: taipeiTrainStation.lat(),
+        lng: taipeiTrainStation.lng(),
+      });
+      GMaps.geocode({
+        address: 'Taipei 101',
+        callback: function(results, status) {
+          if (status == 'OK') {
+            var taipei101 = results[0].geometry.location;
+            m1.setCenter(taipei101.lat(), taipei101.lng());
+            //m1.addMarker({
+            //  lat: taipeiTrainStation.lat(),
+            //  lng: taipeiTrainStation.lng(),
+            //});
+            m1.drawRoute({
+              origin: [taipeiTrainStation.lat(), taipeiTrainStation.lng()],
+              destination: [taipei101.lat(), taipei101.lng()],
+              travelMode: 'driving',
+              strokeColor: '#131540',
+              strokeOpacity: 0.6,
+              strokeWeight: 6
+            });
+          }
+        }
+      });
+    }
+  }
+});
 $(function () {
   $('#fm1').submit(function (e) {
     var place = $('#input-place').val();
