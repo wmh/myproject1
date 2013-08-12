@@ -29,7 +29,7 @@
   <div class="body-content">
     <h2>map1</h2>
     <div id="map1-container"><div id="map1" class="map"></div></div>
-    <form class="form-inline">
+    <form class="form-inline" id="fm1">
       <input id="input-place" type="text" class="form-control" placeholder="Where do you want to go today?">
       <button type="button" class="btn btn-default" id="go">Go</button>
     </form>
@@ -59,7 +59,7 @@ m1.drawOverlay({
   content: '<div class="overlay btn btn-default">Taipei 101</div>'
 });
 $(function () {
-  $('#go').click(function (e) {
+  $('#fm1').submit(function (e) {
     var place = $('#input-place').val();
     GMaps.geocode({
       address: place,
