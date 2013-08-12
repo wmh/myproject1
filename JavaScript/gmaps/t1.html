@@ -31,7 +31,7 @@
     <div id="map1-container"><div id="map1" class="map"></div></div>
     <form class="form-inline" id="fm1">
       <input id="input-place" type="text" class="form-control" placeholder="Where do you want to go today?">
-      <button type="button" class="btn btn-default" id="go">Go</button>
+      <button type="submit" class="btn btn-default" id="go">Go</button>
     </form>
   </div>
 </div>
@@ -64,12 +64,16 @@ $(function () {
     GMaps.geocode({
       address: place,
       callback: function(results, status) {
+        var thatMarker;
         if (status == 'OK') {
           var latlng = results[0].geometry.location;
           m1.setCenter(latlng.lat(), latlng.lng());
-          m1.addMarker({
+          thatMarker = m1.addMarker({
             lat: latlng.lat(),
-            lng: latlng.lng()
+            lng: latlng.lng(),
+            rightclick: function (e) {
+              m1.removeMarker(thatMarker);
+            }
           });
         }
       }
