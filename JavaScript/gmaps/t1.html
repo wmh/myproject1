@@ -87,6 +87,7 @@ GMaps.geocode({
               strokeOpacity: 0.6,
               strokeWeight: 6
             });
+            m1.fitZoom();
           }
         }
       });
@@ -108,6 +109,9 @@ $(function () {
             lng: latlng.lng(),
             rightclick: function (e) {
               m1.removeMarker(thatMarker);
+            },
+            infoWindow: {
+              content: '<p>' + place + '</p>'
             }
           });
         }
