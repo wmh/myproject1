@@ -75,10 +75,10 @@ GMaps.geocode({
           if (status == 'OK') {
             var taipei101 = results[0].geometry.location;
             m1.setCenter(taipei101.lat(), taipei101.lng());
-            //m1.addMarker({
-            //  lat: taipeiTrainStation.lat(),
-            //  lng: taipeiTrainStation.lng(),
-            //});
+            m1.addMarker({
+              lat: taipeiTrainStation.lat(),
+              lng: taipeiTrainStation.lng(),
+            });
             m1.drawRoute({
               origin: [taipeiTrainStation.lat(), taipeiTrainStation.lng()],
               destination: [taipei101.lat(), taipei101.lng()],
@@ -105,6 +105,9 @@ $(function () {
           var latlng = results[0].geometry.location;
           m1.setCenter(latlng.lat(), latlng.lng());
           thatMarker = m1.addMarker({
+            title: place,
+            icon: '//cdnjs.cloudflare.com/ajax/libs/fatcow-icons/20130425/FatCow_Icons32x32/acorn.png',
+            draggable: true,
             lat: latlng.lat(),
             lng: latlng.lng(),
             rightclick: function (e) {
@@ -114,6 +117,7 @@ $(function () {
               content: '<p>' + place + '</p>'
             }
           });
+          thatMarker.infoWindow.open(m1, thatMarker);
         }
       }
     });
