@@ -7,6 +7,10 @@
 <script src="//maps.google.com/maps/api/js?sensor=true"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.3/gmaps.min.js"></script>
 <style>
+body {
+  padding-top: 20px;
+  font-size: 16px;
+}
 #map1-container {
   box-shadow: 0 0 20px #999;
   border: 1px solid silver;
@@ -19,20 +23,21 @@
 #input-place {
   width: 300px;
 }
+#places li {
+  cursor: pointer;
+}
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="masthead">
-    <h1 class="muted">gmaps.js</h1>
-  </div>
   <div class="body-content">
-    <h2>map1</h2>
     <div id="map1-container"><div id="map1" class="map"></div></div>
     <form class="form-inline" id="fm1">
       <input id="input-place" type="text" class="form-control" placeholder="Where do you want to go today?">
       <button type="submit" class="btn btn-default" id="go">Go</button>
     </form>
+    <ul id="places">
+    </ul>
   </div>
 </div>
 <script>
@@ -95,14 +100,22 @@ GMaps.geocode({
   }
 });
 $(function () {
+  var places = {};
   $('#fm1').submit(function (e) {
+    e.preventDefault();
     var place = $('#input-place').val();
+    if (places.hasOwnProperty(place)) {
+      var latlng = places[place].results[0].geometry.location;
+      m1.setCenter(latlng.lat(), latlng.lng());
+      return;
+    }
     GMaps.geocode({
       address: place,
       callback: function(results, status) {
         var thatMarker;
         if (status == 'OK') {
-          var latlng = results[0].geometry.location;
+          var latlng = results[0].geometry.location,
+              id = new Date().getTime() + '' + Math.round(Math.random() * 900000) + 99999;
           m1.setCenter(latlng.lat(), latlng.lng());
           thatMarker = m1.addMarker({
             title: place,
@@ -112,16 +125,34 @@ $(function () {
             lng: latlng.lng(),
             rightclick: function (e) {
               m1.removeMarker(thatMarker);
+              $('#marker' + id).remove();
+              delete places[place];
             },
             infoWindow: {
               content: '<p>' + place + '</p>'
             }
           });
+          places[place] = {
+            results: results,
+            id: id,
+            marker: thatMarker
+          };
           thatMarker.infoWindow.open(m1, thatMarker);
+          $('#places').append('<li id="marker' + id + '">' + place + '</li>');
+
+        } else {
+          alert('Geocode error!');
         }
       }
     });
-    e.preventDefault();
+  });
+  //delegate
+  $('#places').delegate('li', 'click', function () {
+    var place = $(this).text(),
+        latlng = places[place].results[0].geometry.location,
+        marker = places[place].marker;
+    m1.setCenter(latlng.lat(), latlng.lng());
+    marker.infoWindow.open(m1, marker);
   });
 });
 </script>
