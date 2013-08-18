@@ -95,7 +95,7 @@ p.tagline {
 
 #main {
   margin-top: 20px;
-  padding: 0 20px 120px;
+  padding: 0 20px 90px;
   background-color: #fff;
 }
 
@@ -322,7 +322,8 @@ footer .creds small {
 footer .owner .avatar {
   background-color: #666;
   display: block;
-  margin: -39px 10px 0 0;
+  margin: -19px 10px 0 0;
+  width: 60px;
   float: left;
 }
 
