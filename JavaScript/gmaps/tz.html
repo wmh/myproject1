@@ -38,52 +38,55 @@ var m1 = new GMaps({
     console.log(m1.getCenter());
   }
 });
-var tzData = {
+var cityData = {
   'London': 0,
   'Taipei': 8,
-  'Tokyo' : 9
+  'Tokyo' : 9,
+  'Boston': -4,
+  'San Francisco': -7
 };
-var currentTime = new Date();
-var tzOffset = currentTime.getTimezoneOffset();
-var utcOffsetTs = currentTime.getTime() + tzOffset*60*1000;
-$.each(tzData, function (city, tz) {
+$.each(cityData, function (city, tz) {
   GMaps.geocode({
     address: city,
     callback: function(results, status) {
       if (status == 'OK') {
-        var loc = results[0].geometry.location;
+        var loc = results[0].geometry.location,
+            thatMarker,
+            tzData = {};
+
+        // Get timezone data from The Google Time Zone API
+        // https://developers.google.com/maps/documentation/timezone/
+        $.getJSON('https://maps.googleapis.com/maps/api/timezone/json?location=' +
+            loc.lat() + ',' + loc.lng() + '&timestamp=' + Math.round(new Date().getTime()/1000) +
+            '&sensor=false',
+            function (data) {
+                tzData = data;
+            });
+
         m1.setCenter(loc.lat(), loc.lng());
-        m1.addMarker({
+        thatMarker = m1.addMarker({
           lat: loc.lat(),
           lng: loc.lng(),
-        });
-        GMaps.geocode({
-          address: city,
-          callback: function(results, status) {
-            if (status == 'OK') {
-              var taipei101 = results[0].geometry.location;
-              m1.setCenter(taipei101.lat(), taipei101.lng());
-              m1.addMarker({
-                lat: loc.lat(),
-                lng: loc.lng(),
-                title: city,
-                infoWindow: {
-                 content: '<p>'+ city +'</p>'
-                }
-              });
-              m1.drawRoute({
-                origin: [loc.lat(), loc.lng()],
-                destination: [taipei101.lat(), taipei101.lng()],
-                travelMode: 'driving',
-                strokeColor: '#131540',
-                strokeOpacity: 0.6,
-                strokeWeight: 6
-              });
-              m1.fitZoom();
-            }
+          title: city,
+          infoWindow: {
+           content: '<p>'+ city + '</p>'
           }
         });
+        thatMarker.infoWindow.open(m1, thatMarker);
+        google.maps.event.addListener(thatMarker, 'click', function () {
+          console.log('city:' + loc.lat() + ', ' + loc.lng());
+        });
+        setInterval(function() {
+          var currentTime = new Date(),
+              tzOffset = currentTime.getTimezoneOffset(),
+              utcOffsetTs = currentTime.getTime() + tzOffset*60*1000;
+              cityOffsetTs = utcOffsetTs + tz*60*60*1000,
+              cityDateTime = new Date(cityOffsetTs + (tzData.dstOffset || 0) * 1000),
+              showTime = cityDateTime.getHours() + ':' + cityDateTime.getMinutes() + ':' + cityDateTime.getSeconds();
+          thatMarker.infoWindow.setContent('<p>'+ city + '<br>' + showTime + '</p>');
+        }, 1000);
       }
+      m1.fitZoom();
     }
   });
 });
