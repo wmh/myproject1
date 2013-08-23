@@ -45,6 +45,9 @@ var cityData = {
   'Boston': -4,
   'San Francisco': -7
 };
+function timeStrPad(num) {
+  return num < 10 ? '0' + num : num;
+}
 $.each(cityData, function (city, tz) {
   GMaps.geocode({
     address: city,
@@ -82,7 +85,9 @@ $.each(cityData, function (city, tz) {
               utcOffsetTs = currentTime.getTime() + tzOffset*60*1000;
               cityOffsetTs = utcOffsetTs + tz*60*60*1000,
               cityDateTime = new Date(cityOffsetTs + (tzData.dstOffset || 0) * 1000),
-              showTime = cityDateTime.getHours() + ':' + cityDateTime.getMinutes() + ':' + cityDateTime.getSeconds();
+              showTime = timeStrPad(cityDateTime.getHours()) + ':' +
+                  timeStrPad(cityDateTime.getMinutes()) + ':' +
+                  timeStrPad(cityDateTime.getSeconds());
           thatMarker.infoWindow.setContent('<p>'+ city + '<br>' + showTime + '</p>');
         }, 1000);
       }
