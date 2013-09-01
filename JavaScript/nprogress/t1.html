@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>nprogress test</title>
+<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.1.2/nprogress.min.css" rel="stylesheet">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.1.2/nprogress.min.js"></script>
+<style>
+body {
+  background-image: url(//wmh.github.io/hunbook/_static/img/noise.png);
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="jumbotron">
+    <h1>NProgress</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button type="input" id="np-start">Start</button>
+      <button type="input" id="np-done">Done</button>
+      <button type="input" id="np-remove">Remove</button>
+    </div>
+  </div>
+</div>
+<script>
+$(function () {
+  $('#np-start').click(function () {
+    NProgress.start();
+  });
+  $('#np-done').click(function () {
+    NProgress.done();
+  });
+  $('#np-remove').click(function () {
+    NProgress.remove();
+  });
+});
+</script>
+</body>
+</html>
