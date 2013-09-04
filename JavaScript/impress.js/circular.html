@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>circular test</title>
+<style>
+.slide {
+  position: absolute;
+  border: 1px solid silver;
+  width:  60px;
+  height: 30px;
+}
+</style>
+</head>
+<body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+function drawSlide(x, y) {
+  $('body').append($('<div class="slide" style="top: '+ y +'px; left: '+ x +'px">'));
+}
+$(function () {
+  var centerX = parseInt($(window).width() / 2, 10) - 30,
+      centerY = parseInt($(window).height() / 2, 10) - 15,
+      r = 150;
+  for (ra = 360; ra > 0; ra = ra - 30) {
+    de = ra * Math.PI / 180;
+    x = centerX + Math.cos(de) * r;
+    y = (centerY + Math.sin(de) * r);
+    drawSlide(x, y);
+  }
+  drawSlide(centerX, centerY);
+});
+</script>
+</body>
+</html>
