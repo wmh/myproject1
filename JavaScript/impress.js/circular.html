@@ -15,18 +15,20 @@
 <body>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
-function drawSlide(x, y) {
-  $('body').append($('<div class="slide" style="top: '+ y +'px; left: '+ x +'px">'));
+function drawSlide(x, y, rotate) {
+  console.log(x +', '+ y);
+  rotate = rotate || 0;
+  $('body').append($('<div class="slide" style="top: '+ y +'px; left: '+ x +'px; -webkit-transform: rotate('+ rotate +'deg)">'+ rotate +'</div>'));
 }
 $(function () {
   var centerX = parseInt($(window).width() / 2, 10) - 30,
       centerY = parseInt($(window).height() / 2, 10) - 15,
       r = 150;
-  for (ra = 360; ra > 0; ra = ra - 30) {
-    de = ra * Math.PI / 180;
-    x = centerX + Math.cos(de) * r;
-    y = (centerY + Math.sin(de) * r);
-    drawSlide(x, y);
+  for (de = 360; de > 0; de = de - 30) {
+    ra = de * Math.PI / 180;
+    x = centerX + Math.cos(ra) * r;
+    y = centerY + Math.sin(ra) * r;
+    drawSlide(x, y, de);
   }
   drawSlide(centerX, centerY);
 });
