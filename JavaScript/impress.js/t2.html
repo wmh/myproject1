@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>impress.js test</title>
+<style>
+body {
+  background-image: url(//wmh.github.io/hunbook/_static/img/noise.png);
+}
+.step {
+    position: relative;
+    width: 900px;
+    padding: 40px;
+    margin: 0 auto;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing:    border-box;
+    -ms-box-sizing:     border-box;
+    -o-box-sizing:      border-box;
+    box-sizing:         border-box;
+    font-family: 'PT Serif', georgia, serif;
+    font-size: 48px;
+    line-height: 1.5;
+}
+.slide {
+  display: block;
+  width: 800px;
+  height: 600px;
+  padding: 120px 60px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, .3);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+  color: rgb(102, 102, 102);
+  text-shadow: 0 2px 2px rgba(0, 0, 0, .1);
+  font-family: 'Open Sans', Arial, sans-serif;
+}
+.slide2 {
+  -webkit-transform: rotate(30deg);
+}
+.slide3 {
+  -webkit-transform: rotate(30deg);
+}
+</style>
+</head>
+<body>
+<div id="impress">
+    <div id="bored" class="step slide" data-x="-1000" data-y="-1500">
+        <q>Aren't you just <b>bored</b> with all those slides-based presentations?</q>
+    </div>
+    <div class="step slide slide2" data-x="-1100" data-y="-2500">
+        <q>Don't you think that presentations given <strong>in modern browsers</strong> shouldn't <strong>copy the limits</strong> of 'classic' slide decks?</q>
+    </div>
+    <div class="step slide slide3" data-x="-1300" data-y="-3500">
+        <q>Would you like to <strong>impress your audience</strong> with <strong>stunning visualization</strong> of your talk?</q>
+    </div>
+
+    <div class="step" data-x="0" data-y="-1500" data-scale="5" data-rotate="30">
+    </div>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/impress.js/0.5.3/impress.js"></script>
+<script>
+impress().init();
+</script>
+</body>
+</html>
