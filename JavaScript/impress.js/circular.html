@@ -7,8 +7,8 @@
 .slide {
   position: absolute;
   border: 1px solid silver;
-  width:  60px;
-  height: 30px;
+  width:  80px;
+  height: 60px;
 }
 </style>
 </head>
@@ -18,19 +18,20 @@
 function drawSlide(x, y, rotate) {
   console.log(x +', '+ y);
   rotate = rotate || 0;
+  rotate = 360 - rotate;
   $('body').append($('<div class="slide" style="top: '+ y +'px; left: '+ x +'px; -webkit-transform: rotate('+ rotate +'deg)">'+ rotate +'</div>'));
 }
 $(function () {
-  var centerX = parseInt($(window).width() / 2, 10) - 30,
-      centerY = parseInt($(window).height() / 2, 10) - 15,
-      r = 150;
+  var centerX = parseInt($(window).width() / 2, 10) - 40,
+      centerY = parseInt($(window).height() / 2, 10) - 30,
+      r = 170;
+  drawSlide(centerX, centerY);
   for (de = 360; de > 0; de = de - 30) {
     ra = de * Math.PI / 180;
-    x = centerX + Math.cos(ra) * r;
-    y = centerY + Math.sin(ra) * r;
+    x = centerX + parseInt(Math.cos(ra) * r, 10);
+    y = centerY - parseInt(Math.sin(ra) * r, 10);
     drawSlide(x, y, de);
   }
-  drawSlide(centerX, centerY);
 });
 </script>
 </body>
