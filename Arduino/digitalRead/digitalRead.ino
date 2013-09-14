@@ -13,8 +13,14 @@ void loop() {
     switchState = currentState;
     if (currentState == LOW) {
       ledState = ledState == LOW ? HIGH : LOW;
-      digitalWrite(6, ledState);
     }
   }
-  delay(100);
+  if (ledState == HIGH) {
+    digitalWrite(6, HIGH);
+    delay(100);
+    digitalWrite(6, LOW);
+    delay(100);
+  } else {
+    delay(100);
+  }
 }
