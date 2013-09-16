@@ -10,17 +10,20 @@ body {
   background-image: url(//wmh.github.io/hunbook/_static/img/noise.png);
 }
 h1 {
-  font-size: 86px;
+  font-size: 82px;
   font-family: 'Amaranth', sans-serif;
   text-shadow: 0px 3px 3px #666;
   margin-top: 0;
+}
+h2 {
+  font-family: 'Amaranth', sans-serif;
 }
 </style>
 </head>
 <body>
 <div class="container">
   <h1>Circular Slides Generator</h1>
-  <p class="lead">Generates circular slides easily and quickly.</p>
+  <p class="lead">Generates circular slides for impress.js presentations.</p>
   <form class="form-horizontal" role="form">
     <div class="form-group">
       <label for="pages" class="col-md-2 control-label">How Many Slides</label>
@@ -82,11 +85,29 @@ h1 {
       </div>
     </div>
   </form>
+  <div id="credits">
+    <h2>Credits</h2>
+    <ul>
+      <li>
+        <a href="http://bartaz.github.io/impress.js" target="_blank">impress.js</a> - Bartek Szopka
+      </li>
+      <li>
+        <a href="http://wmh.github.io/impress.js" target="_blank">Circular Slides Generator</a> - Hunter Wu
+      </li>
+    </ul>
+  </div>
 </div>
+<a href="https://github.com/wmh"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 $(function () {
+  // load template
+  var template = '';
+  $.get('template.html', function (data) {
+    template = data;
+  }, 'html');
+
   function getSlideCodes() {
     var pages = Math.max($('#pages').val() * 1, 3),
         originX = $('#origin-x').val() * 1,
@@ -111,7 +132,11 @@ $(function () {
       ra = (360 - de) * Math.PI / 180;
       x = parseInt(offsetX + Math.cos(ra) * r, 10);
       y = parseInt(offsetY - Math.sin(ra) * r, 10);
-      codes += '<div class="step slide" data-x="'+ x +'" data-y="' + y + '" data-rotate="'+ rotate +'" data-scale="1"><q>Slide '+ page +'</q></div>' + "\n";
+      if (page < pages) {
+        codes += '<div class="step slide" data-x="'+ x +'" data-y="' + y + '" data-rotate="'+ rotate +'" data-scale="1"><q>Slide '+ page +'</q></div>' + "\n";
+      } else {
+        codes += '<div class="step slide credits" data-x="'+ x +'" data-y="' + y + '" data-rotate="'+ rotate +'" data-scale="1">'+ $('#credits').html() +'</div>' + "\n";
+      }
     }
     codes += '<div class="step" data-x="'+ originX +'" data-y="'+ originY +'" data-scale="'+ overviewScale +'"></div>';
     return codes;
@@ -119,7 +144,13 @@ $(function () {
 
   $('#generate').click(function (e) {
     e.preventDefault();
-    $('#codes').val(getSlideCodes());
+    var sizeW = $('#size-w').val() * 1,
+        sizeH = $('#size-h').val() * 1;
+    $('#codes').val(template
+        .replace('width: 800px;', 'width: '+ sizeW +'px;')
+        .replace('height: 600px;', 'height: '+ sizeH +'px;')
+        .replace('<!-- slides -->', getSlideCodes())
+    );
   });
 
   $('#preview').click(function (e) {
