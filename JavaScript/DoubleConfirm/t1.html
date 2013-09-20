@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>I need a double confirm</title>
+<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="//cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.10/alertify.default.css" rel="stylesheet">
+<link href="//cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.10/alertify.core.css" rel="stylesheet">
+<style>
+body {
+  background-image: url(//wmh.github.io/hunbook/_static/img/noise.png);
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Double confirm</h1>
+  <button id="btn1" type="button" class="btn btn-primary">Primary</button>
+</div>
+<div id="confirm-modal-1" class="modal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Are you sure?</h2>
+      </div>
+      <div class="modal-body">
+        <p>Just to confirm!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button id="ok1" type="button" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="confirm-modal-2" class="modal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Are you sure again?</h2>
+      </div>
+      <div class="modal-body">
+        <p>Just to confirm!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button id="ok2" type="button" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.10/alertify.min.js"></script>
+<script>
+$(function () {
+  $('#btn1').click(function () {
+    $('#confirm-modal-1').modal('show');
+  });
+  $('#ok1').click(function () {
+    $('#confirm-modal-1').modal('hide');
+    $('#confirm-modal-2').modal('show');
+  });
+  $('#ok2').click(function () {
+    $('#confirm-modal-2').modal('hide');
+    alertify.log('Got confirmed!');
+  });
+});
+</script>
+</body>
+</html>
