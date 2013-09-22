@@ -15,7 +15,8 @@ body {
 <body>
 <div class="container">
   <h1>Double confirm</h1>
-  <button id="btn1" type="button" class="btn btn-primary">Primary</button>
+  <button id="btn1" type="button" class="btn btn-primary">Test1</button>
+  <button id="btn2" type="button" class="btn btn-primary">Test2</button>
 </div>
 <div id="confirm-modal-1" class="modal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
   <div class="modal-dialog">
@@ -50,6 +51,28 @@ body {
   </div>
 </div>
 
+<div id="confirm-modal-3" class="modal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Are you sure?</h2>
+      </div>
+      <div class="modal-body">
+        <form class="form-inline" role="form">
+          <div class="form-group" id="answer-group">
+            <label class="control-label" for="answer">Please answer 1 + 1 =</label>
+            <input type="text" class="form-control" id="answer" placeholder="Enter your answer">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button id="ok3" type="button" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.10/alertify.min.js"></script>
@@ -66,6 +89,25 @@ $(function () {
     $('#confirm-modal-2').modal('hide');
     alertify.log('Got confirmed!');
   });
+
+  $('#btn2').click(function () {
+    $('#answer-group').removeClass('has-error');
+    $('#answer').val('');
+    $('#confirm-modal-3').modal('show');
+  });
+  $('#ok3').click(function () {
+    // check value
+    var answer = $('#answer').val();
+    if (answer !== '2')
+    {
+      $('#answer-group').addClass('has-error');
+      return;
+    }
+
+    $('#confirm-modal-3').modal('hide');
+    $('#confirm-modal-2').modal('show');
+  });
+
 });
 </script>
 </body>
