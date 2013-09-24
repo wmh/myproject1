@@ -17,8 +17,9 @@ body {
   <h1>Double confirm</h1>
   <button id="btn1" type="button" class="btn btn-primary">Test1</button>
   <button id="btn2" type="button" class="btn btn-primary">Test2</button>
+  <button id="btn3" type="button" class="btn btn-primary">Test3</button>
 </div>
-<div id="confirm-modal-1" class="modal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
+<div id="confirm-modal-1a" class="modal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -29,12 +30,12 @@ body {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button id="ok1" type="button" class="btn btn-primary">OK</button>
+        <button id="ok1a" type="button" class="btn btn-primary">OK</button>
       </div>
     </div>
   </div>
 </div>
-<div id="confirm-modal-2" class="modal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
+<div id="confirm-modal-1b" class="modal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -45,13 +46,13 @@ body {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button id="ok2" type="button" class="btn btn-primary">OK</button>
+        <button id="ok1b" type="button" class="btn btn-primary">OK</button>
       </div>
     </div>
   </div>
 </div>
 
-<div id="confirm-modal-3" class="modal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
+<div id="confirm-modal-2" class="modal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -67,7 +68,41 @@ body {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button id="ok3" type="button" class="btn btn-primary">OK</button>
+        <button id="ok2" type="button" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="confirm-modal-3a" class="modal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Are you sure?</h2>
+      </div>
+      <div class="modal-body">
+        <p>Just to confirm!</p>
+      </div>
+      <div class="modal-footer">
+        <button id="cancel3a" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button id="ok3a" type="button" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="confirm-modal-3b" class="modal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Are you sure again?</h2>
+      </div>
+      <div class="modal-body">
+        <p>Just to confirm!</p>
+      </div>
+      <div class="modal-footer">
+        <button id="cancel3b" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button id="ok3b" type="button" class="btn btn-primary">OK</button>
       </div>
     </div>
   </div>
@@ -79,23 +114,23 @@ body {
 <script>
 $(function () {
   $('#btn1').click(function () {
-    $('#confirm-modal-1').modal('show');
+    $('#confirm-modal-1a').modal('show');
   });
-  $('#ok1').click(function () {
-    $('#confirm-modal-1').modal('hide');
-    $('#confirm-modal-2').modal('show');
+  $('#ok1a').click(function () {
+    $('#confirm-modal-1a').modal('hide');
+    $('#confirm-modal-1b').modal('show');
   });
-  $('#ok2').click(function () {
-    $('#confirm-modal-2').modal('hide');
+  $('#ok1b').click(function () {
+    $('#confirm-modal-1b').modal('hide');
     alertify.log('Got confirmed!');
   });
 
   $('#btn2').click(function () {
     $('#answer-group').removeClass('has-error');
     $('#answer').val('');
-    $('#confirm-modal-3').modal('show');
+    $('#confirm-modal-2').modal('show');
   });
-  $('#ok3').click(function () {
+  $('#ok2').click(function () {
     // check value
     var answer = $('#answer').val();
     if (answer !== '2')
@@ -103,9 +138,44 @@ $(function () {
       $('#answer-group').addClass('has-error');
       return;
     }
+    $('#confirm-modal-2').modal('hide');
+    $('#confirm-modal-1b').modal('show');
+  });
 
-    $('#confirm-modal-3').modal('hide');
-    $('#confirm-modal-2').modal('show');
+  var dtd_a = $.Deferred();
+  var dtd_b = $.Deferred();
+  $('#btn3').click(function () {
+    var confirm_a = function(dtd) {
+      $('#confirm-modal-3a').modal('show');
+      return dtd.promise();
+    };
+    confirm_a(dtd_a);
+  });
+  $('#ok3a').click(function () {
+    $('#confirm-modal-3a').modal('hide');
+    $('#confirm-modal-3b').modal('show');
+    dtd_a.resolve();
+    var confirm_b = function(dtd) {
+      $('#confirm-modal-3b').modal('show');
+      return dtd.promise();
+    };
+    $.when(confirm_b(dtd_b))
+    .done(function() {
+      alertify.log('Got confirmed!');
+    })
+    .fail(function() {
+      alertify.error('Canceled!');
+    });
+  });
+  $('#ok3b').click(function () {
+    $('#confirm-modal-3b').modal('hide');
+    dtd_b.resolve();
+  });
+  $('#cancel3a').click(function () {
+    dtd_a.reject();
+  });
+  $('#cancel3b').click(function () {
+    dtd_b.reject();
   });
 
 });
