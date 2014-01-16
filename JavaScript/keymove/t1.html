@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache" />
+<title>Key Move</title>
+<style>
+#outContainer {
+  border: 1px solid red;
+  width: 340px;
+  height: 200px;
+  overflow: hidden;
+
+}
+#container {
+  width: 340px;
+}
+.item {
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  border: 2px solid blue;
+  margin: 5px;
+  font-size: 30px;
+  color: silver;
+  text-align: center;
+  vertical-align: middle;
+}
+.active {
+  background-color: #c4e1ff;
+}
+
+</style>
+</head>
+<body>
+<div id="outContainer">
+<div id="container">
+</div>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+var boundaryMove = true,
+    currentViewportStart = 1,
+    viewItems = 8,
+    cnt = 21, rowCnt = 4,
+    lastFocus = currentFocus = 1;
+
+function updateUI(lastFocus, currentFocus) {
+  if (lastFocus == currentFocus) {
+    return;
+  }
+  $('#item' + lastFocus).removeClass('active');
+  $('#item' + currentFocus).addClass('active');
+
+  if (currentFocus < currentViewportStart) {
+    currentViewportStart -= rowCnt;
+    $('#outContainer')[0].scrollTop = (Math.ceil(currentViewportStart / rowCnt) - 1) * 84;
+  } else if (currentFocus >= currentViewportStart + 8) {
+    currentViewportStart += rowCnt;
+    $('#outContainer')[0].scrollTop = (Math.ceil(currentViewportStart / rowCnt) - 1) * 84;
+  }
+}
+$(function () {
+  $container = $('#container');
+  for (i = 1; i <= cnt; ++i) {
+    $container.append('<div class="item" id="item'+ i +'">'+ i +'</div>');
+  }
+  $('#item1').addClass('active');
+  $(document).bind('keydown', function (e) {
+    var code = e.keyCode || e.which;
+    switch (code) {
+      case 37:
+        if (currentFocus == 1) {
+          break;
+        }
+        if (!boundaryMove) {
+          if (currentFocus % rowCnt == 1) {
+            break;
+          }
+        }
+        lastFocus = currentFocus;
+        currentFocus -= 1;
+        updateUI(lastFocus, currentFocus);
+        break;
+
+      case 38:
+        if (currentFocus <= rowCnt) {
+          break;
+        }
+        lastFocus = currentFocus;
+        currentFocus -= rowCnt;
+        updateUI(lastFocus, currentFocus);
+        break;
+
+      case 39:
+        if (currentFocus == cnt) {
+          break;
+        }
+        if (!boundaryMove) {
+          if (currentFocus % rowCnt == 0) {
+            break;
+          }
+        }
+        lastFocus = currentFocus;
+        currentFocus += 1;
+        updateUI(lastFocus, currentFocus);
+        break;
+
+      case 40:
+        if (currentFocus == cnt) {
+          break;
+        }
+        lastFocus = currentFocus;
+        currentFocus += rowCnt;
+        currentFocus = Math.min(cnt, currentFocus);
+        updateUI(lastFocus, currentFocus);
+        break;
+    }
+    e.preventDefault();
+  });
+});
+</script>
+</body>
+</html>
