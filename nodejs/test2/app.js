@@ -20,7 +20,11 @@ function handler (req, res) {
 var ss = {};
 io.sockets.on('connection', function (socket) {
   ss[socket.id] = socket;
-  console.log('--- ' + socket.id + ' connection! ---');
+  //console.log('--- ' + socket.id + ' connection! ---');
+  socket.on('sid', function (data) {
+    socket.phpsid= data.sid;
+    console.log('--- ' + socket.phpsid + ' connection! ---');
+  });
 
   socket.on('change-nickname', function (data) {
     console.log(data);

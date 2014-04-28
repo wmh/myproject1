@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,8 +54,16 @@ h2 {
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="//localhost:82/socket.io/socket.io.js"></script>
 <script>
+var sid = '<?php echo session_id(); ?>';
 $(function () {
   var socket = io.connect('http://localhost:82');
+
+  socket.on('connect', function (data) {
+    console.log("--connect--");
+    socket.emit('sid', {sid: sid});
+    socket.emit('change-nickname', { nickname: $('#nickname').val() });
+  });
+
   socket.on('show', function (data) {
     $("#message-block").prepend('<p><strong>' + data.nickname + ': </strong>' + data.message + '</p>');
   });
